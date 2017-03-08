@@ -1,0 +1,42 @@
+{% extends base %}
+{% load multiply %}
+
+{% block contents %}
+  <div class="tab-container">
+    {% for alert in alerts %}
+      <div class="alert">
+        <div class="actions" style="float: right;">
+          <a href="/{{ account.id }}{% if type != 'accounts' %}/{{ type }}/{{ target.id }}{% endif %}/alerts/{{ alert.id }}/edit/">edit</a>
+          <a href="/{{ account.id }}{% if type != 'accounts' %}/{{ type }}/{{ target.id }}{% endif %}/alerts/{{ alert.id }}/delete/">delete</a>
+        </div>
+        When
+        <strong>{{ alert.get_field_1_display }}</strong>
+        of
+        <strong>{{ alert.get_utility_type_1_display }}</strong>
+        is
+        <strong>{{ alert.get_comparator_display }}</strong>
+        <strong>{{ alert.percent|multiply:100 }}</strong>%
+        <br>
+        of the
+        <strong>{{ alert.get_field_2_display }}</strong>
+        of
+        <strong>{{ alert.get_utility_type_2_display }}</strong>,
+        notify me by
+        <strong>{{ alert.get_notify_by_display }}</strong>
+        <strong>{{ alert.get_notify_frequency_display }}</strong>.
+      </div> <!-- .alert -->
+      <br>
+      <hr>
+    {% endfor %}
+    {% if alerts|length < 1 %}
+      <div class="empty">There are no alerts for <em>{{ target.name }}</em>.</div>
+    {% endif %}
+
+    <div class="actions">
+      <a class="button" href="/{{ account.id }}{% if type != 'accounts' %}/{{ type }}/{{ target.id }}{% endif %}/alerts/new/">
+        + Add an Alert
+      </a>
+    </div>
+  </div>
+{% endblock %}
+

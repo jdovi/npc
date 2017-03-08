@@ -1,0 +1,215 @@
+{% extends 'buildingspeakapp/meters/base.html' %}
+
+{% block contents %}
+
+<script>
+var charts = [];
+function addChart(arr) {
+  charts.push(arr);
+};
+</script>
+
+<div class="tab tab-stats">
+
+  <h2>Consumption Model Statistics</h2>
+  {% if consumption_model_stats_table == 'false' %}
+    No consumption model assigned to this Meter. <br>
+  {% else %}
+
+    <div id="consumption_model_stats_table" style="width: 100%;"></div>
+    <script>
+      addChart([
+        'Table',
+        'consumption_model_stats_table',
+        'Table',
+        {{ consumption_model_stats_table|safe }},        
+        {}
+      ]);
+    </script>
+
+    <div id="{{ meter.id }}-consumption-model-residuals-histogram" style="display: inline-block; width: 49%;"></div>
+    <script>
+      addChart([
+        'Histogram',
+        '{{ meter.id }}-consumption-model-residuals-histogram',
+        'ColumnChart',
+        {{ consumption_model_residuals_histogram|safe }},
+        {
+          hAxis: {title: 'Residual Ranges'},
+          vAxis: {title: 'Frequency'},
+          legend: 'none'
+        },
+      ]);
+    </script>
+
+    {% for indvarname,indvardata in consumption_residual_plots %}
+      <div id="{{ indvarname|safe }} - {{ forloop.counter0 }} - consumption" style="display: inline-block; width: 49%;"></div>
+      <script>
+        addChart([
+          'Scatter',
+          '{{ indvarname|safe }} - {{ forloop.counter0 }} - consumption',
+          'ScatterChart',
+          {{ indvardata|safe }},
+          {
+            hAxis: {title: '{{ indvarname|safe }}' },
+            vAxis: {title: 'Residuals'},
+            legend: 'none',
+          }
+        ]);
+      </script>
+    {% empty %}
+      <div id="no consumption variables">No independent variables for consumption model.</div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="clear">
+    <div class="woo-sc-hr"></div>
+  </div>
+
+  <h2>Peak Demand Model Statistics</h2>
+  {% if peak_demand_model_stats_table == 'false' %}
+    No peak demand model assigned to this Meter. <br>
+  {% else %}
+    
+    <div id="peak_demand_model_stats_table" style="width: 100%;"></div>
+    <script>
+      addChart([
+        'Table',
+        'peak_demand_model_stats_table',
+        'Table',
+        {{ peak_demand_model_stats_table|safe }},
+        {}
+      ]);
+    </script>
+
+    <div id="{{ meter.id }}-peak-demand-model-residuals-histogram" style="display: inline-block; width: 49%;"></div>
+    <script>
+      addChart([
+        'Histogram',
+        '{{ meter.id }}-peak-demand-model-residuals-histogram',
+        'ColumnChart',
+        {{ peak_demand_model_residuals_histogram|safe }},
+        {
+          hAxis: {title: 'Residual Ranges'},
+          vAxis: {title: 'Frequency'},
+          legend: 'none'
+        }
+      ]);
+    </script>
+
+    {% for indvarname,indvardata in peak_demand_residual_plots %}
+      <div id="{{ indvarname|safe }} - {{ forloop.counter0 }} - peak demand" style="display: inline-block; width: 49%;"></div>
+      <script>
+        addChart([
+          'Scatter',
+          '{{ indvarname|safe }} - {{ forloop.counter0 }} - peak demand',
+          'ScatterChart',
+          {{ indvardata|safe }},
+          {
+            hAxis: {title: '{{ indvarname|safe }}' },
+            vAxis: {title: 'Residuals'},
+            legend: 'none',
+          }
+        ]);
+      </script>
+    {% empty %}
+      <div id="no peak demand variables">No independent variables for peak demand model.</div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="clear">
+    <div class="woo-sc-hr"></div>
+  </div>
+
+  <h2>Model Baseline Period</h2>
+  Redefining the baseline period will calculate new best-fit models and refresh forecasts.
+  <div id="reset_models" style="width: 100%;">
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/meters/{{ meter.id }}/stats/" method="post">
+      {% csrf_token %}
+      <input type="text" class="short datepicker" value="{{baseline_first_date}}" name="baseline_first_date"/>
+      to
+      <input type="text" class="short datepicker"  value="{{baseline_last_date}}" name="baseline_last_date"/>
+      <input type="submit" value="Redefine" name="reset_models"/>
+      <img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ tab_help_text|safe }}"></img>
+    </form>
+</div>
+
+</div> <!-- .tab-stats -->
+
+<script type="text/javascript">
+google.load("visualization", "1", {packages:["corechart","table","controls","motionchart"]});
+google.setOnLoadCallback(drawAllCharts);
+
+function drawGeneric(chartDrawFunc, id, chartType, data, options) {
+  if (!google || !google.visualization) return;
+  var el        = document.getElementById(id);
+  var dataTable = google.visualization.arrayToDataTable(data);   
+  var chart     = new google.visualization[chartType](el);
+  chart.draw(dataTable, options);
+}
+
+function drawGenericHistogram(chartDrawFunc, id, chartType, data, options) {
+  if (!google || !google.visualization) return;
+  var el        = document.getElementById(id);
+  var dataTable = google.visualization.arrayToDataTable(data);   
+  var chart     = new google.visualization[chartType](el);
+
+  // Create formatters.
+  var formatter_numbers = new google.visualization.NumberFormat({
+    fractionDigits: 1,
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  // Reformat our data.
+  formatter_numbers.format(dataTable, 0);
+  formatter_numbers.format(dataTable, 1);
+
+  chart.draw(dataTable, options);
+}
+
+function drawGenericScatter(chartDrawFunc, id, chartType, data, options) {
+  if (!google || !google.visualization) return;
+  var el        = document.getElementById(id);
+  var dataTable = google.visualization.arrayToDataTable(data);   
+  var chart     = new google.visualization[chartType](el);
+
+  // Create formatters.
+  var formatter_numbers = new google.visualization.NumberFormat({
+    fractionDigits: 2,
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  // Reformat our data.
+  formatter_numbers.format(dataTable, 0);
+  formatter_numbers.format(dataTable, 1);
+
+  chart.draw(dataTable, options);
+}
+
+function drawAllCharts() {
+  for (var i=0; i<charts.length; i++) {
+    var chart = charts[i];
+    if (chart[0] == 'Table')
+      {drawGeneric.apply(this, chart);}
+    else if (chart[0] == 'Scatter')
+      {drawGenericScatter.apply(this, chart);}
+    else if (chart[0] == 'Histogram')
+      {drawGenericHistogram.apply(this, chart);}
+    else
+      {}
+  }
+}
+
+$(function() {
+  $(window).resize($.debounce(250, drawAllCharts));
+  $(document).on('tabsactivate', drawAllCharts);
+});
+
+// Set up lightbox
+$(function() {
+  $('.images a').fancybox();
+});
+</script>
+
+{% endblock %}
+

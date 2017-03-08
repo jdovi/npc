@@ -1,0 +1,83 @@
+{% extends 'buildingspeakapp/accounts/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+    <form enctype="multipart/form-data" class="form-wrapper" action="/{{ account.id }}/add_meter/" method="post">{% csrf_token %}
+      {{ add_meter_form.non_field_errors }}
+      <div class="form-row-set">
+        {{ add_meter_form.name.label_tag }}
+        {{ add_meter_form.name }}
+        {{ add_meter_form.name.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_meter_form.serves.label_tag }}
+        {{ add_meter_form.serves }}
+        {{ add_meter_form.serves.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_meter_form.location.label_tag }}
+        {{ add_meter_form.location }}
+        {{ add_meter_form.location.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_meter_form.zip_code.label_tag }}
+        {{ add_meter_form.zip_code }}
+        {{ add_meter_form.zip_code.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_meter_form.make.label_tag }}
+        {{ add_meter_form.make }}
+        {{ add_meter_form.make.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_meter_form.model.label_tag }}
+        {{ add_meter_form.model }}
+        {{ add_meter_form.model.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_meter_form.serial_number.label_tag }}
+        {{ add_meter_form.serial_number }}
+        {{ add_meter_form.serial_number.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_meter_form.utility.label_tag }}
+        {{ add_meter_form.utility }}
+        {{ add_meter_form.utility.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_meter_form.utility_account_number.label_tag }}
+        {{ add_meter_form.utility_account_number }}
+        {{ add_meter_form.utility_account_number.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_meter_form.utility_meter_number.label_tag }}
+        {{ add_meter_form.utility_meter_number }}
+        {{ add_meter_form.utility_meter_number.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_meter_form.utility_type.label_tag }}
+        {{ add_meter_form.utility_type }}
+        {{ add_meter_form.utility_type.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_meter_form.units.label_tag }}
+        {{ add_meter_form.units }}
+        {{ add_meter_form.units.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_meter_form.cost_forecast_method.label_tag }}
+        {{ add_meter_form.cost_forecast_method }}
+        {{ add_meter_form.cost_forecast_method.errors }}
+      </div>
+
+      <div class="form-row-set-buttons">
+	  <input class="woo-sc-button custom small woo-bu" type="submit" value="Create" name="add_meter"/>
+	  <a href="/{{ account.id }}/add/">Cancel</a>
+	  </div>
+    
+	</form>
+  </div>
+
+{% endblock %}
+

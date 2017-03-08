@@ -1,0 +1,148 @@
+{% extends "email_base.html" %}
+
+{% block headline %}{{ headline }}{% endblock %}
+
+{% block body %}
+{% load multiply %}
+{% load key %}
+{% load humanize %}
+
+
+{% if alerts_acct %}
+{% for alert, data, target, url_alert_edit in alerts_acct %}  
+<h2><u>Account: {{ target.name }}</u></h2>
+  <div>
+    <ul>
+      {% for datum in data %}
+        <li>
+        In <strong>{{ datum|key:'label' }}</strong>, the 
+        <strong>{{ alert.get_field_1_display }}</strong>
+         of 
+        <strong>{{ alert.get_utility_type_1_display }}</strong>
+         (<strong>{{ datum|key:'dollar_1' }}</strong><strong>{{ datum|key:'value_1'|floatformat:0|intcomma }}</strong><strong>{{ datum|key:'units_1' }}</strong>)
+         was 
+        {% if datum|key:'ratio' < 999999 %}
+        <strong>{{ datum|key:'ratio'|multiply:100.0|floatformat:0|intcomma }}%</strong>
+         of the
+        {% else %}
+        more than the
+        {% endif %}
+        <strong>{{ alert.get_field_2_display }}</strong>
+         of
+        <strong>{{ alert.get_utility_type_2_display }}</strong>
+         (<strong>{{ datum|key:'dollar_2' }}</strong><strong>{{ datum|key:'value_2'|floatformat:0|intcomma }}</strong><strong>{{ datum|key:'units_2' }}</strong>)
+         &mdash; your alert threshold was 
+        <strong>{{ alert.percent|multiply:100.0|floatformat:0|intcomma }}%</strong>.
+        <a href="{{ url_alert_edit }}">Edit Alert</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endfor %}
+{% endif %}
+
+
+{% if alerts_spaces %}
+{% for alert, data, target, url_alert_edit in alerts_spaces %}  
+<h2><u>Space: {{ target.name }}</u></h2>
+  <div>
+    <ul>
+      {% for datum in data %}
+        <li>
+        In <strong>{{ datum|key:'label' }}</strong>, the 
+        <strong>{{ alert.get_field_1_display }}</strong>
+         of 
+        <strong>{{ alert.get_utility_type_1_display }}</strong>
+         (<strong>{{ datum|key:'dollar_1' }}</strong><strong>{{ datum|key:'value_1'|floatformat:0|intcomma }}</strong><strong>{{ datum|key:'units_1' }}</strong>)
+         was 
+        {% if datum|key:'ratio' < 999999 %}
+        <strong>{{ datum|key:'ratio'|multiply:100.0|floatformat:0|intcomma }}%</strong>
+         of the
+        {% else %}
+        more than the
+        {% endif %}
+        <strong>{{ alert.get_field_2_display }}</strong>
+         of
+        <strong>{{ alert.get_utility_type_2_display }}</strong>
+         (<strong>{{ datum|key:'dollar_2' }}</strong><strong>{{ datum|key:'value_2'|floatformat:0|intcomma }}</strong><strong>{{ datum|key:'units_2' }}</strong>)
+         &mdash; your alert threshold was 
+        <strong>{{ alert.percent|multiply:100.0|floatformat:0|intcomma }}%</strong>.
+        <a href="{{ url_alert_edit }}">Edit Alert</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endfor %}
+{% endif %}
+
+
+{% if alerts_bldgs %}
+{% for alert, data, target, url_alert_edit in alerts_bldgs %}  
+<h2><u>Building: {{ target.name }}</u></h2>
+  <div>
+    <ul>
+      {% for datum in data %}
+        <li>
+        In <strong>{{ datum|key:'label' }}</strong>, the 
+        <strong>{{ alert.get_field_1_display }}</strong>
+         of 
+        <strong>{{ alert.get_utility_type_1_display }}</strong>
+         (<strong>{{ datum|key:'dollar_1' }}</strong><strong>{{ datum|key:'value_1'|floatformat:0|intcomma }}</strong><strong>{{ datum|key:'units_1' }}</strong>)
+         was 
+        {% if datum|key:'ratio' < 999999 %}
+        <strong>{{ datum|key:'ratio'|multiply:100.0|floatformat:0|intcomma }}%</strong>
+         of the
+        {% else %}
+        more than the
+        {% endif %}
+        <strong>{{ alert.get_field_2_display }}</strong>
+         of
+        <strong>{{ alert.get_utility_type_2_display }}</strong>
+         (<strong>{{ datum|key:'dollar_2' }}</strong><strong>{{ datum|key:'value_2'|floatformat:0|intcomma }}</strong><strong>{{ datum|key:'units_2' }}</strong>)
+         &mdash; your alert threshold was 
+        <strong>{{ alert.percent|multiply:100.0|floatformat:0|intcomma }}%</strong>.
+        <a href="{{ url_alert_edit }}">Edit Alert</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endfor %}
+{% endif %}
+
+
+{% if alerts_meters %}
+{% for alert, data, target, url_alert_edit in alerts_meters %}  
+<h2><u>Meter: {{ target.name }}</u></h2>
+  <div>
+    <ul>
+      {% for datum in data %}
+        <li>
+        In <strong>{{ datum|key:'label' }}</strong>, the 
+        <strong>{{ alert.get_field_1_display }}</strong>
+         of 
+        <strong>{{ alert.get_utility_type_1_display }}</strong>
+         (<strong>{{ datum|key:'dollar_1' }}</strong><strong>{{ datum|key:'value_1'|floatformat:0|intcomma }}</strong><strong>{{ datum|key:'units_1' }}</strong>)
+         was 
+        {% if datum|key:'ratio' < 999999 %}
+        <strong>{{ datum|key:'ratio'|multiply:100.0|floatformat:0|intcomma }}%</strong>
+         of the
+        {% else %}
+        more than the
+        {% endif %}
+        <strong>{{ alert.get_field_2_display }}</strong>
+         of
+        <strong>{{ alert.get_utility_type_2_display }}</strong>
+         (<strong>{{ datum|key:'dollar_2' }}</strong><strong>{{ datum|key:'value_2'|floatformat:0|intcomma }}</strong><strong>{{ datum|key:'units_2' }}</strong>)
+         &mdash; your alert threshold was 
+        <strong>{{ alert.percent|multiply:100.0|floatformat:0|intcomma }}%</strong>.
+        <a href="{{ url_alert_edit }}">Edit Alert</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endfor %}
+{% endif %}
+
+{% endblock %}
+
+

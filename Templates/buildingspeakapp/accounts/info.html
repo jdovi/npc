@@ -1,0 +1,894 @@
+{% extends 'buildingspeakapp/accounts/base.html' %}
+{% load humanize %}
+
+{% block contents %}
+
+<script>
+var charts = [];
+function addChart(arr) {
+  charts.push(arr);
+};
+</script>
+
+<div class="tab tab-info">
+  <div class="row">
+    <div class="fivecol-three space-details">
+      {% if account.account_type %}
+        <div class="form-item">
+          <label>Account Type:</label>
+          <span>{{ account.account_type }}</span>
+        </div>
+      {% endif %}
+
+      {% if account.city %}
+        <div class="form-item">
+          <label>City/State/Zip:</label>
+          <span>{{ account.city }}, {{ account.state }} {{ account.zip_code }}</span>
+        </div>
+      {% endif %}
+
+      <div class="form-item">
+        <label>Buildings:</label>
+        <span>{{ account.building_set.count }}</span>
+      </div>
+
+      {% if total_SF %}
+        <div class="form-item">
+          <label>Floorspace (SF):</label>
+          <span>{{ total_SF|floatformat:0|intcomma }}</span>
+        </div>
+      {% endif %}
+
+      <div class="form-item">
+        <label>Meters:</label>
+        <span>{{ account.meter_set.count }}</span>
+      </div>
+	  
+	  <span><a href="/{{ account.id }}/edit/">Edit Account Details</a></span>
+
+    </div> <!-- .fivecol-three.space-details -->
+
+    <div class="fivecol-two last">
+      <ul class="images">
+        {% if account.image_file %}
+          <li>
+            <a rel="images" href="{{ account.image_file.url }}"><img src="{{ account.image_file.url }}"  style="height: 100px;"/></a>
+          </li>
+		{% else %}
+          <li>
+            <a rel="images" href="{{ STATIC_PREFIX }}default_images/default_account_image.png"><img src="{{ STATIC_PREFIX }}default_images/default_account_image.png"  style="height: 100px;"/></a>
+          </li>
+		{% endif %}
+      </ul>
+    </div> <!-- .fivecol-two -->
+  </div> <!-- .row -->
+
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/info/" method="post">
+      {% csrf_token %}
+    <img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ tab_help_text|safe }}"></img>
+    <input type="submit" value="Export" name="export_info_tab" style="float:right;"/>
+    </form>
+
+  {% if measures %}
+    <div class="clear">
+      <div class="woo-sc-hr"></div>
+    </div>
+    <h2>Efficiency Measures</h2>
+    <table>
+      <tbody>
+          <tr>
+            <td>Efficiency Measure</td>
+            <td>Start Date</td>
+          </tr>
+        {% for m in measures %}
+          <tr>
+            <td><a href="/{{ account.id }}/measures/{{ m.id }}/">{{ m.name }}</a></td>
+            <td>{{ m.start_date }}</td>
+          </tr>
+        {% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/add_efficiency_measure/">+ Add Measure</a></td>
+            <td></td>
+          </tr>
+      </tbody>
+    </table>
+  {% endif %}
+
+  {% if buildings %}
+    <div class="clear">
+      <div class="woo-sc-hr"></div>
+    </div>
+    <h2>Buildings</h2>
+    <table>
+      <tbody>
+        <tr>
+          <td>Building</td>
+          <td>Type</td>
+          <td>Square Footage</td>
+        </tr>
+        {% for b in buildings %}
+          <tr>
+            <td><a href="/{{ account.id }}/buildings/{{ b.id }}/">{{ b.name }}</a></td>
+            <td>{{ b.building_type }}</td>
+            <td>{{ b.square_footage|floatformat:0|intcomma }}</td>
+          </tr>
+        {% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/add_building/">+ Add Building</a></td>
+            <td></td>
+          </tr>
+      </tbody>
+    </table>
+
+  {% endif %}
+
+  {% if spaces %}
+    <div class="clear">
+      <div class="woo-sc-hr"></div>
+    </div>
+    <h2>Spaces</h2>
+    <table>
+      <tbody>
+        <tr>
+          <td>Space</td>
+          <td>Type</td>
+          <td>Square Footage</td>
+        </tr>
+        {% for sp in spaces %}
+          <tr>
+            <td><a href="/{{ account.id }}/spaces/{{ sp.id }}/">{{ sp.name }}</a></td>
+            <td>{{ sp.space_type }}</td>
+            <td>{{ sp.square_footage|floatformat:0|intcomma }}</td>
+          </tr>
+        {% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/add_space/">+ Add Space</a></td>
+            <td></td>
+          </tr>
+      </tbody>
+    </table>
+
+  {% endif %}
+
+  {% if meters %}
+    <div class="clear">
+      <div class="woo-sc-hr"></div>
+    </div>
+    <h2>Meters</h2>
+    <table>
+      <tbody>
+        <tr>
+          <td>Meter</td>
+          <td>Fuel Type</td>
+        </tr>
+        {% for m in meters %}
+          <tr>
+            <td><a href="/{{ account.id }}/meters/{{ m.id }}/">{{ m.name }} - {{ m.utility_type }}</a></td>
+            <td>{{ m.utility_type }}</td>
+          </tr>
+        {% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/add_meter/">+ Add Meter</a></td>
+            <td></td>
+          </tr>
+      </tbody>
+    </table>
+
+  {% endif %}
+
+  {% if equipments %}
+    <div class="clear">
+      <div class="woo-sc-hr"></div>
+    </div>
+    <h2>Equipments</h2>
+    <table>
+      <tbody>
+        <tr>
+          <td>Equipment</td>
+        </tr>
+        {% for e in equipments %}
+          <tr>
+            <td><a href="/{{ account.id }}/equipments/{{ e.id }}/">{{ e.name }}</a></td>
+          </tr>
+        {% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/add_equipment/">+ Add Equipment</a></td>
+            <td></td>
+          </tr>
+      </tbody>
+    </table>
+
+  {% endif %}
+
+  <div class="clear">
+    <div class="woo-sc-hr"></div>
+  </div>
+
+  <a id="eventlist"></a>
+  <h2>Alerts:</h2>
+  <table>
+    <tbody>
+      {% if alerts %}
+        {% for a in alerts %}
+          <tr>
+            <td>{{ a.get_field_1_display }} {{ a.get_utility_type_1_display }}</td>
+            <td>{{ a.get_comparator_display }}</td>
+            <td>{{ a.get_field_2_display }} {{ a.get_utility_type_2_display }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td>No alerts.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <div class="clear">
+    <div class="woo-sc-hr"></div>
+  </div>
+
+  <h2>Event Log:</h2>
+  <table>
+    <tbody>
+      {% if events %}
+        {% for e in events %}
+          <tr>
+            <td>{{ e.when|date:"m/d/Y" }}</td>
+            <td>{{ e.subject }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td>No events.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  {% if adding_events_is_enabled %}
+    <h4>Add an event for this account:</h4>
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/info/#eventlist" method="post">
+      {% csrf_token %}
+      <input type="text" class="event-date short datepicker" value="{% now "m/d/Y" %}" name="when"/>
+      <input type="text" class="event-description" placeholder="Click to enter event description" name="subject"/>
+      <input type="submit" class="woo-sc-button custom small woo-bu" value="Add" name="add_event"/>
+    </form>
+  {% endif %}
+
+</div> <!-- .tab-info -->
+
+<script type="text/javascript">
+google.load("visualization", "1", {packages:["corechart","table","controls","motionchart"]});
+google.setOnLoadCallback(drawAllCharts);
+
+function drawGeneric(chartDrawFunc, id, chartType, data, options) {
+  if (!google || !google.visualization) return;
+  var el        = document.getElementById(id);
+  var dataTable = google.visualization.arrayToDataTable(data);   
+  var chart     = new google.visualization[chartType](el);
+  chart.draw(dataTable, options);
+}
+
+function drawGeneric5yrCost(chartDrawFunc, id, chartType, data, options) {
+  if (!google || !google.visualization) return;
+  var el        = document.getElementById(id);
+  var dataTable = google.visualization.arrayToDataTable(data);   
+  var chart     = new google.visualization[chartType](el);
+
+  // Create formatters.
+  var formatter_dollars = new google.visualization.NumberFormat({
+    prefix: '$',
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  var formatter_numbers = new google.visualization.NumberFormat({
+    fractionDigits: 0,
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  // Reformat our data.
+  formatter_dollars.format(dataTable, 1);
+  formatter_dollars.format(dataTable, 2);
+  formatter_numbers.format(dataTable, 3);
+  formatter_numbers.format(dataTable, 4);
+
+  chart.draw(dataTable, options);
+}
+
+function drawGeneric5yrCons(chartDrawFunc, id, chartType, data, options) {
+  if (!google || !google.visualization) return;
+  var el        = document.getElementById(id);
+  var dataTable = google.visualization.arrayToDataTable(data);   
+  var chart     = new google.visualization[chartType](el);
+
+  // Create formatters.
+  var formatter_numbers = new google.visualization.NumberFormat({
+    fractionDigits: 0,
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  // Reformat our data.
+  formatter_numbers.format(dataTable, 1);
+  formatter_numbers.format(dataTable, 2);
+  formatter_numbers.format(dataTable, 3);
+  formatter_numbers.format(dataTable, 4);
+
+  chart.draw(dataTable, options);
+}
+
+function drawGeneric5yrConsSF(chartDrawFunc, id, chartType, data, options) {
+  if (!google || !google.visualization) return;
+  var el        = document.getElementById(id);
+  var dataTable = google.visualization.arrayToDataTable(data);   
+  var chart     = new google.visualization[chartType](el);
+
+  // Create formatters.
+  var formatter_numbers0digits = new google.visualization.NumberFormat({
+    fractionDigits: 0,
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  var formatter_numbers1digit = new google.visualization.NumberFormat({
+    fractionDigits: 1,
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  // Reformat our data.
+  formatter_numbers1digit.format(dataTable, 1);
+  formatter_numbers1digit.format(dataTable, 2);
+  formatter_numbers0digits.format(dataTable, 3);
+  formatter_numbers0digits.format(dataTable, 4);
+
+  chart.draw(dataTable, options);
+}
+
+function drawGenericDollars(chartDrawFunc, id, chartType, data, options) {
+  if (!google || !google.visualization) return;
+  var el        = document.getElementById(id);
+  var dataTable = google.visualization.arrayToDataTable(data);   
+  var chart     = new google.visualization[chartType](el);
+
+  // Create formatters.
+  var formatter_dollars = new google.visualization.NumberFormat({
+    prefix: '$',
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  // Reformat our data.
+  formatter_dollars.format(dataTable, 1);
+
+  chart.draw(dataTable, options);
+}
+
+function drawGenericNoDecimals(chartDrawFunc, id, chartType, data, options) {
+  if (!google || !google.visualization) return;
+  var el        = document.getElementById(id);
+  var dataTable = google.visualization.arrayToDataTable(data);   
+  var chart     = new google.visualization[chartType](el);
+
+  // Create formatters.
+  var formatter_numbers = new google.visualization.NumberFormat({
+    fractionDigits: 0,
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  // Reformat our data.
+  formatter_numbers.format(dataTable, 1);
+
+  chart.draw(dataTable, options);
+}
+
+function drawMonthlyColumn(chartDrawFunc, iddashboard, idchart, idcontrol, cols, data, vaxtitle) {
+  if (!google || !google.visualization) return;
+  var eldashboard = document.getElementById(iddashboard);
+  var dashboard   = new google.visualization.Dashboard(eldashboard);
+
+  var today = new Date();
+  var chart_start_date = new Date(today.getFullYear(),today.getMonth()-7,today.getDate());
+  var chart_end_date = new Date(today.getFullYear(),today.getMonth()+6,today.getDate()+5);
+
+  var control     = new google.visualization.ControlWrapper({
+    'controlType': 'ChartRangeFilter',
+    'containerId': idcontrol,
+    'options': {
+      // Filter by the date axis.
+      'filterColumnIndex': 0,
+      'ui': {
+        'chartType':    'ColumnChart',
+        'chartOptions': {
+          'chartArea':    {'left': '15%', 'width': '85%'},
+          'hAxis':        {'baselineColor': 'none'}
+        },
+        'chartView': { 'columns': [0, 1, 2, 3, 4, 5] },
+        // 1 day in milliseconds = 24 * 60 * 60 * 1000 = 86,400,000
+        'minRangeSize': 86400000
+      }
+    },
+    // Initial range:
+    'state': {
+      'range': {
+        'start': chart_start_date,
+        'end': chart_end_date
+      }
+    }
+  });
+
+  var chart = new google.visualization.ChartWrapper({
+    'chartType': 'ColumnChart',
+    'containerId': idchart,
+    'options': {
+      // Use the same chart area width as the control for axis alignment.
+      'chartArea': {'height': '80%', 'left': '15%', 'width': '85%'},
+      'hAxis': {'slantedText': false},
+      'vAxis': {'title': vaxtitle},
+      'legend': {'position': 'top'}
+    },
+    // Convert the first column from 'date' to 'string'.
+    'view': {
+      'columns': [
+        {
+          'type': 'string',
+          'calc': function(dataTable, rowIndex) {
+            return dataTable.getFormattedValue(rowIndex, 0);
+          }
+        }, 1, 2, 3, 4, 5
+      ]
+    }
+  });
+
+  var dataTable = new google.visualization.DataTable();
+  for (var i = 0; i < cols.length; i++) { 
+    dataTable.addColumn(cols[i][0], cols[i][1]);
+  }
+  
+  for (var i = 0; i < data.length; i++) { 
+    data[i][0] = new Date(data[i][0]);
+  }
+  
+  dataTable.addRows(data.slice(1,data.length));
+  
+  // Create formatters.
+  var formatter_months = new google.visualization.DateFormat({pattern: "MMM''yy"});
+  var formatter_dollars = new google.visualization.NumberFormat({
+    prefix: '$',
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  // Reformat our data.
+  formatter_months.format(dataTable, 0);
+  formatter_dollars.format(dataTable, 1);
+ 
+  dashboard.bind(control, chart);
+  dashboard.draw(dataTable);
+}
+
+function drawMonthlyColumnDollars(chartDrawFunc, iddashboard, idchart, idcontrol, cols, data, vaxtitle) {
+  if (!google || !google.visualization) return;
+  var eldashboard = document.getElementById(iddashboard);
+  var dashboard   = new google.visualization.Dashboard(eldashboard);
+
+  var today = new Date();
+  var chart_start_date = new Date(today.getFullYear(),today.getMonth()-7,today.getDate());
+  var chart_end_date = new Date(today.getFullYear(),today.getMonth()+6,today.getDate()+5);
+
+  var control     = new google.visualization.ControlWrapper({
+    'controlType': 'ChartRangeFilter',
+    'containerId': idcontrol,
+    'options': {
+      // Filter by the date axis.
+      'filterColumnIndex': 0,
+      'ui': {
+        'chartType':    'ColumnChart',
+        'chartOptions': {
+          'chartArea':    {'left': '15%', 'width': '85%'},
+          'hAxis':        {'baselineColor': 'none'}
+        },
+        'chartView': { 'columns': [0, 1, 2, 3, 4, 5] },
+        // 1 day in milliseconds = 24 * 60 * 60 * 1000 = 86,400,000
+        'minRangeSize': 86400000
+      }
+    },
+    // Initial range:
+    'state': {
+      'range': {
+        'start': chart_start_date,
+        'end': chart_end_date
+      }
+    }
+  });
+
+  var chart = new google.visualization.ChartWrapper({
+    'chartType': 'ColumnChart',
+    'containerId': idchart,
+    'options': {
+      // Use the same chart area width as the control for axis alignment.
+      'chartArea': {'height': '80%', 'left': '15%', 'width': '85%'},
+      'hAxis': {'slantedText': false},
+      'vAxis': {'title': vaxtitle},
+      'legend': {'position': 'top'}
+    },
+    // Convert the first column from 'date' to 'string'.
+    'view': {
+      'columns': [
+        {
+          'type': 'string',
+          'calc': function(dataTable, rowIndex) {
+            return dataTable.getFormattedValue(rowIndex, 0);
+          }
+        }, 1, 2, 3, 4, 5
+      ]
+    }
+  });
+
+  var dataTable = new google.visualization.DataTable();
+  for (var i = 0; i < cols.length; i++) { 
+    dataTable.addColumn(cols[i][0], cols[i][1]);
+  }
+  
+  for (var i = 0; i < data.length; i++) { 
+    data[i][0] = new Date(data[i][0]);
+  }
+  
+  dataTable.addRows(data.slice(1,data.length));
+  
+  // Create formatters.
+  var formatter_months = new google.visualization.DateFormat({pattern: "MMM''yy"});
+  var formatter_dollars = new google.visualization.NumberFormat({
+    prefix: '$',
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  // Reformat our data.
+  formatter_months.format(dataTable, 0);
+  formatter_dollars.format(dataTable, 1);
+  formatter_dollars.format(dataTable, 2);
+  formatter_dollars.format(dataTable, 3);
+  formatter_dollars.format(dataTable, 4);
+  formatter_dollars.format(dataTable, 5);
+ 
+  dashboard.bind(control, chart);
+  dashboard.draw(dataTable);
+}
+
+function drawMonthlyColumnNoDecimals(chartDrawFunc, iddashboard, idchart, idcontrol, cols, data, vaxtitle) {
+  if (!google || !google.visualization) return;
+  var eldashboard = document.getElementById(iddashboard);
+  var dashboard   = new google.visualization.Dashboard(eldashboard);
+
+  var today = new Date();
+  var chart_start_date = new Date(today.getFullYear(),today.getMonth()-7,today.getDate());
+  var chart_end_date = new Date(today.getFullYear(),today.getMonth()+6,today.getDate()+5);
+
+  var control     = new google.visualization.ControlWrapper({
+    'controlType': 'ChartRangeFilter',
+    'containerId': idcontrol,
+    'options': {
+      // Filter by the date axis.
+      'filterColumnIndex': 0,
+      'ui': {
+        'chartType':    'ColumnChart',
+        'chartOptions': {
+          'chartArea':    {'left': '15%', 'width': '85%'},
+          'hAxis':        {'baselineColor': 'none'}
+        },
+        'chartView': { 'columns': [0, 1, 2, 3, 4, 5] },
+        // 1 day in milliseconds = 24 * 60 * 60 * 1000 = 86,400,000
+        'minRangeSize': 86400000
+      }
+    },
+    // Initial range:
+    'state': {
+      'range': {
+        'start': chart_start_date,
+        'end': chart_end_date
+      }
+    }
+  });
+
+  var chart = new google.visualization.ChartWrapper({
+    'chartType': 'ColumnChart',
+    'containerId': idchart,
+    'options': {
+      // Use the same chart area width as the control for axis alignment.
+      'chartArea': {'height': '80%', 'left': '15%', 'width': '85%'},
+      'hAxis': {'slantedText': false},
+      'vAxis': {'title': vaxtitle},
+      'legend': {'position': 'top'}
+    },
+    // Convert the first column from 'date' to 'string'.
+    'view': {
+      'columns': [
+        {
+          'type': 'string',
+          'calc': function(dataTable, rowIndex) {
+            return dataTable.getFormattedValue(rowIndex, 0);
+          }
+        }, 1, 2, 3, 4, 5
+      ]
+    }
+  });
+
+  var dataTable = new google.visualization.DataTable();
+  for (var i = 0; i < cols.length; i++) { 
+    dataTable.addColumn(cols[i][0], cols[i][1]);
+  }
+  
+  for (var i = 0; i < data.length; i++) { 
+    data[i][0] = new Date(data[i][0]);
+  }
+  
+  dataTable.addRows(data.slice(1,data.length));
+  
+  // Create formatters.
+  var formatter_months = new google.visualization.DateFormat({pattern: "MMM''yy"});
+  var formatter_numbers = new google.visualization.NumberFormat({
+    fractionDigits: 0,
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  // Reformat our data.
+  formatter_months.format(dataTable, 0);
+  formatter_numbers.format(dataTable, 1);
+  formatter_numbers.format(dataTable, 2);
+  formatter_numbers.format(dataTable, 3);
+  formatter_numbers.format(dataTable, 4);
+  formatter_numbers.format(dataTable, 5);
+ 
+  dashboard.bind(control, chart);
+  dashboard.draw(dataTable);
+}
+
+function drawPie(chartDrawFunc, iddashboard, idchart, idcontrol, cols, data, charttitle, viewcols, filtercol) {
+  if (!google || !google.visualization) return;
+  var eldashboard    = document.getElementById(iddashboard);
+  var dashboard      = new google.visualization.Dashboard(eldashboard);
+  var categoryPicker = new google.visualization.ControlWrapper({
+    'controlType': 'CategoryFilter',
+    'containerId': idcontrol,
+    'options': {
+      'filterColumnIndex': filtercol,
+      'ui': {
+        'labelStacking': 'vertical',
+        'allowTyping': false,
+        'allowMultiple': false
+      }
+    }
+  });
+
+  var chart = new google.visualization.ChartWrapper({
+    'chartType': 'PieChart',
+    'containerId': idchart,
+    'options': {
+      'width': 300,
+      'height': 300,
+      'legend': 'none',
+      'title': charttitle,
+      'chartArea': {'left': 15, 'top': 15, 'right': 0, 'bottom': 0},
+      'pieSliceText': 'label'
+    },
+    'view': {'columns': viewcols}
+  });
+
+  var dataTable = new google.visualization.DataTable();
+  for (var i = 0; i < cols.length; i++) { 
+    dataTable.addColumn(cols[i][0], cols[i][1]);
+  }
+  
+  dataTable.addRows(data.slice(1,data.length));
+  
+  // Create formatters.
+  // var formatter_dollars = new google.visualization.NumberFormat({
+  //   prefix: '$',
+  //   negativeColor: 'red',
+  //   negativeParens: true
+  // });
+  // Reformat our data.
+  // formatter_dollars.format(dataTable, 1);
+ 
+  dashboard.bind(categoryPicker, chart);
+  dashboard.draw(dataTable);
+}
+
+function drawTwoPies(chartDrawFunc, iddashboard, idchart1, idchart2, idcontrol, cols, data, charttitle1, charttitle2, viewcols1, viewcols2, filtercol) {
+  if (!google || !google.visualization) return;
+  var eldashboard        = document.getElementById(iddashboard);
+  var dashboard = new google.visualization.Dashboard(eldashboard);
+  var categoryPicker = new google.visualization.ControlWrapper({
+    'controlType': 'CategoryFilter',
+    'containerId': idcontrol,
+    'options': {
+      'filterColumnIndex': filtercol,
+      'ui': {
+        'labelStacking': 'vertical',
+        'allowTyping': false,
+        'allowMultiple': false
+      }
+    }
+  });
+
+  var chart1 = new google.visualization.ChartWrapper({
+    'chartType': 'PieChart',
+    'containerId': idchart1,
+    'options': {
+      'width': 300,
+      'height': 300,
+      'legend': 'none',
+      'title': charttitle1,
+      'chartArea': {'left': 15, 'top': 15, 'right': 0, 'bottom': 0},
+      'pieSliceText': 'label'
+    },
+    'view': {'columns': viewcols1}
+  });
+
+  var chart2 = new google.visualization.ChartWrapper({
+    'chartType': 'PieChart',
+    'containerId': idchart2,
+    'options': {
+      'width': 300,
+      'height': 300,
+      'legend': 'none',
+      'title': charttitle2,
+      'chartArea': {'left': 15, 'top': 15, 'right': 0, 'bottom': 0},
+      'pieSliceText': 'label'
+    },
+    'view': {'columns': viewcols2}
+  });
+
+  var dataTable = new google.visualization.DataTable();
+  for (var i = 0; i < cols.length; i++) { 
+    dataTable.addColumn(cols[i][0], cols[i][1]);
+  }
+  
+  dataTable.addRows(data.slice(1,data.length));
+  
+  // Create formatters.
+  // var formatter_dollars = new google.visualization.NumberFormat({
+  //   prefix: '$',
+  //   negativeColor: 'red',
+  //   negativeParens: true
+  // });
+  // Reformat our data.
+  // formatter_dollars.format(dataTable, 1);
+ 
+  dashboard.bind(categoryPicker, [chart1, chart2]);
+  dashboard.draw(dataTable);
+}
+
+function drawTwoPiesWithNumbersFormatted(chartDrawFunc, iddashboard, idchart1, idchart2, idcontrol, cols, data, charttitle1, charttitle2, viewcols1, viewcols2, filtercol) {
+  if (!google || !google.visualization) return;
+  var eldashboard        = document.getElementById(iddashboard);
+  var dashboard = new google.visualization.Dashboard(eldashboard);
+  var categoryPicker = new google.visualization.ControlWrapper({
+    'controlType': 'CategoryFilter',
+    'containerId': idcontrol,
+    'options': {
+      'filterColumnIndex': filtercol,
+      'ui': {
+        'labelStacking': 'vertical',
+        'allowTyping': false,
+        'allowMultiple': false
+      }
+    }
+  });
+
+  var chart1 = new google.visualization.ChartWrapper({
+    'chartType': 'PieChart',
+    'containerId': idchart1,
+    'options': {
+      'width': 300,
+      'height': 300,
+      'legend': 'none',
+      'title': charttitle1,
+      'chartArea': {'left': 15, 'top': 15, 'right': 0, 'bottom': 0},
+      'pieSliceText': 'label'
+    },
+    'view': {'columns': viewcols1}
+  });
+
+  var chart2 = new google.visualization.ChartWrapper({
+    'chartType': 'PieChart',
+    'containerId': idchart2,
+    'options': {
+      'width': 300,
+      'height': 300,
+      'legend': 'none',
+      'title': charttitle2,
+      'chartArea': {'left': 15, 'top': 15, 'right': 0, 'bottom': 0},
+      'pieSliceText': 'label'
+    },
+    'view': {'columns': viewcols2}
+  });
+
+  var dataTable = new google.visualization.DataTable();
+  for (var i = 0; i < cols.length; i++) { 
+    dataTable.addColumn(cols[i][0], cols[i][1]);
+  }
+  
+  dataTable.addRows(data.slice(1,data.length));
+  
+  // Create formatters.
+  var formatter_numbers = new google.visualization.NumberFormat({
+    fractionDigits: 0,
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  var formatter_dollars = new google.visualization.NumberFormat({
+    prefix: '$',
+    negativeColor: 'red',
+    negativeParens: true
+  });
+  // Reformat our data.
+  formatter_dollars.format(dataTable, 1);
+  formatter_numbers.format(dataTable, 2);
+ 
+  dashboard.bind(categoryPicker, [chart1, chart2]);
+  dashboard.draw(dataTable);
+}
+
+function drawMotion(chartDrawFunc, id, chartType, data, options) {
+  if (!google || !google.visualization) return;
+  var el = document.getElementById(id);
+  for (var i = 1; i < data.length; i++) { data[i][1] = new Date(data[i][1]); }
+  var dataTable = google.visualization.arrayToDataTable(data);
+  var chart = new google.visualization[chartType](el);
+  chart.draw(dataTable, options);
+}
+
+function drawAllCharts() {
+  for (var i=0; i<charts.length; i++) {
+    var chart = charts[i];
+    if (chart[0] == 'Table')
+      {drawGeneric.apply(this, chart);}
+    else if (chart[0] == 'Scatter')
+      {drawGeneric.apply(this, chart);}
+    else if (chart[0] == 'Histogram')
+      {drawGeneric.apply(this, chart);}
+    else if (chart[0] == 'ComboChart')
+      {drawGeneric.apply(this, chart);}
+    else if (chart[0] == 'ColumnChart')
+      {drawGeneric.apply(this, chart);}
+    else if (chart[0] == 'ColumnChart5yrCost')
+      {drawGeneric5yrCost.apply(this, chart);}
+    else if (chart[0] == 'ColumnChart5yrCons')
+      {drawGeneric5yrCons.apply(this, chart);}
+    else if (chart[0] == 'ColumnChart5yrConsSF')
+      {drawGeneric5yrConsSF.apply(this, chart);}
+    else if (chart[0] == 'PieChart')
+      {drawGeneric.apply(this, chart);}
+    else if (chart[0] == 'PieChartDollars')
+      {drawGenericDollars.apply(this, chart);}
+    else if (chart[0] == 'PieChartNoDecimals')
+      {drawGenericNoDecimals.apply(this, chart);}
+    else if (chart[0] == 'PieControl')
+      {drawPie.apply(this, chart);}
+    else if (chart[0] == 'TwoPiesControl')
+      {drawTwoPies.apply(this, chart);}
+    else if (chart[0] == 'TwoPiesControlWithNumbersFormatted')
+      {drawTwoPiesWithNumbersFormatted.apply(this, chart);}
+    else if (chart[0] == 'MonthlyColumn')
+      {drawMonthlyColumn.apply(this, chart);}
+    else if (chart[0] == 'MonthlyColumnDollars')
+      {drawMonthlyColumnDollars.apply(this, chart);}
+    else if (chart[0] == 'MonthlyColumnNoDecimals')
+      {drawMonthlyColumnNoDecimals.apply(this, chart);}
+    else if (chart[0] == 'MotionChart')
+      {drawMotion.apply(this, chart);}
+    else
+      {}
+  }
+}
+
+$(function() {
+  $(window).resize($.debounce(250, drawAllCharts));
+  $(document).on('tabsactivate', drawAllCharts);
+});
+
+// Set up lightbox
+$(function() {
+  $('.images a').fancybox();
+});
+</script>
+
+{% endblock %}
+

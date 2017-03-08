@@ -1,0 +1,76 @@
+{% extends "app_base.html" %}
+
+{% block body %}
+<!--
+<header>
+  <h1>My User Account</h1>
+</header>
+-->
+
+<form enctype="multipart/form-data" class="entry" action="/user-account/" method="post">{% csrf_token %}
+	{{ user_settings_form.non_field_errors }}
+	<img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" title="{{ main_page_help_text|safe }}" style="float:right;"></img>
+	<div class="form-item">
+		{{ user_settings_form.username.label_tag }}
+		{{ user_settings_form.username }}
+		{{ user_settings_form.username.errors }}
+	</div>
+	<div class="form-item">
+		Password:&emsp;&emsp;&emsp;&ensp;
+        <a href="/user-account/password/reset/">Reset Password</a>
+	</div>
+	<div class="form-item">
+		{{ user_settings_form.email.label_tag }}
+		{{ user_settings_form.email }}
+		{{ user_settings_form.email.errors }}
+	</div>
+	<div class="form-item">
+		{{ user_settings_form.mobile_phone.label_tag }}
+		{{ user_settings_form.mobile_phone }}
+		{{ user_settings_form.mobile_phone.errors }}
+	</div>
+	<div class="form-item">
+		{{ user_settings_form.desk_phone.label_tag }}
+		{{ user_settings_form.desk_phone }}
+		{{ user_settings_form.desk_phone.errors }}
+	</div>
+	<div class="form-item">
+		{{ user_settings_form.first_name.label_tag }}
+		{{ user_settings_form.first_name }}
+		{{ user_settings_form.first_name.errors }}
+	</div>
+	<div class="form-item">
+		{{ user_settings_form.last_name.label_tag }}
+		{{ user_settings_form.last_name }}
+		{{ user_settings_form.last_name.errors }}
+	</div>
+	<div class="form-item">
+		{{ user_settings_form.organization.label_tag }}
+		{{ user_settings_form.organization }}
+		{{ user_settings_form.organization.errors }}
+	</div>
+	<div class="form-item">
+		{{ user_settings_form.image_file.label_tag }}
+		{{ user_settings_form.image_file }}
+		{{ user_settings_form.image_file.errors }}
+		<img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" title="{{ tab_help_text|safe }}"></img>
+	</div>
+	<div class="form-item">
+		Monthly Utility Summary Emails:
+		{{ user_settings_form.monthly_utility_account }}
+		{{ user_settings_form.monthly_utility_account.errors }}
+		Account
+		{{ user_settings_form.monthly_utility_buildings }}
+		{{ user_settings_form.monthly_utility_buildings.errors }}
+		Buildings
+		{{ user_settings_form.monthly_utility_spaces }}
+		{{ user_settings_form.monthly_utility_spaces.errors }}
+		Spaces
+		{{ user_settings_form.monthly_utility_meters }}
+		{{ user_settings_form.monthly_utility_meters.errors }}
+        Meters
+	</div>
+	<input type="submit" class="right" value="Update" name="user_settings"/>
+</form>
+
+{% endblock %}

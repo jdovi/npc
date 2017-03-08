@@ -1,0 +1,83 @@
+{% load multiply %}
+
+<div class="form-item">
+  When
+  <select name="field_1">
+    {% for value, label in field_options_1 %}
+      <option
+        value="{{ value }}"
+        {% if alert.field_1 == value %}selected{% endif %}>
+          {{ label }}
+      </option>
+    {% endfor %}
+  </select>
+  of
+  <select name="utility_type_1">
+    {% for value, label in utility_type_options_1 %}
+      <option
+        value="{{ value }}"
+        {% if alert.utility_type_1 == value %}selected{% endif %}>
+          {{ label }}
+      </option>
+    {% endfor %}
+  </select>
+  is
+  <select name="comparator">
+    {% for value, label in comparator_options %}
+      <option
+        value="{{ value }}"
+        {% if alert.comparator == value %}selected{% endif %}>
+          {{ label }}
+      </option>
+    {% endfor %}
+  </select>
+  <input type="number" name="percent" value="{{alert.percent|multiply:100}}" style="width: 5em;">%
+  <br>
+  of the
+  <select name="field_2">
+    {% for value, label in field_options_2 %}
+      <option
+        value="{{ value }}"
+        {% if alert.field_2 == value %}selected{% endif %}>
+          {{ label }}
+      </option>
+    {% endfor %}
+  </select>
+  of
+  <select name="utility_type_2">
+    {% for value, label in utility_type_options_2 %}
+      <option
+        value="{{ value }}"
+        {% if alert.utility_type_2 == value %}selected{% endif %}>
+          {{ label }}
+      </option>
+    {% endfor %}
+  </select>,
+  notify me by
+  <select name="notify_by">
+    {% for value, label in notify_by_options %}
+      <option
+        value="{{ value }}"
+        {% if alert.notify_by == value %}selected{% endif %}>
+          {{ label }}
+      </option>
+    {% endfor %}
+  </select>
+  <select name="notify_frequency">
+    {% for value, label in notify_frequency_options %}
+      <option
+        value="{{ value }}"
+        {% if alert.notify_frequency == value %}selected{% endif %}>
+          {{ label }}
+      </option>
+    {% endfor %}
+  </select>.
+</div>
+
+<div class="actions">
+  <a class="button" href="/{{ account.id }}{% if type != 'accounts' %}/{{ type }}/{{ target.id }}{% endif %}/alerts/">
+    Cancel
+  </a>
+  <input type="submit" value="Save">
+</div>
+

@@ -1,0 +1,11 @@
+{% extends "app_base.html" %}
+
+{% block body %}
+
+<header>
+  <h1>{{ account.name }} &#8594; Update Payment Details</h1>
+</header>
+
+{% include 'buildingspeakapp/partials/payment_details_form.html' with post_url="update_payment_details" %}
+
+{% endblock %}

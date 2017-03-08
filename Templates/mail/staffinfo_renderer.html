@@ -1,0 +1,207 @@
+{% extends "email_base.html" %}
+
+{% block headline %}{{ headline }}{% endblock %}
+
+{% block body %}
+{% load multiply %}
+{% load key %}
+{% load humanize %}
+
+
+{% if content_id == 'get_building_energystar_xml' %}
+{{ xml }}
+{% endif %}
+
+
+{% if content_id == 'get_latest_meter_end_dates' %}
+<table>
+    {% for A, B, C, D in  meter_end_dates_table %}
+    <tr>
+        <td style="padding:0 15px 0 15px;">{{ A }}</td>
+        <td style="padding:0 15px 0 15px;">{{ B }}</td>
+        <td style="padding:0 15px 0 15px;">{{ C }}</td>
+        <td style="padding:0 15px 0 15px;">{{ D }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+
+{% if content_id == 'check_meter_forecasts' %}
+<table>
+    {% for A, B, C, D in  meter_latest_forecasted_month_table %}
+    <tr>
+        <td style="padding:0 15px 0 15px;">{{ A }}</td>
+        <td style="padding:0 15px 0 15px;">{{ B }}</td>
+        <td style="padding:0 15px 0 15px;">{{ C }}</td>
+        <td style="padding:0 15px 0 15px;">{{ D }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+
+{% if content_id == 'check_ENERGY_STAR_scores' %}
+<table>
+    {% for A, B, C, D, E in data_table %}
+    <tr>
+        <td style="padding:0 15px 0 15px;">{{ A }}</td>
+        <td style="padding:0 15px 0 15px;">{{ B }}</td>
+        <td style="padding:0 15px 0 15px;">{{ C }}</td>
+        <td style="padding:0 15px 0 15px;">{{ D }}</td>
+        <td style="padding:0 15px 0 15px;">{{ E }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+
+{% if content_id == 'account_financials' %}
+<table>
+    {% for A, B, C, D, E, F, G, H, I, J, K, L, M, N, O in acct_data_table %}
+    <tr>
+        <td style="padding:0 15px 0 15px;">{{ A }}</td>
+        <td style="padding:0 15px 0 15px;">{{ B }}</td>
+        <td style="padding:0 15px 0 15px;">{{ C }}</td>
+        <td style="padding:0 15px 0 15px;">{{ D }}</td>
+        <td style="padding:0 15px 0 15px;">{{ E }}</td>
+        <td style="padding:0 15px 0 15px;">{{ F }}</td>
+        <td style="padding:0 15px 0 15px;">{{ G }}</td>
+        <td style="padding:0 15px 0 15px;">{{ H }}</td>
+        <td style="padding:0 15px 0 15px;">{{ I }}</td>
+        <td style="padding:0 15px 0 15px;">{{ J }}</td>
+        <td style="padding:0 15px 0 15px;">{{ K }}</td>
+        <td style="padding:0 15px 0 15px;">{{ L }}</td>
+        <td style="padding:0 15px 0 15px;">{{ M }}</td>
+        <td style="padding:0 15px 0 15px;">{{ N }}</td>
+        <td style="padding:0 15px 0 15px;">{{ O }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+
+{% if content_id == 'get_all_stripe_events' %}
+
+{% if customer_created %}
+<p><h2>New Customers Created</h2>
+<table>
+{% for A, B, C, D, E in customer_created %}
+    <tr>
+        <td style="padding:0 15px 0 15px;">{{ A }}</td>
+        <td style="padding:0 15px 0 15px;">{{ B }}</td>
+        <td style="padding:0 15px 0 15px;">{{ C }}</td>
+        <td style="padding:0 15px 0 15px;">{{ D }}</td>
+        <td style="padding:0 15px 0 15px;">{{ E }}</td>
+    </tr>
+{% endfor %}
+</table>
+</p>
+{% else %}
+<p><h2>No customers created.</h2></p>
+{% endif %}
+
+{% if customer_card_created %}
+<p><h2>New Cards Created</h2>
+<table>
+{% for A, B, C, D, E, F in customer_card_created %}
+    <tr>
+        <td style="padding:0 15px 0 15px;">{{ A }}</td>
+        <td style="padding:0 15px 0 15px;">{{ B }}</td>
+        <td style="padding:0 15px 0 15px;">{{ C }}</td>
+        <td style="padding:0 15px 0 15px;">{{ D }}</td>
+        <td style="padding:0 15px 0 15px;">{{ E }}</td>
+        <td style="padding:0 15px 0 15px;">{{ F }}</td>
+    </tr>
+{% endfor %}
+</table>
+</p>
+{% else %}
+<p><h2>No customer cards created.</h2></p>
+{% endif %}
+
+{% if charge_succeeded %}
+<p><h2>Successful Charges</h2>
+<table>
+{% for A, B, C, D, E, F, G in charge_succeeded %}
+    <tr>
+        <td style="padding:0 15px 0 15px;">{{ A }}</td>
+        <td style="padding:0 15px 0 15px;">{{ B }}</td>
+        <td style="padding:0 15px 0 15px;">{{ C }}</td>
+        <td style="padding:0 15px 0 15px;">{{ D }}</td>
+        <td style="padding:0 15px 0 15px;">{{ E }}</td>
+        <td style="padding:0 15px 0 15px;">{{ F }}</td>
+        <td style="padding:0 15px 0 15px;">{{ G }}</td>
+    </tr>
+{% endfor %}
+</table>
+</p>
+{% else %}
+<p><h2>No successful charges.</h2></p>
+{% endif %}
+
+{% if charge_failed %}
+<p><h2>Failed Charges</h2>
+<table>
+{% for A, B, C, D, E, F, G in charge_failed %}
+    <tr>
+        <td style="padding:0 15px 0 15px;">{{ A }}</td>
+        <td style="padding:0 15px 0 15px;">{{ B }}</td>
+        <td style="padding:0 15px 0 15px;">{{ C }}</td>
+        <td style="padding:0 15px 0 15px;">{{ D }}</td>
+        <td style="padding:0 15px 0 15px;">{{ E }}</td>
+        <td style="padding:0 15px 0 15px;">{{ F }}</td>
+        <td style="padding:0 15px 0 15px;">{{ G }}</td>
+    </tr>
+{% endfor %}
+</table>
+</p>
+{% else %}
+<p><h2>No failed charges.</h2></p>
+{% endif %}
+
+{% if transfer_created %}
+<p><h2>Transfers Created</h2>
+<table>
+{% for A, B, C, D, E, F, G, H in transfer_created %}
+    <tr>
+        <td style="padding:0 15px 0 15px;">{{ A }}</td>
+        <td style="padding:0 15px 0 15px;">{{ B }}</td>
+        <td style="padding:0 15px 0 15px;">{{ C }}</td>
+        <td style="padding:0 15px 0 15px;">{{ D }}</td>
+        <td style="padding:0 15px 0 15px;">{{ E }}</td>
+        <td style="padding:0 15px 0 15px;">{{ F }}</td>
+        <td style="padding:0 15px 0 15px;">{{ G }}</td>
+        <td style="padding:0 15px 0 15px;">{{ H }}</td>
+    </tr>
+{% endfor %}
+</table>
+</p>
+{% else %}
+<p><h2>No transfers created.</h2></p>
+{% endif %}
+
+{% if transfer_paid %}
+<p><h2>Transfers Paid</h2>
+<table>
+{% for A, B, C, D, E, F, G, H in transfer_paid %}
+    <tr>
+        <td style="padding:0 15px 0 15px;">{{ A }}</td>
+        <td style="padding:0 15px 0 15px;">{{ B }}</td>
+        <td style="padding:0 15px 0 15px;">{{ C }}</td>
+        <td style="padding:0 15px 0 15px;">{{ D }}</td>
+        <td style="padding:0 15px 0 15px;">{{ E }}</td>
+        <td style="padding:0 15px 0 15px;">{{ F }}</td>
+        <td style="padding:0 15px 0 15px;">{{ G }}</td>
+        <td style="padding:0 15px 0 15px;">{{ H }}</td>
+    </tr>
+{% endfor %}
+</table>
+</p>
+{% else %}
+<p><h2>No transfers paid.</h2></p>
+{% endif %}
+
+{% endif %}
+
+{% endblock %}

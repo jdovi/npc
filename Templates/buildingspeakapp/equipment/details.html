@@ -1,0 +1,40 @@
+{% extends 'buildingspeakapp/equipment/base.html' %}
+
+{% block contents %}
+
+<div class="tab tab-details">
+
+<form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/equipments/{{ equipment.id }}/details/" method="post">
+  {% csrf_token %}
+<img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ tab_help_text|safe }}"></img>
+<input type="submit" value="Export" name="export_details_tab" style="float:right;"/>
+</form>
+
+<a href="/{{ account.id }}/equipments/{{ equipment.id }}/edit/">Edit Equipment Details</a> 
+
+<table>
+  <tbody>
+    <tr><td>Name:</td><td>{{ equipment.name }}</td></tr>
+    <tr><td>Type:</td><td>{{ equipment.equipment_type }}</td></tr>
+    <tr><td>Location:</td><td>{{ equipment.location }}</td></tr>
+    <tr><td>Description:</td><td>{{ equipment.description }}</td></tr>
+    <tr><td>Image File:</td><td>
+						{% if equipment.image_file %}
+						<img src="{{ equipment.image_file.url }}" alt="equipment image" style="height: 40px;"/>
+						{% else %}
+						<b>No Equipment image file!</b>
+						{% endif %}
+						</td></tr>
+    <tr><td>Nameplate File:</td><td>
+						{% if equipment.image_file %}
+						<img src="{{ equipment.nameplate_file.url }}" alt="equipment nameplate image" style="height: 40px;"/>
+						{% else %}
+						<b>No Equipment image file!</b>
+						{% endif %}
+						</td></tr>
+  </tbody>
+</table>
+
+</div> <!-- .tab-details -->
+
+{% endblock %}

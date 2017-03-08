@@ -1,0 +1,56 @@
+{% extends 'buildingspeakapp/meters/base.html' %}
+
+{% block contents %}
+
+<div class="tab tab-details">
+
+<form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/meters/{{ meter.id }}/details/" method="post">
+  {% csrf_token %}
+<img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ tab_help_text|safe }}"></img>
+<input type="submit" value="Export" name="export_details_tab" style="float:right;"/>
+</form>
+
+<h2 style="display:inline">Meter Details</h2>  |  <a href="/{{ account.id }}/meters/{{ meter.id }}/edit/">Edit Meter Details</a> 
+
+<table>
+  <tbody>
+    <tr><td>Name:</td><td>{{ meter.name }}</td></tr>
+    <tr><td>Utility Type:</td><td>{{ meter.utility_type }}</td></tr>
+    <tr><td>Units of Measure:</td><td>{{ meter.units }}</td></tr>
+    <tr><td>Utility Provider(s):</td><td>{{ utility_providers }}</td></tr>
+    <tr><td>Utility Account #:</td><td>{{ meter.utility_account_number }}</td></tr>
+    <tr><td>Utility Meter #:</td><td>{{ meter.utility_meter_number }}</td></tr>
+    <tr><td>Serial #:</td><td>{{ meter.serial_number }}</td></tr>
+    <tr><td>Cost Forecast Method:</td><td>{{ rate_schedules }}</td></tr>
+    <tr><td>Location:</td><td>{{ meter.location }}</td></tr>
+    <tr><td>Serves:</td><td>{{ meter.serves }}</td></tr>
+    <tr><td>Weather Station:</td><td>{{ meter.weather_station.name }}</td></tr>
+    <tr><td>Make:</td><td>{{ meter.make }}</td></tr>
+    <tr><td>Model:</td><td>{{ meter.model }}</td></tr>
+    <tr>
+      <td>Image File:</td>
+      <td>
+        {% if meter.image_file %}
+          <img src="{{ meter.image_file.url }}" alt="meter image" style="height: 40px;"/>
+        {% else %}
+          <b>No Meter image file!</b>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>Nameplate Image File:</td>
+      <td>
+        {% if meter.nameplate_file %}
+          <img src="{{ meter.nameplate_file.url }}" alt="meter nameplate image" style="height: 40px;"/>
+        {% else %}
+          <b>No Meter nameplate image file!</b>
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</div> <!-- .tab-details -->
+
+{% endblock %}
+

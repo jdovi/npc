@@ -1,0 +1,223 @@
+{% extends "email_base.html" %}
+
+{% block headline %}{{ headline }}{% endblock %}
+
+{% block body %}
+{% load multiply %}
+{% load key %}
+{% load humanize %}
+{% load static %}
+
+
+{% if package_account %}
+{% for name, list_of_statements in package_account %}
+<h2><u>{{ name }}</u></h2>
+  <div>
+    <table>
+        <tr>
+          <td style="padding:0 15px 0 15px;">Utility Resource</td>
+          <td style="padding:0 15px 0 15px;">Cost</td>
+          <td style="padding:0 15px 0 15px;">Consumption</td>
+          <td style="padding:0 15px 0 15px;">Summary</td>
+        </tr>
+      {% for utype, costR, costG, costB, costK, consR, consG, consB, consK, statement, rec in list_of_statements %}  
+        <tr>
+          <td style="padding:0 15px 0 15px;">{{ utype }}</td>
+          <td style="padding:0 15px 0 15px;">
+            {% if costR %}<img src="{% static 'app/img/red.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if costG %}<img src="{% static 'app/img/green.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if costB %}<img src="{% static 'app/img/blue.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if costK %}<img src="{% static 'app/img/black.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+          </td>
+          <td style="padding:0 15px 0 15px;">
+            {% if consR %}<img src="{% static 'app/img/red.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if consG %}<img src="{% static 'app/img/green.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if consB %}<img src="{% static 'app/img/blue.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if consK %}<img src="{% static 'app/img/black.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+          </td>
+          <td style="padding:0 15px 0 15px;">{{ statement }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <br>
+  <div id='templateBody'>
+    <hr>
+    <h2>Recommendations</h2>
+    <hr>
+    <p>
+      {% for utype, costR, costG, costB, costK, consR, consG, consB, consK, statement, rec in list_of_statements %}  
+        {{ rec }}
+      {% endfor %}
+    </p>
+  </div>
+
+{% endfor %}
+{% endif %}
+
+
+{% if package_buildings %}
+{% for name, list_of_statements in package_buildings %}
+<h2><u>{{ name }}</u></h2>
+  <div>
+    <table>
+        <tr>
+          <td style="padding:0 15px 0 15px;">Utility Resource</td>
+          <td style="padding:0 15px 0 15px;">Cost</td>
+          <td style="padding:0 15px 0 15px;">Consumption</td>
+          <td style="padding:0 15px 0 15px;">Summary</td>
+        </tr>
+      {% for utype, costR, costG, costB, costK, consR, consG, consB, consK, statement, rec in list_of_statements %}  
+        <tr>
+          <td style="padding:0 15px 0 15px;">{{ utype }}</td>
+          <td style="padding:0 15px 0 15px;">
+            {% if costR %}<img src="{% static 'app/img/red.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if costG %}<img src="{% static 'app/img/green.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if costB %}<img src="{% static 'app/img/blue.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if costK %}<img src="{% static 'app/img/black.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+          </td>
+          <td style="padding:0 15px 0 15px;">
+            {% if consR %}<img src="{% static 'app/img/red.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if consG %}<img src="{% static 'app/img/green.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if consB %}<img src="{% static 'app/img/blue.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if consK %}<img src="{% static 'app/img/black.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+          </td>
+          <td style="padding:0 15px 0 15px;">{{ statement }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <br>
+  <div id='templateBody'>
+    <hr>
+    <h2>Recommendations</h2>
+    <hr>
+    <p>
+      {% for utype, costR, costG, costB, costK, consR, consG, consB, consK, statement, rec in list_of_statements %}  
+        {{ rec }}
+      {% endfor %}
+    </p>
+  </div>
+{% endfor %}
+{% endif %}
+
+
+{% if package_spaces %}
+{% for name, list_of_statements in package_spaces %}
+<h2><u>{{ name }}</u></h2>
+  <div>
+    <table>
+        <tr>
+          <td style="padding:0 15px 0 15px;">Utility Resource</td>
+          <td style="padding:0 15px 0 15px;">Cost</td>
+          <td style="padding:0 15px 0 15px;">Consumption</td>
+          <td style="padding:0 15px 0 15px;">Summary</td>
+        </tr>
+      {% for utype, costR, costG, costB, costK, consR, consG, consB, consK, statement, rec in list_of_statements %}  
+        <tr>
+          <td style="padding:0 15px 0 15px;">{{ utype }}</td>
+          <td style="padding:0 15px 0 15px;">
+            {% if costR %}<img src="{% static 'app/img/red.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if costG %}<img src="{% static 'app/img/green.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if costB %}<img src="{% static 'app/img/blue.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if costK %}<img src="{% static 'app/img/black.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+          </td>
+          <td style="padding:0 15px 0 15px;">
+            {% if consR %}<img src="{% static 'app/img/red.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if consG %}<img src="{% static 'app/img/green.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if consB %}<img src="{% static 'app/img/blue.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+            {% if consK %}<img src="{% static 'app/img/black.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+          </td>
+          <td style="padding:0 15px 0 15px;">{{ statement }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <br>
+  <div id='templateBody'>
+    <hr>
+    <h2>Recommendations</h2>
+    <hr>
+    <p>
+      {% for utype, costR, costG, costB, costK, consR, consG, consB, consK, statement, rec in list_of_statements %}  
+        {{ rec }}
+      {% endfor %}
+    </p>
+  </div>
+{% endfor %}
+{% endif %}
+
+
+{% if package_meters %}
+  <div>
+    <table>
+        <tr>
+          <td style="padding:0 15px 0 15px;">Name</td>
+          <td style="padding:0 15px 0 15px;">Utility Type</td>
+          <td style="padding:0 15px 0 15px;">Cost</td>
+          <td style="padding:0 15px 0 15px;">Consumption</td>
+          <td style="padding:0 15px 0 15px;">Summary</td>
+        </tr>
+        {% for name, utility_type, list_of_statements in package_meters %}
+          {% for utype, costR, costG, costB, costK, consR, consG, consB, consK, statement, rec in list_of_statements %}  
+            <tr>
+              <td style="padding:0 15px 0 15px;">{{ name }}</td>
+              <td style="padding:0 15px 0 15px;">{{ utility_type }}</td>
+              <td style="padding:0 15px 0 15px;">
+                {% if costR %}<img src="{% static 'app/img/red.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+                {% if costG %}<img src="{% static 'app/img/green.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+                {% if costB %}<img src="{% static 'app/img/blue.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+                {% if costK %}<img src="{% static 'app/img/black.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+              </td>
+              <td style="padding:0 15px 0 15px;">
+                {% if consR %}<img src="{% static 'app/img/red.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+                {% if consG %}<img src="{% static 'app/img/green.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+                {% if consB %}<img src="{% static 'app/img/blue.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+                {% if consK %}<img src="{% static 'app/img/black.png' %}" alt="color_circle" style="height: 12px;"/>{% endif %}
+              </td>
+              <td style="padding:0 15px 0 15px;">{{ statement }}</td>
+            </tr>
+          {% endfor %}
+        {% endfor %}
+    </table>
+  </div>
+  <br>
+  <div id='templateBody'>
+    <hr>
+    <h2>Recommendations</h2>
+    <hr>
+    <p>
+      {% for name, utility_type, list_of_statements in package_meters %}
+        {% for utype, costR, costG, costB, costK, consR, consG, consB, consK, statement, rec in list_of_statements %}  
+          {{ rec }}
+        {% endfor %}
+      {% endfor %}
+    </p>
+  </div>
+
+{% endif %}
+
+
+
+
+
+<br>
+<div id='templateBody'>
+    <hr>
+    <h2>Recommendataions</h2>
+    <hr>
+    <p>
+    Prices of natural gas are decreasing!  This is good for the bottom line, but
+    cost could have been even lower if you had used the expected amount of 
+    natural gas.  We recommend checking your thermostats to ensure they are set
+    on an appropriate schedule.  Also, you may want to schedule maintenance
+    on your heating equipment.  Changing filters and lubricating moving parts can
+    increase efficiency by %15 or more!
+    </p>
+    <p>
+    All is well with electricity.  Have you looked into an LED lighting project?
+    <a href=''>Click here</a> to estimate your savings using a simple calculator.
+    </p>
+</div>
+{% endblock %}
+

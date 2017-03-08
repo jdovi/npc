@@ -1,0 +1,313 @@
+{% extends 'buildingspeakapp/spaces/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/spaces/{{ space.id }}/edit-energystar/" method="post">{% csrf_token %}
+      {{ space_energystar_form.non_field_errors }}
+
+<table>
+  <tbody>
+    <tr><td>Portfolio Manager Property Type:</td><td>{{ space.ESPM_type }}</td></tr>
+    {% if space.ESPM_type == 'worshipFacility' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Weekly operating hours:</td><td>{{ space_energystar_form.weeklyOperatingHours }}</td></tr>
+        <tr><td>Number of commercial refrigeration units:</td><td>{{ space_energystar_form.numberOfCommercialRefrigerationUnits }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Cooking facilities?:</td><td>{{ space_energystar_form.cookingFacilities }}</td></tr>
+        <tr><td>Seating capacity:</td><td>{{ space_energystar_form.seatingCapacity }}</td></tr>
+        <tr><td>Number of weekdays open:</td><td>{{ space_energystar_form.numberOfWeekdaysOpen }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'wholesaleClubSupercenter' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Exterior entrance to the public?:</td><td>{{ space_energystar_form.exteriorEntranceToThePublic }}</td></tr>
+        <tr><td>Weekly operating hours:</td><td>{{ space_energystar_form.weeklyOperatingHours }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+        <tr><td>Number of cash registers:</td><td>{{ space_energystar_form.numberOfCashRegisters }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Number of open closed refrigeration units:</td><td>{{ space_energystar_form.numberOfOpenClosedRefrigerationUnits }}</td></tr>
+        <tr><td>Number of walk in refrigeration units:</td><td>{{ space_energystar_form.numberOfWalkInRefrigerationUnits }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'wastewaterTreatmentPlant' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Average influent biological oxygen demand:</td><td>{{ space_energystar_form.averageInfluentBiologicalOxygenDemand }}</td></tr>
+        <tr><td>Average effluent biological oxygen demand:</td><td>{{ space_energystar_form.averageEffluentBiologicalOxygenDemand }}</td></tr>
+        <tr><td>Plant design flow rate:</td><td>{{ space_energystar_form.plantDesignFlowRate }}</td></tr>
+        <tr><td>Fixed film trickle filtration process:</td><td>{{ space_energystar_form.fixedFilmTrickleFiltrationProcess }}</td></tr>
+        <tr><td>Nutrient removal:</td><td>{{ space_energystar_form.nutrientRemoval }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'swimmingPool' %}
+        <tr><td>Pool size:</td><td>{{ space_energystar_form.poolSize }}</td></tr>
+        <tr><td>Pool location:</td><td>{{ space_energystar_form.poolLocation }}</td></tr>
+        <tr><td>Months in use:</td><td>{{ space_energystar_form.monthsInUse }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'supermarket' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Weekly operating hours:</td><td>{{ space_energystar_form.weeklyOperatingHours }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Cooking facilities?:</td><td>{{ space_energystar_form.cookingFacilities }}</td></tr>
+        <tr><td>Number of walk in refrigeration units:</td><td>{{ space_energystar_form.numberOfWalkInRefrigerationUnits }}</td></tr>
+        <tr><td>Number of open closed refrigeration units:</td><td>{{ space_energystar_form.numberOfOpenClosedRefrigerationUnits }}</td></tr>
+        <tr><td>Number of cash registers:</td><td>{{ space_energystar_form.numberOfCashRegisters }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'stadiumOpen' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Enclosed floor area:</td><td>{{ space_energystar_form.enclosedFloorArea }}</td></tr>
+        <tr><td>Number of sporting events per year:</td><td>{{ space_energystar_form.numberOfSportingEventsPerYear }}</td></tr>
+        <tr><td>Number of concert show events per year:</td><td>{{ space_energystar_form.numberOfConcertShowEventsPerYear }}</td></tr>
+        <tr><td>Number of special other events per year:</td><td>{{ space_energystar_form.numberOfSpecialOtherEventsPerYear }}</td></tr>
+        <tr><td>Size of electronic score boards:</td><td>{{ space_energystar_form.sizeOfElectronicScoreBoards }}</td></tr>
+        <tr><td>Ice events:</td><td>{{ space_energystar_form.iceEvents }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Number of walk in refrigeration units:</td><td>{{ space_energystar_form.numberOfWalkInRefrigerationUnits }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'stadiumClosed' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Enclosed floor area:</td><td>{{ space_energystar_form.enclosedFloorArea }}</td></tr>
+        <tr><td>Number of sporting events per year:</td><td>{{ space_energystar_form.numberOfSportingEventsPerYear }}</td></tr>
+        <tr><td>Number of concert show events per year:</td><td>{{ space_energystar_form.numberOfConcertShowEventsPerYear }}</td></tr>
+        <tr><td>Number of special other events per year:</td><td>{{ space_energystar_form.numberOfSpecialOtherEventsPerYear }}</td></tr>
+        <tr><td>Size of electronic score boards:</td><td>{{ space_energystar_form.sizeOfElectronicScoreBoards }}</td></tr>
+        <tr><td>Ice events:</td><td>{{ space_energystar_form.iceEvents }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Number of walk in refrigeration units:</td><td>{{ space_energystar_form.numberOfWalkInRefrigerationUnits }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'singleFamilyHome' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Number of bedrooms:</td><td>{{ space_energystar_form.numberOfBedrooms }}</td></tr>
+        <tr><td>Number of people:</td><td>{{ space_energystar_form.numberOfPeople }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'seniorCareCommunity' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Number of residential living units:</td><td>{{ space_energystar_form.numberOfResidentialLivingUnits }}</td></tr>
+        <tr><td>Average number of residents:</td><td>{{ space_energystar_form.averageNumberOfResidents }}</td></tr>
+        <tr><td>Maximum resident capacity:</td><td>{{ space_energystar_form.maximumResidentCapacity }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Number of commercial refrigeration units:</td><td>{{ space_energystar_form.numberOfCommercialRefrigerationUnits }}</td></tr>
+        <tr><td>Number of commercial washing machines:</td><td>{{ space_energystar_form.numberOfCommercialWashingMachines }}</td></tr>
+        <tr><td>Number of residential washing machines:</td><td>{{ space_energystar_form.numberOfResidentialWashingMachines }}</td></tr>
+        <tr><td>Number of residential lift systems:</td><td>{{ space_energystar_form.numberOfResidentialLiftSystems }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'retail' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Weekly operating hours:</td><td>{{ space_energystar_form.weeklyOperatingHours }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Number of cash registers:</td><td>{{ space_energystar_form.numberOfCashRegisters }}</td></tr>
+        <tr><td>Number of walk in refrigeration units:</td><td>{{ space_energystar_form.numberOfWalkInRefrigerationUnits }}</td></tr>
+        <tr><td>Number of open closed refrigeration units:</td><td>{{ space_energystar_form.numberOfOpenClosedRefrigerationUnits }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+        <tr><td>Single store?:</td><td>{{ space_energystar_form.singleStore }}</td></tr>
+        <tr><td>Exterior entrance to the public?:</td><td>{{ space_energystar_form.exteriorEntranceToThePublic }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'residenceHallDormitory' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Number of rooms:</td><td>{{ space_energystar_form.numberOfRooms }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Has computer lab?:</td><td>{{ space_energystar_form.hasComputerLab }}</td></tr>
+        <tr><td>Has dining hall?:</td><td>{{ space_energystar_form.hasDiningHall }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'refrigeratedWarehouse' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+        <tr><td>Weekly operating hours:</td><td>{{ space_energystar_form.weeklyOperatingHours }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'parking' %}
+        <tr><td>Supplemental heating?:</td><td>{{ space_energystar_form.supplementalHeating }}</td></tr>
+        <tr><td>Open square footage:</td><td>{{ space_energystar_form.openFootage }}</td></tr>
+        <tr><td>Completely enclosed square footage:</td><td>{{ space_energystar_form.completelyEnclosedFootage }}</td></tr>
+        <tr><td>Partially enclosed square footage:</td><td>{{ space_energystar_form.partiallyEnclosedFootage }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'otherStadium' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Enclosed floor area:</td><td>{{ space_energystar_form.enclosedFloorArea }}</td></tr>
+        <tr><td>Number of sporting events per year:</td><td>{{ space_energystar_form.numberOfSportingEventsPerYear }}</td></tr>
+        <tr><td>Number of concert show events per year:</td><td>{{ space_energystar_form.numberOfConcertShowEventsPerYear }}</td></tr>
+        <tr><td>Number of special other events per year:</td><td>{{ space_energystar_form.numberOfSpecialOtherEventsPerYear }}</td></tr>
+        <tr><td>Size of electronic score boards:</td><td>{{ space_energystar_form.sizeOfElectronicScoreBoards }}</td></tr>
+        <tr><td>Ice events:</td><td>{{ space_energystar_form.iceEvents }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Number of walk in refrigeration units:</td><td>{{ space_energystar_form.numberOfWalkInRefrigerationUnits }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'office' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Weekly operating hours:</td><td>{{ space_energystar_form.weeklyOperatingHours }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Percent office cooled:</td><td>{{ space_energystar_form.percentOfficeCooled }}</td></tr>
+        <tr><td>Percent office heated:</td><td>{{ space_energystar_form.percentOfficeHeated }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'nonRefrigeratedWarehouse' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+        <tr><td>Weekly operating hours:</td><td>{{ space_energystar_form.weeklyOperatingHours }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+        <tr><td>Number of walk in refrigeration units:</td><td>{{ space_energystar_form.numberOfWalkInRefrigerationUnits }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'multifamilyHousing' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Number of residential living units:</td><td>{{ space_energystar_form.numberOfResidentialLivingUnits }}</td></tr>
+        <tr><td>Number of bedrooms:</td><td>{{ space_energystar_form.numberOfBedrooms }}</td></tr>
+        <tr><td>Maximum number of floors:</td><td>{{ space_energystar_form.maximumNumberOfFloors }}</td></tr>
+        <tr><td>Percent of floor area that is common space only:</td><td>{{ space_energystar_form.percentOfFloorAreaThatIsCommonSpaceOnly }}</td></tr>
+        <tr><td>Number of laundry hookups in all units:</td><td>{{ space_energystar_form.numberOfLaundryHookupsInAllUnits }}</td></tr>
+        <tr><td>Number of laundry hookups in common area:</td><td>{{ space_energystar_form.numberOfLaundryHookupsInCommonArea }}</td></tr>
+        <tr><td>Number of dishwashers:</td><td>{{ space_energystar_form.numberOfDishwashers }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Primary hot water fuel type:</td><td>{{ space_energystar_form.primaryHotWaterFuelType }}</td></tr>
+        <tr><td>Resident population:</td><td>{{ space_energystar_form.residentPopulation }}</td></tr>
+        <tr><td>Government subsidized housing:</td><td>{{ space_energystar_form.governmentSubsidizedHousing }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'medicalOffice' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+        <tr><td>Weekly operating hours:</td><td>{{ space_energystar_form.weeklyOperatingHours }}</td></tr>
+        <tr><td>Number of surgical operating beds:</td><td>{{ space_energystar_form.numberOfSurgicalOperatingBeds }}</td></tr>
+        <tr><td>Surgery center floor area:</td><td>{{ space_energystar_form.surgeryCenterFloorArea }}</td></tr>
+        <tr><td>Number of MRI machines:</td><td>{{ space_energystar_form.numberOfMriMachines }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'k12School' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Open on weekends?:</td><td>{{ space_energystar_form.openOnWeekends }}</td></tr>
+        <tr><td>Number of walk in refrigeration units:</td><td>{{ space_energystar_form.numberOfWalkInRefrigerationUnits }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Cooking facilities?:</td><td>{{ space_energystar_form.cookingFacilities }}</td></tr>
+        <tr><td>Is high school?:</td><td>{{ space_energystar_form.isHighSchool }}</td></tr>
+        <tr><td>Months in use:</td><td>{{ space_energystar_form.monthsInUse }}</td></tr>
+        <tr><td>School district:</td><td>{{ space_energystar_form.schoolDistrict }}</td></tr>
+        <tr><td>Student seating capacity:</td><td>{{ space_energystar_form.studentSeatingCapacity }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+        <tr><td>Gymnasium floor area:</td><td>{{ space_energystar_form.gymnasiumFloorArea }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'indoorArena' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Enclosed floor area:</td><td>{{ space_energystar_form.enclosedFloorArea }}</td></tr>
+        <tr><td>Number of sporting events per year:</td><td>{{ space_energystar_form.numberOfSportingEventsPerYear }}</td></tr>
+        <tr><td>Number of concert show events per year:</td><td>{{ space_energystar_form.numberOfConcertShowEventsPerYear }}</td></tr>
+        <tr><td>Number of special other events per year:</td><td>{{ space_energystar_form.numberOfSpecialOtherEventsPerYear }}</td></tr>
+        <tr><td>Size of electronic score boards:</td><td>{{ space_energystar_form.sizeOfElectronicScoreBoards }}</td></tr>
+        <tr><td>Ice events:</td><td>{{ space_energystar_form.iceEvents }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Number of walk in refrigeration units:</td><td>{{ space_energystar_form.numberOfWalkInRefrigerationUnits }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'hotel' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Full service spa floor area:</td><td>{{ space_energystar_form.fullServiceSpaFloorArea }}</td></tr>
+        <tr><td>Gym center floor area:</td><td>{{ space_energystar_form.gymCenterFloorArea }}</td></tr>
+        <tr><td>Hours per day guests on-site:</td><td>{{ space_energystar_form.hoursPerDayGuestsOnsite }}</td></tr>
+        <tr><td>Number of commercial refrigeration units:</td><td>{{ space_energystar_form.numberOfCommercialRefrigerationUnits }}</td></tr>
+        <tr><td>Number of guest meals served per year:</td><td>{{ space_energystar_form.numberOfGuestMealsServedPerYear }}</td></tr>
+        <tr><td>Number of hotel rooms:</td><td>{{ space_energystar_form.numberOfHotelRooms }}</td></tr>
+        <tr><td>Laundry facility?:</td><td>{{ space_energystar_form.laundryFacility }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+        <tr><td>Cooking facilities?:</td><td>{{ space_energystar_form.cookingFacilities }}</td></tr>
+        <tr><td>Amount of laundry processed annually:</td><td>{{ space_energystar_form.amountOfLaundryProcessedAnnually }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'hospital' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Has laboratory?:</td><td>{{ space_energystar_form.hasLaboratory }}</td></tr>
+        <tr><td>On-site laundry facility?:</td><td>{{ space_energystar_form.onSiteLaundryFacility }}</td></tr>
+        <tr><td>Maximum number of floors:</td><td>{{ space_energystar_form.maximumNumberOfFloors }}</td></tr>
+        <tr><td>Number of staffed beds:</td><td>{{ space_energystar_form.numberOfStaffedBeds }}</td></tr>
+        <tr><td>Number of FTE workers:</td><td>{{ space_energystar_form.numberOfFTEWorkers }}</td></tr>
+        <tr><td>Number of MRI machines:</td><td>{{ space_energystar_form.numberOfMriMachines }}</td></tr>
+        <tr><td>Owned by:</td><td>{{ space_energystar_form.ownedBy }}</td></tr>
+        <tr><td>Is tertiary care?:</td><td>{{ space_energystar_form.isTertiaryCare }}</td></tr>
+        <tr><td>Licensed bed capacity:</td><td>{{ space_energystar_form.licensedBedCapacity }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'financialOffice' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Percent office cooled:</td><td>{{ space_energystar_form.percentOfficeCooled }}</td></tr>
+        <tr><td>Percent office heated:</td><td>{{ space_energystar_form.percentOfficeHeated }}</td></tr>
+        <tr><td>Weekly operating hours:</td><td>{{ space_energystar_form.weeklyOperatingHours }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'drinkingWaterTreatmentAndDistribution' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'distributionCenter' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Weekly operating hours:</td><td>{{ space_energystar_form.weeklyOperatingHours }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+        <tr><td>Number of walk in refrigeration units:</td><td>{{ space_energystar_form.numberOfWalkInRefrigerationUnits }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'dataCenter' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Cooling equipment redundancy:</td><td>{{ space_energystar_form.coolingEquipmentRedundancy }}</td></tr>
+        <tr><td>IT energy meter configuration:</td><td>{{ space_energystar_form.itEnergyMeterConfiguration }}</td></tr>
+        <tr><td>UPS system redundancy:</td><td>{{ space_energystar_form.upsSystemRedundancy }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'courthouse' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Percent office cooled:</td><td>{{ space_energystar_form.percentOfficeCooled }}</td></tr>
+        <tr><td>Percent office heated:</td><td>{{ space_energystar_form.percentOfficeHeated }}</td></tr>
+        <tr><td>Weekly operating hours:</td><td>{{ space_energystar_form.weeklyOperatingHours }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'collegeUniversity' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Weekly operating hours:</td><td>{{ space_energystar_form.weeklyOperatingHours }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Enrollment:</td><td>{{ space_energystar_form.enrollment }}</td></tr>
+        <tr><td>Grant dollars:</td><td>{{ space_energystar_form.grantDollars }}</td></tr>
+        <tr><td>Number of FTE workers:</td><td>{{ space_energystar_form.numberOfFTEWorkers }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'barracks' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Has computer lab?:</td><td>{{ space_energystar_form.hasComputerLab }}</td></tr>
+        <tr><td>Has dining hall?:</td><td>{{ space_energystar_form.hasDiningHall }}</td></tr>
+        <tr><td>Number of rooms:</td><td>{{ space_energystar_form.numberOfRooms }}</td></tr>
+        <tr><td>Percent cooled:</td><td>{{ space_energystar_form.percentCooled }}</td></tr>
+        <tr><td>Percent heated:</td><td>{{ space_energystar_form.percentHeated }}</td></tr>
+    {% endif %}
+    {% if space.ESPM_type == 'bankBranch' %}
+        <tr><td>Total gross floor area:</td><td>{{ space_energystar_form.totalGrossFloorArea }}</td></tr>
+        <tr><td>Number of computers:</td><td>{{ space_energystar_form.numberOfComputers }}</td></tr>
+        <tr><td>Percent office cooled:</td><td>{{ space_energystar_form.percentOfficeCooled }}</td></tr>
+        <tr><td>Percent office heated:</td><td>{{ space_energystar_form.percentOfficeHeated }}</td></tr>
+        <tr><td>Weekly operating hours:</td><td>{{ space_energystar_form.weeklyOperatingHours }}</td></tr>
+        <tr><td>Number of workers:</td><td>{{ space_energystar_form.numberOfWorkers }}</td></tr>
+    {% endif %}
+
+    </tbody>
+</table>
+
+	  <a style="margin: 5px" class="button" href="/{{ account.id }}/spaces/{{ space.id }}/details/">Cancel</a>
+	  <input style="margin: 5px" type="submit" value="Update" name="edit_space_energystar"/>
+    
+	</form>
+  </div>
+{% endblock %}
+

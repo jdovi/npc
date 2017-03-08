@@ -1,0 +1,43 @@
+{% extends "email_base.html" %}
+
+{% block headline %}{{ headline }}{% endblock %}
+
+{% block body %}
+{% load multiply %}
+{% load key %}
+{% load humanize %}
+
+Hello {{ account.first_name }}, 
+<br><br>
+Your BuildingSPEAK payment for <strong>{{ billing_month_year }}</strong> has been processed. We charged <strong>{{ charge_amount }}</strong> to your credit card (<strong>{{ card_type }} ***{{ last4 }}</strong>) on <strong>{{ charge_date }}</strong>.
+<br><br>
+You can review all charges for your account ({{ account.name }}) by visiting your <a href="{{ billing_url }}">account's billing page</a>.
+<br><br>
+If you have questions, please contact us at <a href="mailto:billing@buildingspeak.com">billing@buildingspeak.com</a>.
+<br><br>
+Thanks for choosing BuildingSPEAK,<br>
+The Billing Team
+
+<br>
+<br>
+<br>
+
+Account:<br>{{ account.name }}
+<br><br>
+Billed to:<br>
+{{ account.first_name }} {{ account.last_name }}<br>
+{{ account.street_address }}<br>
+{{ account.city }}, {{ account.state }} {{ account.zip_code }}
+<br><br>
+Billing period:<br>{{ billing_month_year }}
+<br><br>
+Invoice #:<br>{{ payment_id }}
+<br><br>
+Charge Amount:<br>{{ charge_amount }}
+<br><br>
+Charge ID:<br>{{ charge_id }}
+<br><br>
+Charges on your credit card bill should appear as "BuildingSPEAK {{ billing_month }}."
+
+{% endblock %}
+

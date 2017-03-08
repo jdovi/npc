@@ -1,0 +1,135 @@
+{% extends 'buildingspeakapp/accounts/base.html' %}
+
+{% block contents %}
+
+<div id="tab-details" class="tab tab-details">
+{% csrf_token %}
+<div class="two-col-container two-col-bg1">
+    <div class="two-col-right">
+        <form enctype="multipart/form-data" action="/{{ account.id }}/add_building/" method="get" class="entry">
+        <input type="submit" value="+ Building" name="add_building" />
+        </form>
+    </div>
+    <div class="two-col-left">
+        Create a Building...
+    </div>
+</div>
+<div class="two-col-container two-col-bg2">
+    <div class="two-col-right">
+        <form enctype="multipart/form-data" action="/{{ account.id }}/add_space/" method="get" class="entry">
+        <input type="submit" value="+ Space" name="add_space" />
+        </form>
+    </div>
+    <div class="two-col-left">
+        Create the Spaces that comprise the Building...
+    </div>
+</div>
+
+<div class="two-col-container two-col-bg1">
+    <div class="two-col-right">
+        <form enctype="multipart/form-data" action="/{{ account.id }}/add_meter/" method="get" class="entry">
+        <input type="submit" value="+ Meter" name="add_meter" />
+        </form>
+    </div>
+    <div class="two-col-left">
+        Create the Meters that track utilities...
+    </div>
+</div>
+
+<div class="two-col-container two-col-bg2">
+    <div class="two-col-right">
+        <form enctype="multipart/form-data" action="/{{ account.id }}/space_meter/" method="get" class="entry">
+        <input type="submit" value="Meter -> Space" name="space_meter"/>
+        </form>
+    </div>
+    <div class="two-col-left">
+        Map which Spaces and Buildings they serve...
+    </div>
+</div>
+
+<div class="two-col-container two-col-bg2">
+    <div class="two-col-right">
+        <form enctype="multipart/form-data" action="/{{ account.id }}/building_meter/" method="get" class="entry">
+        <input type="submit" value="Meter -> Building" name="building_meter"/>
+        </form>
+    </div>
+    <div class="two-col-left">
+    </div>
+</div>
+
+<div class="two-col-container two-col-bg1">
+    <div class="two-col-right">
+        <form enctype="multipart/form-data" action="/{{ account.id }}/add_equipment/" method="get" class="entry">
+        <input type="submit" value="+ Equipment" name="add_equipment" />
+        </form>
+    </div>
+    <div class="two-col-left">
+        Create the Equipment serving your occupants...
+    </div>
+</div>
+<div class="two-col-container two-col-bg2">
+    <div class="two-col-right">
+        <form enctype="multipart/form-data" action="/{{ account.id }}/equipment_meter/" method="get" class="entry">
+        <input type="submit" value="Equipment -> Meter" name="equipment_meter" />
+        </form>
+    </div>
+     <div class="two-col-left">
+    Connect your Equipment to the Meters that supply them...
+    </div>
+</div>
+<div class="two-col-container two-col-bg1">
+    <div class="two-col-right">
+        <form enctype="multipart/form-data" action="/{{ account.id }}/equipment_building/" method="get" class="entry">
+        <input type="submit" value="Equipment -> Building" name="equipment_building"/>
+        </form>
+    </div>
+     <div class="two-col-left">
+    Connect your Equipment buildings and spaces...
+    </div>
+</div>
+<div class="two-col-container two-col-bg1">
+    <div class="two-col-right">
+        <form enctype="multipart/form-data" action="/{{ account.id }}/equipment_space/" method="get" class="entry">
+        <input type="submit" value="Equipment -> Space" name="equipment_space"/>
+        </form>
+    </div>
+     <div class="two-col-left">
+    </div>
+</div>
+<div class="two-col-container two-col-bg2">
+    <div class="two-col-right">
+        <form enctype="multipart/form-data" action="/{{ account.id }}/add_efficiency_measure/" method="get" class="entry">
+        <input type="submit" value="+ Measure" name="add_efficiency_measure" />
+        </form>
+    </div>
+    <div class="two-col-left">
+        Create the Efficiency Measures saving you money...
+    </div>
+</div>
+
+<div class="two-col-container two-col-bg1">
+    <div class="two-col-right">
+        <form enctype="multipart/form-data" action="/{{ account.id }}/equipment_measure/" method="get" class="entry">
+        <input type="submit" value="Measure -> Equip" name="equipment_efficiency_measure" />
+        </form>
+    </div>
+    <div class="two-col-left">
+        Track where the savings will occur...
+    </div>
+</div>
+<div class="two-col-container two-col-bg1">
+    <div class="two-col-right">
+        <form enctype="multipart/form-data" action="/{{ account.id }}/measure_meter/" method="get" class="entry">
+        <input type="submit" value="Measure -> Meter" name="efficiency_measure_meter" />
+        </form>
+    </div>
+    <div class="two-col-left">
+        
+    </div>
+</div>
+
+</div> <!-- .tab-details -->
+
+
+{% endblock %}
+

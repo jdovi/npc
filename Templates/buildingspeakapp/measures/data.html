@@ -1,0 +1,27 @@
+{% extends 'buildingspeakapp/measures/base.html' %}
+
+{% block contents %}
+
+<script>
+var charts = [];
+function addChart(arr) {
+  charts.push(arr);
+};
+</script>
+
+<div class="tab tab-data">
+  <p>
+	<strong><u>Currently viewing:</u></strong>
+	<form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/measures/{{ measure.id }}/data/" method="post">{% csrf_token %}
+	  <input type="text" class="short datepicker" value="{{table_start_date}}" name="table_start_date"/>
+	  to
+	  <input type="text" class="short datepicker"  value="{{table_end_date}}" name="table_end_date"/>
+	  <input type="submit" value="Refresh" name="refresh_data_ranges"/>
+	  <input type="submit" value="Export" name="export_data_tab"/>
+	</form>
+  </p>
+
+
+</div> <!-- .tab-data -->
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'buildingspeakapp/buildings/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/buildings/{{ building.id }}/connect_equipment/" method="post">{% csrf_token %}
+      {{ connect_building_equipment_form.non_field_errors }}
+      <div class="form-item">
+        {{ connect_building_equipment_form.building.label_tag }}
+        {{ connect_building_equipment_form.building }}
+        {{ connect_building_equipment_form.building.errors }}
+      </div>
+      <div class="form-item">
+        {{ connect_building_equipment_form.equipment.label_tag }}
+        {{ connect_building_equipment_form.equipment }}
+        {{ connect_building_equipment_form.equipment.errors }}
+      </div>
+
+	  <a style="margin: 5px" class="button" href="/{{ account.id }}/buildings/{{ building.id }}/info/">Cancel</a>
+	  <input style="margin: 5px" type="submit" value="Save" name="connect_building_equipment"/>
+    
+	</form>
+  </div>
+{% endblock %}
+

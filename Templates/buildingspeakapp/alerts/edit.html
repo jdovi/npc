@@ -1,0 +1,12 @@
+{% extends base %}
+
+{% block contents %}
+  <div class="tab-container">
+    <h1>Edit Alert</h1>
+    <form action="/{{ account.id }}{% if type != 'accounts' %}/{{ type }}/{{ target.id }}{% endif %}/alerts/{{ alert.id }}/" method="POST">
+      {% csrf_token %}
+      {% include 'buildingspeakapp/alerts/_form.html' %}
+    </form>
+  </div>
+{% endblock %}
+

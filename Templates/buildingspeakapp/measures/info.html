@@ -1,0 +1,175 @@
+{% extends 'buildingspeakapp/measures/base.html' %}
+{% load humanize %}
+
+{% block contents %}
+
+<div class="tab tab-info">
+<div class="fivecol-three space-details">
+  {% if measure.utility_type %}
+	<div class="form-item">
+	  <label>Utility Type:</label>
+	  <span>{{ measure.utility_type }}</span>
+	</div>
+  {% endif %}
+  {% if measure.units %}
+	<div class="form-item">
+	  <label>Units (Peak Demand, Energy):</label>
+	  <span>{{ measure.units }}</span>
+	</div>
+  {% endif %}
+  {% if measure.annual_consumption_savings %}
+	<div class="form-item">
+	  <label>Annual Consumption Savings:</label>
+	  <span>{{ measure.annual_consumption_savings|floatformat:0|intcomma }}</span>
+	</div>
+  {% endif %}
+  {% if measure.peak_demand_savings %}
+	<div class="form-item">
+	  <label>Annual Peak Demand Savings:</label>
+	  <span>{{ measure.peak_demand_savings|floatformat:0|intcomma }}</span>
+	</div>
+  {% endif %}
+  {% if measure.annual_cost_savings %}
+	<div class="form-item">
+	  <label>Annual Cost Savings:</label>
+	  <span>${{ measure.annual_cost_savings|floatformat:2|intcomma }}</span>
+	</div>
+  {% endif %}
+
+  <span><a href="/{{ account.id }}/measures/{{ measure.id }}/edit/">Edit Measure Details</a></span>
+
+</div>
+<div class="fivecol-two last">
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/measures/{{ measure.id }}/info/" method="post">
+      {% csrf_token %}
+    <img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ tab_help_text|safe }}"></img>
+    <input type="submit" value="Export" name="export_info_tab" style="float:right;"/>
+    </form>
+</div>
+<div class="clear">
+<div class="woo-sc-hr"></div>
+</div>
+
+{% if measure_buildings %}
+<h2>Buildings</h2>
+<table>
+  <tbody>
+	  <tr>
+		<td>Building</td>
+		<td>Type</td>
+		<td>Square Footage</td>
+	  </tr>
+	{% for b in measure_buildings %}
+	  <tr>
+		<td><a href="/{{ account.id }}/buildings/{{ b.id }}/">{{ b.name }}</a></td>
+		<td>{{ b.building_type }}</td>
+		<td>{{ b.square_footage|floatformat:0|intcomma }}</td>
+	  </tr>
+	{% endfor %}
+  </tbody>
+</table>
+
+<div class="clear">
+  <div class="woo-sc-hr"></div>
+</div>
+{% endif %}
+
+{% if measure_spaces %}
+<h2>Spaces</h2>
+<table>
+  <tbody>
+	  <tr>
+		<td>Space</td>
+		<td>Type</td>
+		<td>Square Footage</td>
+	  </tr>
+	{% for sp in measure_spaces %}
+	  <tr>
+		<td><a href="/{{ account.id }}/spaces/{{ sp.id }}/">{{ sp.name }}</a></td>
+		<td>{{ sp.space_type }}</td>
+		<td>{{ sp.square_footage|floatformat:0|intcomma }}</td>
+	  </tr>
+	{% endfor %}
+  </tbody>
+</table>
+
+<div class="clear">
+  <div class="woo-sc-hr"></div>
+</div>
+{% endif %}
+
+{% if measure.emmeterapportionment_set.all %}
+<h2>Meters</h2>
+<table>
+  <tbody>
+      <tr>
+        <td>Meter</td>
+        <td>Fuel Type</td>
+        <td>Fraction of Savings Assigned</td>
+        <td></td>
+      </tr>
+    {% for emma in measure.emmeterapportionment_set.all %}
+      <tr>
+        <td><a href="/{{ account.id }}/meters/{{ emma.meter.id }}/">{{ emma.meter.name }} - {{ emma.meter.utility_type }}</a></td>
+        <td>{{ emma.meter.utility_type }}</td>
+        <td>{{ emma.assigned_fraction|floatformat:3|intcomma }}</td>
+        <td>
+            <a href="/{{ account.id }}/measures/{{ measure.id }}/connect_meter/{{ emma.id }}">edit</a>
+            /
+            <a href="/{{ account.id }}/measures/{{ measure.id }}/remove_meter/{{ emma.id }}">remove</a>
+        </td>
+      </tr>
+    {% endfor %}
+        <tr>
+          <td><a href="/{{ account.id }}/measures/{{ measure.id }}/connect_meter/">+ Add Meter</a></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+  </tbody>
+</table>
+
+<div class="clear">
+  <div class="woo-sc-hr"></div>
+</div>
+{% endif %}
+
+{% if measure.emequipmentapportionment_set.all %}
+<h2>Equipment</h2>
+<table>
+  <tbody>
+	  <tr>
+		<td>Equipment</td>
+        <td>Equipment Type</td>
+        <td>Fraction of Savings Assigned</td>
+        <td></td>
+	  </tr>
+	{% for emea in measure.emequipmentapportionment_set.all %}
+	  <tr>
+		<td><a href="/{{ account.id }}/equipments/{{ emea.equipment.id }}/">{{ emea.equipment.name }}</a></td>
+        <td>{{ emea.equipment.equipment_type }}</td>
+        <td>{{ emea.assigned_fraction|floatformat:3|intcomma }}</td>
+        <td>
+            <a href="/{{ account.id }}/measures/{{ measure.id }}/connect_equipment/{{ emea.id }}">edit</a>
+            /
+            <a href="/{{ account.id }}/measures/{{ measure.id }}/remove_equipment/{{ emea.id }}">remove</a>
+        </td>
+	  </tr>
+	{% endfor %}
+        <tr>
+          <td><a href="/{{ account.id }}/measures/{{ measure.id }}/connect_equipment/">+ Add Equipment</a></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+  </tbody>
+</table>
+
+<div class="clear">
+  <div class="woo-sc-hr"></div>
+</div>
+{% endif %}
+
+    </div> <!-- .tab-info -->
+
+{% endblock %}

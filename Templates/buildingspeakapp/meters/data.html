@@ -1,0 +1,85 @@
+{% extends 'buildingspeakapp/meters/base.html' %}
+
+{% block contents %}
+<style type="text/css">
+label { display: inline-block; width: 7em; }
+
+</style>
+
+<div class="tab tab-data">
+  <div style="overflow-x: scroll;">
+  <table>
+    <tr>
+      <th>Start Date</th>
+      <th>End Date</th>
+      {% if being_tracked_Consumption %}<th>Consumption<br>({{ meter.consumption_units }})</th>{% endif %}
+      {% if being_tracked_Peak_Demand %}<th>Peak Demand ({{ meter.demand_units }})</th>{% endif %}
+      {% if being_tracked_Billing_Demand %}<th>Billing Demand ({{ meter.demand_units }})</th>{% endif %}
+      {% if being_tracked_Cost %}<th>Total Cost (USD)</th>{% endif %}
+      {% if being_tracked_Supply_Cost %}<th>Supply Cost (USD)</th>{% endif %}
+      {% if being_tracked_Delivery_Cost %}<th>Delivery Cost (USD)</th>{% endif %}
+      {% if being_tracked_Grid_Consumption %}<th>Grid Consumption (kWh)</th>{% endif %}
+      {% if being_tracked_Solar_Site_Consumption %}<th>Solar Site Consumption (kWh)</th>{% endif %}
+      {% if being_tracked_Solar_Grid_Production %}<th>Solar Grid Production (kWh)</th>{% endif %}
+      {% if being_tracked_Solar_Total_Production %}<th>Solar Total Production (kWh)</th>{% endif %}
+      {% if being_tracked_Solar_Site_Cost_Savings %}<th>Solar Site Cost Savings (USD)</th>{% endif %}
+      {% if being_tracked_Solar_Grid_Sales %}<th>Solar Grid Sales (USD)</th>{% endif %}
+    </tr>
+    {% for monthling in monthlings %}
+      <tr>
+        <td>{{ monthling.start_date }}</td>
+        <td>{{ monthling.end_date }}</td>
+        {% if being_tracked_Consumption %}<td>{{ monthling.consumption }}</td>{% endif %}
+        {% if being_tracked_Peak_Demand %}<td>{{ monthling.peak_demand }}</td>{% endif %}
+        {% if being_tracked_Billing_Demand %}<td>{{ monthling.billing_demand }}</td>{% endif %}
+        {% if being_tracked_Cost %}<td>{{ monthling.cost }}</td>{% endif %}
+        {% if being_tracked_Supply_Cost %}<td>{{ monthling.cost_supply }}</td>{% endif %}
+        {% if being_tracked_Delivery_Cost %}<td>{{ monthling.cost_delivery }}</td>{% endif %}
+        {% if being_tracked_Grid_Consumption %}<td>{{ monthling.grid_consumption }}</td>{% endif %}
+        {% if being_tracked_Solar_Site_Consumption %}<td>{{ monthling.solar_site_consumption }}</td>{% endif %}
+        {% if being_tracked_Solar_Grid_Production %}<td>{{ monthling.solar_grid_production }}</td>{% endif %}
+        {% if being_tracked_Solar_Total_Production %}<td>{{ monthling.solar_total_production }}</td>{% endif %}
+        {% if being_tracked_Solar_Site_Cost_Savings %}<td>{{ monthling.solar_site_cost_savings }}</td>{% endif %}
+        {% if being_tracked_Solar_Grid_Sales %}<td>{{ monthling.solar_grid_sales }}</td>{% endif %}
+      </tr>
+    {% endfor %}
+  </table>
+  </div>
+  <form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" name="edit" value="Edit History">
+
+    <div class="clear">
+      <br>
+      <div class="woo-sc-hr"></div>
+      </br>
+    </div>
+    
+    <div>
+      {{ form.non_field_errors }}
+
+    <table>
+      <tbody>
+                                                        <tr><td>Start Date:</td>                            <td>{{ start_date_str }}</td></tr>
+                                                        <tr><td>{{ form.end_date.label_tag }}</td>         <td>{{ form.end_date }}</td>                                    {% if form.end_date.errors %}<td>{{ form.end_date.errors }}</td>{% endif %}</tr>
+        {% if being_tracked_Consumption %}              <tr><td>{{ form.consumption.label_tag }}</td>      <td>{{ form.consumption }} {{ meter.consumption_units }}</td>   {% if form.consumption.errors %}<td>{{ form.consumption.errors }}</td>{% endif %}</tr>{% endif %}
+        {% if being_tracked_Peak_Demand %}              <tr><td>{{ form.peak_demand.label_tag }}</td>      <td>{{ form.peak_demand }} {{ meter.demand_units }}</td>        {% if form.peak_demand.errors %}<td>{{ form.peak_demand.errors }}</td>{% endif %}</tr>{% endif %}
+        {% if being_tracked_Billing_Demand %}           <tr><td>{{ form.billing_demand.label_tag }}</td>   <td>{{ form.billing_demand }} {{ meter.demand_units }}</td>     {% if form.billing_demand.errors %}<td>{{ form.billing_demand.errors }}</td>{% endif %}</tr>{% endif %}
+        {% if being_tracked_Cost %}                     <tr><td>{{ form.cost.label_tag }}</td>             <td>{{ form.cost }} USD</td>                                    {% if form.cost.errors %}<td>{{ form.cost.errors }}</td>{% endif %}</tr>{% endif %}
+        {% if being_tracked_Supply_Cost %}              <tr><td>{{ form.cost_supply.label_tag }}</td>      <td>{{ form.cost_supply }} USD</td>                             {% if form.cost_supply.errors %}<td>{{ form.cost_supply.errors }}</td>{% endif %}</tr>{% endif %}
+        {% if being_tracked_Delivery_Cost %}            <tr><td>{{ form.cost_delivery.label_tag }}</td>    <td>{{ form.cost_delivery }} USD</td>                           {% if form.cost_delivery.errors %}<td>{{ form.cost_delivery.errors }}</td>{% endif %}</tr>{% endif %}
+        {% if being_tracked_Grid_Consumption %}         <tr><td>{{ form.grid_consumption.label_tag }}</td>         <td>{{ form.grid_consumption }} kWh</td>                {% if form.grid_consumption.errors %}<td>{{ form.grid_consumption.errors }}</td>{% endif %}</tr>{% endif %}
+        {% if being_tracked_Solar_Site_Consumption %}   <tr><td>{{ form.solar_site_consumption.label_tag }}</td>   <td>{{ form.solar_site_consumption }} kWh</td>          {% if form.solar_site_consumption.errors %}<td>{{ form.solar_site_consumption.errors }}</td>{% endif %}</tr>{% endif %}
+        {% if being_tracked_Solar_Grid_Production %}    <tr><td>{{ form.solar_grid_production.label_tag }}</td>    <td>{{ form.solar_grid_production }} kWh</td>           {% if form.solar_grid_production.errors %}<td>{{ form.solar_grid_production.errors }}</td>{% endif %}</tr>{% endif %}
+        {% if being_tracked_Solar_Total_Production %}   <tr><td>{{ form.solar_total_production.label_tag }}</td>   <td>{{ form.solar_total_production }} kWh</td>          {% if form.solar_total_production.errors %}<td>{{ form.solar_total_production.errors }}</td>{% endif %}</tr>{% endif %}
+        {% if being_tracked_Solar_Grid_Sales %}         <tr><td>{{ form.solar_site_cost_savings.label_tag }}</td>  <td>{{ form.solar_site_cost_savings }} USD</td>         {% if form.solar_site_cost_savings.errors %}<td>{{ form.solar_site_cost_savings.errors }}</td>{% endif %}</tr>{% endif %}
+        {% if being_tracked_Solar_Site_Cost_Savings %}  <tr><td>{{ form.solar_grid_sales.label_tag }}</td>         <td>{{ form.solar_grid_sales }} USD</td>                {% if form.solar_grid_sales.errors %}<td>{{ form.solar_grid_sales.errors }}</td>{% endif %}</tr>{% endif %}
+        </tbody>
+    </table>
+
+      <input type="submit" name="save" value="Add New">
+    </div>
+  </form>
+</div> <!-- .tab-data -->
+{% endblock %}
+

@@ -1,0 +1,73 @@
+{% extends "email_base.html" %}
+
+{% block headline %}Collected Bill Data{% endblock %}
+
+{% block body %}
+{% load multiply %}
+{% load key %}
+{% load humanize %}
+{% load i18n %}
+{% for meter, meter_data_tab_url, start_date_str, being_tracked_Consumption, being_tracked_Peak_Demand, being_tracked_Cost, being_tracked_Supply_Cost, being_tracked_Delivery_Cost, being_tracked_Billing_Demand, end_date, consumption, peak_demand, cost, billing_demand, cost_supply, cost_delivery, monthlings, utilities, ubdcs in list_of_meter_datasets %}
+<div>
+    <div>
+    <label>Acct ID/Name: </label>
+    {{ meter.account.id }} / {{ meter.account.name }}
+    </div>
+
+    <div>
+    <label>Meter ID/Name: </label>
+    {{ meter.id }} / {{ meter.name }}
+    </div>
+
+    <div>
+    <label>Utilities: </label>
+    {{ utilities }}
+    </div>
+
+    <div>
+    <label>UBDCs: </label>
+    {{ ubdcs }}
+    </div>
+</div>
+<div>
+  <table id="datatable">
+    <tr>
+      <th>Start Date</th>
+      <th>End Date</th>
+      {% if being_tracked_Consumption %}<th>Consumption<br>({{ meter.consumption_units }})</th>{% endif %}
+      {% if being_tracked_Peak_Demand %}<th>Peak Demand ({{ meter.demand_units }})</th>{% endif %}
+      {% if being_tracked_Billing_Demand %}<th>Billing Demand ({{ meter.demand_units }})</th>{% endif %}
+      {% if being_tracked_Cost %}<th>Total Cost (USD)</th>{% endif %}
+      {% if being_tracked_Supply_Cost %}<th>Supply Cost (USD)</th>{% endif %}
+      {% if being_tracked_Delivery_Cost %}<th>Delivery Cost (USD)</th>{% endif %}
+    </tr>
+    {% for monthling in monthlings %}
+    <tr>
+    <td>{{ monthling.start_date }}</td>
+        <td>{{ monthling.end_date }}</td>
+        {% if being_tracked_Consumption %}<td>{{ monthling.consumption }}</td>{% endif %}
+        {% if being_tracked_Peak_Demand %}<td>{{ monthling.peak_demand }}</td>{% endif %}
+        {% if being_tracked_Billing_Demand %}<td>{{ monthling.billing_demand }}</td>{% endif %}
+        {% if being_tracked_Cost %}<td>{{ monthling.cost }}</td>{% endif %}
+        {% if being_tracked_Supply_Cost %}<td>{{ monthling.cost_supply }}</td>{% endif %}
+        {% if being_tracked_Delivery_Cost %}<td>{{ monthling.cost_delivery }}</td>{% endif %}
+    </tr>
+    {% endfor %}
+    <tr style="background-color:#ff8080;">
+        <td>{{ start_date_str }}</td>
+        <td>{{ end_date }}</td>
+        {% if being_tracked_Consumption %}<td>{{ consumption }} {{ meter.consumption_units }}</td>{% endif %}
+        {% if being_tracked_Peak_Demand %}<td>{{ peak_demand }} {{ meter.demand_units }}</td>{% endif %}
+        {% if being_tracked_Billing_Demand %}<td>{{ billing_demand }} {{ meter.demand_units }}</td>{% endif %}
+        {% if being_tracked_Cost %}<td>{{ cost }} USD</td>{% endif %}
+        {% if being_tracked_Supply_Cost %}<td>{{ cost_supply }} USD</td>{% endif %}
+        {% if being_tracked_Delivery_Cost %}<td>{{ cost_delivery }} USD</td>{% endif %}
+    </tr>
+  </table>
+</div>
+<a href="{{ meter_data_tab_url }}">Load Month</a>
+<hr>
+{% endfor %}
+
+{% endblock %}
+

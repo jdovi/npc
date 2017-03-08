@@ -1,0 +1,189 @@
+{% extends 'app_base.html' %}
+
+{% block body %}
+
+<style type="text/css">
+#ui-tabs-1, #ui-tabs-2, #ui-tabs-3, #ui-tabs-4, #ui-tabs-5,
+#ui-tabs-6, #ui-tabs-7, #ui-tabs-8, #ui-tabs-9, #ui-tabs-10,
+#ui-tabs-11, #ui-tabs-12, #ui-tabs-13, #ui-tabs-14, #ui-tabs-15,
+#ui-tabs-16, #ui-tabs-17, #ui-tabs-18, #ui-tabs-19 {
+  display: none !important;
+}
+.tab-container {
+  background-color: #ffffff;
+  overflow: auto;
+  margin: 0;
+  padding: 9px 18px;
+  clear: both;
+}
+.actions { text-align: right; }
+a.button { background-color: #5298d2 !important; }
+a.button:hover { background-color: #3076b0 !important; }
+</style>
+
+<header>
+  <font size="3">Account Home: {{ account.name }}</font>
+  <img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ main_page_help_text }}"></img>
+</header>
+
+<section class="entry">
+  <div class="shortcode-tabs default" id="tabs-11">
+    <ul class="tab_titles">
+      {% if account.status != 'Active'%}
+	  <li class="nav-tab {% if tab == 'status' %}ui-tabs-active ui-state-active{% endif %}">
+        <a class="static" href="/{{ account.id }}/status/">Status</a>
+      </li>
+      {% endif %}
+      
+      {% if account.status == 'Active' or user.is_staff %}
+<!--	  <li class="nav-tab {% if tab == 'summary' %}ui-tabs-active ui-state-active{% endif %}">-->
+<!--		<a class="static" href="/{{ account.id }}/summary/">Summary</a>-->
+<!--	  </li>-->
+	  <li class="nav-tab {% if tab == 'info' %}ui-tabs-active ui-state-active{% endif %}">
+		<a class="static" href="/{{ account.id }}/info/">Info</a>
+	  </li>
+	  <li class="nav-tab {% if tab == 'bars' %}ui-tabs-active ui-state-active{% endif %}">
+		<a class="static" href="/{{ account.id }}/bars/">Bars</a>
+	  </li>
+	  <li class="nav-tab {% if tab == 'tables' %}ui-tabs-active ui-state-active{% endif %}">
+		<a class="static" href="/{{ account.id }}/tables/">Tables</a>
+	  </li>
+	  <li class="nav-tab {% if tab == 'pies' %}ui-tabs-active ui-state-active{% endif %}">
+		<a class="static" href="/{{ account.id }}/pies/">Pies</a>
+	  </li>
+	  <li class="nav-tab {% if tab == 'fiveyear' %}ui-tabs-active ui-state-active{% endif %}">
+		<a class="static" href="/{{ account.id }}/fiveyear/">5yr</a>
+	  </li>
+<!--	  <li class="nav-tab {% if tab == 'motion' %}ui-tabs-active ui-state-active{% endif %}">-->
+<!--		<a class="static" href="/{{ account.id }}/motion/">Motion</a>-->
+<!--	  </li>-->
+	  <li class="nav-tab {% if tab == 'details' %}ui-tabs-active ui-state-active{% endif %}">
+		<a class="static" href="/{{ account.id }}/details/">Details</a>
+	  </li>
+      <li class="nav-tab {% if tab == 'alerts' %}ui-tabs-active ui-state-active{% endif %}">
+        <a class="static" href="/{{ account.id }}/alerts/">Alerts</a>
+      </li>
+      {% endif %}
+
+      {% if user.user_profile.access_billing %}
+        {% if account.status == 'Delinquent' or account.status == 'Inactive' or account.status == 'Active' or account.status == 'Construction'%}
+          <li class="nav-tab {% if tab == 'billing' %}ui-tabs-active ui-state-active{% endif %}">
+            <a class="static" href="/{{ account.id }}/billing/">Billing</a>
+          </li>
+        {% endif %}
+      {% endif %}
+
+      {% if account.status == 'Active' or user.is_staff %}
+          {% if tab == 'add' %}
+            <li class="nav-tab ui-tabs-active ui-state-active">
+              <a class="static" href="/{{ account.id }}/add/">Add</a>
+            </li>
+          {% endif %}
+      {% endif %}
+
+      {% if account.status == 'Active' or user.is_staff %}
+          {% if tab == 'add_building' %}
+            <li class="nav-tab ui-tabs-active ui-state-active">
+              <a class="static" href="/{{ account.id }}/add_building/">Add Building</a>
+            </li>
+          {% endif %}
+      {% endif %}
+
+      {% if account.status == 'Active' or user.is_staff %}
+          {% if tab == 'add_space' %}
+            <li class="nav-tab ui-tabs-active ui-state-active">
+              <a class="static" href="/{{ account.id }}/add_space/">Add Space</a>
+            </li>
+          {% endif %}
+      {% endif %}
+
+      {% if account.status == 'Active' or user.is_staff %}
+          {% if tab == 'add_meter' %}
+            <li class="nav-tab ui-tabs-active ui-state-active">
+              <a class="static" href="/{{ account.id }}/add_meter/">Add Meter</a>
+            </li>
+          {% endif %}
+      {% endif %}
+
+      {% if account.status == 'Active' or user.is_staff %}
+          {% if tab == 'add_equipment' %}
+            <li class="nav-tab ui-tabs-active ui-state-active">
+              <a class="static" href="/{{ account.id }}/add_equipment/">Add Equipment</a>
+            </li>
+          {% endif %}
+      {% endif %}
+
+      {% if account.status == 'Active' or user.is_staff %}
+          {% if tab == 'add_efficiency_measure' %}
+            <li class="nav-tab ui-tabs-active ui-state-active">
+              <a class="static" href="/{{ account.id }}/add_efficiency_measure/">Add Measure</a>
+            </li>
+          {% endif %}
+      {% endif %}
+
+      {% if account.status == 'Active' or user.is_staff %}
+          {% if tab == 'building_meter' %}
+            <li class="nav-tab ui-tabs-active ui-state-active">
+              <a class="static" href="/{{ account.id }}/building_meter/">Map</a>
+            </li>
+          {% endif %}
+      {% endif %}
+
+      {% if account.status == 'Active' or user.is_staff %}
+          {% if tab == 'space_meter' %}
+            <li class="nav-tab ui-tabs-active ui-state-active">
+              <a class="static" href="/{{ account.id }}/space_meter/">Map</a>
+            </li>
+          {% endif %}
+      {% endif %}
+
+      {% if account.status == 'Active' or user.is_staff %}
+          {% if tab == 'equipment_meter' %}
+            <li class="nav-tab ui-tabs-active ui-state-active">
+              <a class="static" href="/{{ account.id }}/equipment_meter/">Connect</a>
+            </li>
+          {% endif %}
+      {% endif %}
+
+      {% if account.status == 'Active' or user.is_staff %}
+          {% if tab == 'efficiency_measure_meter' %}
+            <li class="nav-tab ui-tabs-active ui-state-active">
+              <a class="static" href="/{{ account.id }}/measure_meter/">Identify</a>
+            </li>
+          {% endif %}
+      {% endif %}
+
+      {% if account.status == 'Active' or user.is_staff %}
+          {% if tab == 'equipment_efficiency_measure' %}
+            <li class="nav-tab ui-tabs-active ui-state-active">
+              <a class="static" href="/{{ account.id }}/equipment_measure/">Identify</a>
+            </li>
+          {% endif %}
+      {% endif %}
+
+      {% if account.status == 'Active' or user.is_staff %}
+          {% if tab == 'equipment_building' %}
+            <li class="nav-tab ui-tabs-active ui-state-active">
+              <a class="static" href="/{{ account.id }}/equipment_building/">Connect</a>
+            </li>
+          {% endif %}
+      {% endif %}
+
+      {% if account.status == 'Active' or user.is_staff %}
+          {% if tab == 'equipment_space' %}
+            <li class="nav-tab ui-tabs-active ui-state-active">
+              <a class="static" href="/{{ account.id }}/equipment_space/">Connect</a>
+            </li>
+          {% endif %}
+      {% endif %}
+
+	</ul> <!-- .nav-tabs -->
+
+    {% block contents %}
+    {% endblock %}
+	
+  </div>
+</section>
+
+{% endblock %}
+

@@ -1,0 +1,253 @@
+{% extends 'buildingspeakapp/buildings/base.html' %}
+{% load humanize %}
+
+{% block contents %}
+
+<div class="tab tab-info">
+  <div class="row">
+    <div class="fivecol-three space-details">
+      {% if building.street_address %}
+        <div class="form-item">
+          <label>Address:</label>
+          <span>{{ building.street_address }}</span>
+        </div>
+      {% endif %}
+      {% if building.city %}
+        <div class="form-item">
+          <label>City/State/Zip:</label>
+          <span>{{ building.city }}, {{ building.state }} {{ building.zip_code }}</span>
+        </div>
+      {% endif %}
+      {% if building.square_footage %}
+        <div class="form-item">
+          <label>Square Footage:</label>
+          <span>{{ building.square_footage|floatformat:0|intcomma }}</span>
+        </div>
+      {% endif %}
+      {% if building.ES_score_past_12_months %}
+        <div class="form-item">
+          <label>ENERGY STAR Score:</label>
+          <span>{{ building.ES_score_past_12_months }}</span>
+        </div>
+      {% endif %}
+
+	  <span><a href="/{{ account.id }}/buildings/{{ building.id }}/edit/">Edit Building Details</a></span>
+
+	  </div>
+    <div class="fivecol-two last">
+      <ul class="images">
+        {% if building.image_file %}
+          <li>
+            <a rel="images" href="{{ building.image_file.url }}"><img src="{{ building.image_file.url }}" style="height: 100px;" /></a>
+          </li>
+		{% else %}
+          <li>
+            <a rel="images" href="{{ STATIC_PREFIX }}default_images/default_building_image.png"><img src="{{ STATIC_PREFIX }}default_images/default_building_image.png" style="height: 100px;" /></a>
+          </li>
+		{% endif %}
+      </ul>
+    </div> <!-- .fivecol-two -->
+  </div> <!-- .row -->
+
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/buildings/{{ building.id }}/info/" method="post">
+      {% csrf_token %}
+    <img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ tab_help_text|safe }}"></img>
+    <input type="submit" value="Export" name="export_info_tab" style="float:right;"/>
+    </form>
+
+  {% if building_measures %}
+    <div class="clear">
+      <div class="woo-sc-hr"></div>
+    </div>
+    <h2>Efficiency Measures</h2>
+    <table>
+      <tbody>
+          <tr>
+            <td>Efficiency Measure</td>
+            <td>Start Date</td>
+          </tr>
+        {% for bm in building_measures %}
+          <tr>
+            <td><a href="/{{ account.id }}/measures/{{ bm.id }}/">{{ bm.name }}</a></td>
+            <td>{{ bm.start_date }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+  {% if building_spaces %}
+    <div class="clear">
+      <div class="woo-sc-hr"></div>
+    </div>
+    <h2>Spaces</h2>
+    <table>
+      <tbody>
+          <tr>
+            <td>Space</td>
+            <td>Type</td>
+            <td>Square Footage</td>
+          </tr>
+        {% for sp in building_spaces %}
+          <tr>
+            <td><a href="/{{ account.id }}/spaces/{{ sp.id }}/">{{ sp.name }}</a></td>
+            <td>{{ sp.space_type }}</td>
+            <td>{{ sp.square_footage|floatformat:0|intcomma }}</td>
+          </tr>
+        {% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/buildings/{{ building.id }}/add_space/">+ Add Space</a></td>
+            <td></td>
+            <td></td>
+          </tr>
+      </tbody>
+    </table>
+  {% endif %}
+
+  {% if building.buildingmeterapportionment_set.all %}
+    <div class="clear">
+      <div class="woo-sc-hr"></div>
+    </div>
+    <h2>Meters</h2>
+    <table>
+      <tbody>
+          <tr>
+            <td>Meter</td>
+            <td>Fuel Type</td>
+            <td>Fraction of Meter Assigned</td>
+            <td></td>
+          </tr>
+        {% for bma in building.buildingmeterapportionment_set.all %}
+          <tr>
+            <td><a href="/{{ account.id }}/meters/{{ bma.meter.id }}/">{{ bma.meter.name }} - {{ bma.meter.utility_type }}</a></td>
+            <td>{{ bma.meter.utility_type }}</td>
+            <td>{{ bma.assigned_fraction|floatformat:3|intcomma }}</td>
+            <td>
+                <a href="/{{ account.id }}/buildings/{{ building.id }}/connect_meter/{{ bma.id }}">edit</a>
+                /
+                <a id="bma{{ bma.id }}" href="/{{ account.id }}/buildings/{{ building.id }}/remove_meter/{{ bma.id }}">remove</a>
+                
+                <script type="text/javascript">
+                        // Initialize Variables
+                        var bma{{ bma.id }} = document.getElementById("bma{{ bma.id }}");
+                        //Function to open popup window
+                        bma{{ bma.id }}.onclick = function() {
+                            overlay.style.display = 'block';
+                            popup.style.display = 'block';
+                            return false;
+                        };
+                        //Function to execute remove url
+                        button_yes.onclick = function() {
+                            window.location = bma{{ bma.id }}.href;
+                        };
+                </script>
+            </td>
+          </tr>
+        {% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/buildings/{{ building.id }}/connect_meter/">+ Add Meter</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+      </tbody>
+    </table>
+  {% endif %}
+
+  {% if building.equipment_set.all %}
+    <div class="clear">
+      <div class="woo-sc-hr"></div>
+    </div>
+    <h2>Equipment</h2>
+    <table>
+      <tbody>
+          <tr>
+            <td>Equipment</td>
+            <td></td>
+          </tr>
+        {% for e in building.equipment_set.all %}
+          <tr>
+            <td><a href="/{{ account.id }}/equipments/{{ e.id }}/">{{ e.name }}</a></td>
+            <td><a id="e{{ e.id }}" href="/{{ account.id }}/buildings/{{ building.id }}/remove_equipment/{{ e.id }}">remove</a>
+                
+                <script type="text/javascript">
+                        // Initialize Variables
+                        var e{{ e.id }} = document.getElementById("e{{ e.id }}");
+                        //Function to open popup window
+                        e{{ e.id }}.onclick = function() {
+                            overlay.style.display = 'block';
+                            popup.style.display = 'block';
+                            return false;
+                        };
+                        //Function to execute remove url
+                        button_yes.onclick = function() {
+                            window.location = e{{ e.id }}.href;
+                        };
+                 </script>
+                 </td>
+          </tr>
+        {% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/buildings/{{ building.id }}/connect_equipment/">+ Add Equipment</a></td>
+            <td></td>
+          </tr>
+      </tbody>
+    </table>
+  {% endif %}
+
+  <div class="clear">
+    <div class="woo-sc-hr"></div>
+  </div>
+
+  <a id="eventlist"></a>
+  <h2>Alerts:</h2>
+  <table>
+    <tbody>
+      {% if alerts %}
+        {% for a in alerts %}
+          <tr>
+            <td>{{ a.get_field_1_display }} {{ a.get_utility_type_1_display }}</td>
+            <td>{{ a.get_comparator_display }}</td>
+            <td>{{ a.get_field_2_display }} {{ a.get_utility_type_2_display }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td>No alerts.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <h2>Event Log:</h2>
+  <table>
+    <tbody>
+      {% if events %}
+        {% for e in events %}
+          <tr>
+            <td>{{ e.when|date:"m/d/Y" }}</td>
+            <td>{{ e.subject }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td>No events.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  {% if adding_events_is_enabled %}
+    <h4>Add an event for this building:</h4>
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/buildings/{{ building.id }}/info/#eventlist" method="post">
+      {% csrf_token %}
+      <input type="text" class="event-date short datepicker" value="{% now "m/d/Y" %}" name="when"/>
+      <input type="text" class="event-description" placeholder="Click to enter event description" name="subject"/>
+      <input type="submit" class="woo-sc-button custom small woo-bu" value="Add" name="add_event"/>
+    </form>
+  {% endif %}
+
+</div> <!-- .tab-info -->
+
+{% endblock %}
+

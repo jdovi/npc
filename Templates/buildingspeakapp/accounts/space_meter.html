@@ -1,0 +1,32 @@
+{% extends 'buildingspeakapp/accounts/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+    <form enctype="multipart/form-data" class="form-wrapper" action="/{{ account.id }}/space_meter/" method="post">{% csrf_token %}
+      {{ connect_space_meter_form.non_field_errors }}
+      <div class="form-row-set">
+        {{ connect_space_meter_form.space.label_tag }}
+        {{ connect_space_meter_form.space }}
+        {{ connect_space_meter_form.space.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ connect_space_meter_form.meter.label_tag }}
+        {{ connect_space_meter_form.meter }}
+        {{ connect_space_meter_form.meter.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ connect_space_meter_form.assigned_fraction.label_tag }}
+        {{ connect_space_meter_form.assigned_fraction }}
+        {{ connect_space_meter_form.assigned_fraction.errors }}
+      </div>
+	  
+      <div class="form-row-set-buttons">
+	  <input class="woo-sc-button custom small woo-bu" type="submit" value="Create" name="space_meter"/>
+	  <a href="/{{ account.id }}/add/">Cancel</a>
+	  </div>
+	      
+	</form>
+  </div>
+{% endblock %}
+

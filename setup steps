@@ -1,0 +1,98 @@
+Steps:
+************************************
+***GETTING READY EXTERNAL SYSTEMS***
+************************************
+Create a git repo on github with the company / project name.
+    add a git ignore for python
+    add a readme
+
+Create a new app on heroku
+in the settings add the conda building pack
+https://github.com/buildingspeak/conda-buildpack.git
+Copy Config Vars from .pam_environment file
+
+
+Create an s3 bucket
+
+**************************
+***SETTING UP LOCAL ENV***
+**************************
+create the virtual environment
+conda create -n dovimotors python=3.5
+source activate dovimotors
+
+cloning the code
+cd to home directory
+git clone git@github.com:buildingspeak/dovimotors.git
+
+setting up remotes
+cd into the dovimotors dir
+git remote rm origin
+git remote add heroku https://git.heroku.com/dovimotors.git
+git remote add github git@github.com:buildingspeak/dovimotors.git
+
+copy Procfile, requirements.txt and conda_requirements.txt from the Assets folder
+
+conda install --file conda-requirements.txt --yes
+pip install -r requirements.txt
+
+Create the db locally
+sudo -u postgres createdb dovimotors
+
+Create the env variable for the database
+Edit the .pam_environment on your local system
+DOVIMOTORSDB=dovimotors
+
+Create the env variable for the S3 bucket created earlier
+DOVIMOTORS_S3BUCKET=dovimotors (add to Heroku config vars if you didn't already)
+
+Reboot for settings to take effect
+
+***********************************
+***SETTING UP THE DJANGO PROJECT***
+***********************************
+These steps need to be done because you can't start a new djago project in a pre-exisitng folder:
+1. rename dovimotors to dovimotors.temp
+2. from your home directory run django-admin startproject dovimotors
+3. Cut the django project files from the newly created "dovimotors" directory to dovimotors.temp
+4. Delete dovimotors
+5. Rename dovimotors.temp to dovimotors.
+You will now have the correct files and paths created by django in your previously created git repo.
+
+cd into the dovimotors directory.  
+python manage.py runserver to ensure that everything is working
+
+python manage.py startapp DoviMotorsApp
+
+Add a "log" folder, home/dovimotors/log and a development.log file in the log folder
+Add a "static" folder, home/dovimotors/dovimotors/static
+
+Copy all of the settings.py from the Assets folder except for the secret key
+Paste it into your new settings.py in your project folder
+
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py collectstatic
+python manage.py runserver
+
+
+*****************************
+***   PUSHING TO HEROKU   ***
+*****************************
+Setting up the db on heroku for the first time
+heroku addons:create heroku-postgresql:hobby-dev --app dovimotors
+Commit all changes made so far
+push code to Heroku
+
+heroku run python manage.py migrate --app dovimotors
+heroku run python manage.py createsuperuser --app dovimotors
+
+****************************
+***   ADDING FUNCTIONS   ***
+****************************
+Management Commands - Copy the "management" folder and paste it into your app directory
+
+
+
+

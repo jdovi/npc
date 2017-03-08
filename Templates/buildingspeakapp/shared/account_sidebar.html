@@ -1,0 +1,80 @@
+<h3><a href="/{{ account.id }}/add/">+ Add Stuff!</a></h3>
+
+<div class="menu-item" id="accordion">
+
+  {% if buildings|length > 0 %}
+    <h3>Buildings</h3>
+    <div class="panel {% if building %}active{% endif %}">
+      <ul>
+        {% for b in buildings %}
+          <li class="menu-item {% if b.id == building.id %}active{% endif %}">
+            <a href="/{{ account.id }}/buildings/{{ b.id }}/" {% if b.id == building.id %}class="active"{% endif %}>
+              {{ b.name }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if spaces|length > 0 %}
+    <h3>Spaces</h3>
+    <div class="panel {% if space %}active{% endif %}">
+      <ul>
+        {% for s in spaces %}
+          <li class="menu-item {% if s.id == space.id %}active{% endif %}">
+            <a href="/{{ account.id }}/spaces/{{ s.id }}/" {% if s.id == space.id %}class="active"{% endif %}>
+              {{ s.name }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if meters|length > 0 %}
+    <h3>Meters</h3>
+    <div class="panel {% if meter %}active{% endif %}">
+      <ul>
+        {% for m in meters %}
+          <li class="menu-item {% if m.id == meter.id %}active{% endif %}">
+            <a href="/{{ account.id }}/meters/{{ m.id }}/" {% if m.id == meter.id %}class="active"{% endif %}>
+              {{ m.name }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if equipments|length > 0 %}
+    <h3>Equipment</h3>
+    <div class="panel {% if equipment %}active{% endif %}">
+      <ul>
+        {% for e in equipments %}
+          <li class="menu-item {% if e.id == equipment.id %}active{% endif %}">
+            <a href="/{{ account.id }}/equipments/{{ e.id }}/" {% if e.id == equipment.id %}class="active"{% endif %}>
+              {{ e.name }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if measures|length > 0 %}
+    <h3>Measures</h3>
+    <div class="panel {% if measure %}active{% endif %}">
+      <ul>
+        {% for mea in measures %}
+          <li class="menu-item {% if mea.id == measure.id %}active{% endif %}">
+            <a href="/{{ account.id }}/measures/{{ mea.id }}/" {% if mea.id == measure.id %}class="active"{% endif %}>
+              {{ mea.name }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+</div>
+

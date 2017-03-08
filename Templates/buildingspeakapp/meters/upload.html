@@ -1,0 +1,41 @@
+{% extends 'buildingspeakapp/meters/base.html' %}
+
+{% block contents %}
+
+<div class="tab tab-upload">
+  <form enctype="multipart/form-data" class="entry" action="" method="post">
+    {% csrf_token %}
+    {{ meter_data_form.non_field_errors }}
+    <div class="form-item">
+      <img style="float:right" src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" title="{{ tab_help_text|safe }}"></img>
+      {% if meter.bill_data_file %}
+        <a href="{{ meter.bill_data_file.url }}">Download a copy of the last CSV file uploaded</a><br>
+      {% else %}
+        After a file is uploaded, it will be available for download here.<br>
+      {% endif %}
+      {{ meter_data_form.bill_data_file }}<br>
+      {{ meter_data_form.bill_data_file.errors }}
+      
+    </div>
+    <br>
+    <input type="submit" value="Upload New Bill Data" name="meter_data" style="margin-right: 10pt"/>
+    <input type="submit" value="Download Existing Data" name="meter_data_export"  style="margin-right: 10pt"/>
+    <input id="meter_data_delete" type="submit" value="Delete Existing Data" name="meter_data_delete"  style="margin-right: 10pt"/>
+        <script type="text/javascript">
+                // Initialize Variables
+                var meter_data_delete = document.getElementById("meter_data_delete");
+                //Function to open popup window
+                meter_data_delete.onclick = function() {
+                    overlay.style.display = 'block';
+                    popup.style.display = 'block';
+                    return false;
+                };
+                //Function to execute url
+                button_yes.onclick = function() {
+                    window.location = "/{{ account.id }}/meters/{{ meter.id }}/upload/1/";
+                };
+        </script>
+</div> <!-- .tab-upload -->
+
+{% endblock %}
+

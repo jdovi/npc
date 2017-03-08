@@ -1,0 +1,37 @@
+{% extends 'buildingspeakapp/measures/base.html' %}
+{% load humanize %}
+
+{% block contents %}
+
+<div class="tab tab-details">
+
+<form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/measures/{{ measure.id }}/details/" method="post">
+  {% csrf_token %}
+<img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ tab_help_text|safe }}"></img>
+<input type="submit" value="Export" name="export_details_tab" style="float:right;"/>
+</form>
+
+<a href="/{{ account.id }}/measures/{{ measure.id }}/edit/">Edit Measure Details</a> 
+
+<table>
+  <tbody>
+    <tr><td>Name:</td><td>{{ measure.name }}</td></tr>
+    <tr><td>Start Date:</td><td>{{ measure.start_date }}</td></tr>
+    <tr><td>End Date:</td><td>{{ measure.end_date }}</td></tr>
+    <tr><td>Utility Type:</td><td>{{ measure.utility_type }}</td></tr>
+    <tr><td>Units of Measure:</td><td>{{ measure.units }}</td></tr>
+    <tr><td>Annual Consumption Savings:</td><td>{{ measure.annual_consumption_savings|floatformat:0|intcomma }}</td></tr>
+    <tr><td>Annual Peak Demand Savings:</td><td>{{ measure.peak_demand_savings|floatformat:0|intcomma }}</td></tr>
+    <tr><td>Annual Cost Savings:</td><td>${{ measure.annual_cost_savings|floatformat:2|intcomma }}</td></tr>
+    <tr><td>Savings Uncertainty:</td><td>{{ measure.percent_uncertainty|floatformat:2|intcomma }}</td></tr>
+    <tr><td>% Cooling-Related:</td><td>{{ measure.percent_cool|floatformat:3|intcomma }}</td></tr>
+    <tr><td>% Heating-Related:</td><td>{{ measure.percent_heat|floatformat:3|intcomma }}</td></tr>
+    <tr><td>% Flat (daily):</td><td>{{ measure.percent_flat|floatformat:3|intcomma }}</td></tr>
+    <tr><td>% Flat (monthly):</td><td>{{ measure.percent_fixed|floatformat:3|intcomma }}</td></tr>
+    <tr><td>Weather Station:</td><td>{{ measure.weather_station.name }}</td></tr>
+  </tbody>
+</table>
+
+</div> <!-- .tab-details -->
+
+{% endblock %}

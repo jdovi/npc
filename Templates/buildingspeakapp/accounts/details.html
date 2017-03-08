@@ -1,0 +1,49 @@
+{% extends 'buildingspeakapp/accounts/base.html' %}
+
+{% block contents %}
+
+<div id="tab-details" class="tab tab-details">
+
+<form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/details/" method="post">
+  {% csrf_token %}
+<img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ tab_help_text|safe }}"></img>
+<input type="submit" value="Export" name="export_details_tab" style="float:right;"/>
+</form>
+
+<h2 style="display:inline">Account Details</h2>  |  <a href="/{{ account.id }}/edit/">Edit Account Details</a> 
+
+
+<table>
+  <tbody>
+    <tr><td>Name:</td><td>{{ account.name }}</td></tr>
+    <tr><td>Type:</td><td>{{ account.account_type }}</td></tr>
+    <tr><td>Launch Date:</td><td>{{ account.launch_date }}</td></tr>
+    <tr><td>Image File:</td><td>
+						{% if account.image_file %}
+						<img src="{{ account.image_file.url }}" alt="organization image" style="height: 40px;"/>
+						{% else %}
+						<b>No Account image file!</b>
+						{% endif %}
+						</td></tr>
+
+</tbody>
+</table>
+
+<h2 style="display:inline">Account Contact Info</h2>  |  <span><a href="/{{ account.id }}/edit/">Edit Account Contact Information</a></span>
+
+<table>
+  <tbody>
+    <tr><td>First Name:</td><td>{{ account.first_name }}</td></tr>
+    <tr><td>Last Name:</td><td>{{ account.last_name }}</td></tr>
+    <tr><td>Title:</td><td>{{ account.title }}</td></tr>
+    <tr><td>Email:</td><td>{{ account.email }}</td></tr>
+    <tr><td>Phone:</td><td>{{ account.phone }}</td></tr>
+    <tr><td>Street Address:</td><td>{{ account.street_address }}</td></tr>
+    <tr><td>City, State Zip:</td><td>{{ account.city }}, {{ account.state }} {{ account.zip_code }}</td></tr>
+  </tbody>
+</table>
+
+</div> <!-- .tab-details -->
+
+{% endblock %}
+

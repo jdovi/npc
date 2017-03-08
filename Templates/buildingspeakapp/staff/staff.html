@@ -1,0 +1,89 @@
+{% extends "app_base.html" %}
+
+{% block body %}
+
+
+<div>
+    <form enctype="multipart/form-data" class="entry" action="/staff/" method="post">
+      {% csrf_token %}
+      <table>
+        <tr>
+          <th colspan="2">
+            <img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ block_02|safe }}"></img><h3>Various Summaries</h3>
+          </th>
+        </tr>
+        <tr>
+          <th>email address:</th>
+          <th><input type="text" value="{{user_email_address}}" name="email_address"/></th>
+        </tr>
+        <tr>
+          <th colspan="2"><input type="submit" value="Meter End Dates" name="get_meter_end_dates" style="margin-right: 10pt"/><input type="submit" value="Meter Forecasts" name="check_meter_forecasts" style="margin-right: 10pt"/><input type="submit" value="Check ES Scores" name="check_ENERGY_STAR_scores" style="margin-right: 10pt"/><input type="submit" value="Financials" name="get_financial_summary" style="margin-right: 10pt"/><input type="submit" value="Stripe" name="get_all_stripe_events" style="margin-right: 10pt"/></th>
+        </tr>
+        <tr>
+          <th colspan="2"><input type="submit" value="Collected Bill Data" name="send_collected_meter_bill_data" style="margin-right: 10pt"/></th>
+        </tr>
+      </table>
+    </form>
+</div>
+
+<div>
+    <form enctype="multipart/form-data" class="entry" action="/staff/" method="post">
+      {% csrf_token %}
+      <table>
+        <tr>
+          <th colspan="2">
+            <img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ block_01|safe }}"></img><h3>Buildings ENERGY STAR</h3>
+          </th>
+        </tr>
+        <tr>
+          <th>email address:</th>
+          <th><input type="text" value="{{user_email_address}}" name="email_address"/></th>
+        </tr>
+        <tr>
+          <th>Building ID:</th>
+          <th><input type="text" name="building_id"/></th>
+        </tr>
+        <tr>
+          <th><input type="submit" value="Email XML" name="get_bldg_ES_xml" style="margin-right: 10pt"/><input type="submit" value="Update Score" name="update_bldg_ES_score" style="margin-right: 10pt"/></th>
+        </tr>
+      </table>
+    </form>
+</div>
+
+<div>
+    <form enctype="multipart/form-data" class="entry" action="/staff/" method="post">
+      {% csrf_token %}
+      <table>
+        <tr>
+          <th colspan="2">
+            <img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ block_03|safe }}"></img><h3>Development Scripts</h3>
+          </th>
+        </tr>
+        <tr>
+          <th colspan="2"><input type="submit" value="Reset Notifications" name="reset_notifications" style="margin-right: 10pt"/><input type="submit" value="Alerts Immed." name="send_notifications_immediately" style="margin-right: 10pt"/><input type="submit" value="Alerts Hourly" name="send_notifications_hourly" style="margin-right: 10pt"/><input type="submit" value="Alerts Daily" name="send_notifications_daily" style="margin-right: 10pt"/>
+        </tr>
+      </table>
+    </form>
+</div>
+
+<div>
+    <form enctype="multipart/form-data" class="entry" action="/staff/" method="post">
+      {% csrf_token %}
+      <table>
+        <tr>
+          <th colspan="2">
+            <img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ block_04|safe }}"></img><h3>Management Scripts</h3>
+          </th>
+        </tr>
+        <tr>
+          <th>meter ID:</th>
+          <th><input type="text" name="meter_id"/></th>
+        </tr>
+        <tr>
+          <th colspan="2"><input type="submit" value="Retire Meter" name="retire_meter" style="margin-right: 10pt"/><input type="submit" value="Update ES Scores" name="update_all_ES_scores" style="margin-right: 10pt"/><input type="submit" value="temp" name="temp" style="margin-right: 10pt"/>
+        </tr>
+      </table>
+    </form>
+</div>
+
+{% endblock %}

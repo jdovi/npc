@@ -1,0 +1,285 @@
+{% extends 'buildingspeakapp/equipment/base.html' %}
+{% load humanize %}
+
+{% block contents %}
+
+<div class="tab tab-info">
+  <div class="row">
+	<div class="fivecol-three space-details">
+	  {% if equipment.equipment_type %}
+		<div class="form-item">
+		  <label>Equipment Type:</label>
+		  <span>{{ equipment.equipment_type }}</span>
+		</div>
+	  {% endif %}
+	  {% if equipment.location %}
+		<div class="form-item">
+		  <label>Located:</label>
+		  <span>{{ equipment.location }}</span>
+		</div>
+	  {% endif %}
+	  {% if equipment.description %}
+		<div class="form-item">
+		  <label>Description:</label>
+		  <span>{{ equipment.description }}</span>
+		</div>
+	  {% endif %}
+
+	  <span><a href="/{{ account.id }}/equipments/{{ equipment.id }}/edit/">Edit Equipment Details</a></span>
+
+	</div>
+	<div class="fivecol-two last">
+	  <ul class="images">
+		{% if equipment.image_file %}
+		  <li>
+			<a rel="images" href="{{ equipment.image_file.url }}"><img src="{{ equipment.image_file.url }}" style="height: 100px;" /></a>
+		  </li>
+		{% else %}
+		  <li>
+			<a rel="images" href="{{ STATIC_PREFIX }}default_images/default_equipment_image.png"><img src="{{ STATIC_PREFIX }}default_images/default_equipment_image.png" style="height: 100px;" /></a>
+		  </li>
+		{% endif %}
+		{% if equipment.nameplate_file %}
+		  <li>
+			<a rel="images" href="{{ equipment.nameplate_file.url }}"><img src="{{ equipment.nameplate_file.url }}" style="height: 100px;" /></a>
+		  </li>
+		{% else %}
+		  <li>
+			<a rel="images" href="{{ STATIC_PREFIX }}default_images/default_equipment_nameplate_image.png"><img src="{{ STATIC_PREFIX }}default_images/default_equipment_nameplate_image.png" style="height: 100px;" /></a>
+		  </li>
+		{% endif %}
+	  </ul>
+	</div> <!-- .fivecol-two -->
+  </div> <!-- .row -->
+
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/equipments/{{ equipment.id }}/info/" method="post">
+      {% csrf_token %}
+    <img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ tab_help_text|safe }}"></img>
+    <input type="submit" value="Export" name="export_info_tab" style="float:right;"/>
+    </form>
+
+	{% if equipment.emequipmentapportionment_set.all %}
+    <div class="clear">
+	  <div class="woo-sc-hr"></div>
+    </div>
+	<h2>Efficiency Measures</h2>
+	<table>
+	  <tbody>
+		  <tr>
+			<td>Efficiency Measure</td>
+			<td>Start Date</td>
+			<td>Portion of Savings Assigned</td>
+            <td></td>
+		  </tr>
+		{% for ema in equipment.emequipmentapportionment_set.all %}
+		  <tr>
+			<td><a href="/{{ account.id }}/measures/{{ ema.efficiency_measure.id }}/">{{ ema.efficiency_measure.name }}</a></td>
+			<td>{{ ema.efficiency_measure.start_date }}</td>
+			<td>{{ ema.assigned_fraction|floatformat:3|intcomma }}</td>
+            <td>
+                <a href="/{{ account.id }}/equipments/{{ equipment.id }}/connect_measure/{{ ema.id }}">edit</a>
+                /
+                <a id="ema{{ ema.id }}" href="/{{ account.id }}/equipments/{{ equipment.id }}/remove_measure/{{ ema.id }}">remove</a>
+                <script type="text/javascript">
+                        // Initialize Variables
+                        var ema{{ ema.id }} = document.getElementById("ema{{ ema.id }}");
+                        //Function to open popup window
+                        ema{{ ema.id }}.onclick = function() {
+                            overlay.style.display = 'block';
+                            popup.style.display = 'block';
+                            return false;
+                        };
+                        //Function to execute remove url
+                        button_yes.onclick = function() {
+                            window.location = ema{{ ema.id }}.href;
+                        };
+                </script>            
+            </td>
+		  </tr>
+		{% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/equipments/{{ equipment.id }}/connect_measure/">+ Add Measure</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+	  </tbody>
+	</table>
+  {% endif %}
+
+  {% if equipment.buildings.all %}
+	<div class="clear">
+	  <div class="woo-sc-hr"></div>
+	</div>
+	<h2>Buildings</h2>
+	<table>
+	  <tbody>
+		  <tr>
+			<td>Building Served</td>
+			<td></td>
+		  </tr>
+		{% for b in equipment.buildings.all %}
+		  <tr>
+			<td><a href="/{{ account.id }}/buildings/{{ b.id }}/">{{ b.name }}</a></td>
+			<td><a id="b{{ b.id }}" href="/{{ account.id }}/equipments/{{ equipment.id }}/remove_building/{{ b.id }}">remove</a></td>
+                <script type="text/javascript">
+                        // Initialize Variables
+                        var b{{ b.id }} = document.getElementById("b{{ b.id }}");
+                        //Function to open popup window
+                        b{{ b.id }}.onclick = function() {
+                            overlay.style.display = 'block';
+                            popup.style.display = 'block';
+                            return false;
+                        };
+                        //Function to execute remove url
+                        button_yes.onclick = function() {
+                            window.location = b{{ b.id }}.href;
+                        };
+                </script>		  
+		  </tr>
+		{% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/equipments/{{ equipment.id }}/connect_building/">+ Add Building</a></td>
+            <td></td>
+          </tr>
+	  </tbody>
+	</table>
+  {% endif %}
+
+  {% if equipment.spaces.all %}
+	<div class="clear">
+	  <div class="woo-sc-hr"></div>
+	</div>
+	<h2>Spaces</h2>
+	<table>
+	  <tbody>
+		  <tr>
+			<td>Space Served</td>
+			<td></td>
+		  </tr>
+		{% for s in equipment.spaces.all %}
+		  <tr>
+			<td><a href="/{{ account.id }}/spaces/{{ s.id }}/">{{ s.name }}</a></td>
+			<td><a id="s{{ s.id }}" href="/{{ account.id }}/equipments/{{ equipment.id }}/remove_space/{{ s.id }}">remove</a></td>
+                <script type="text/javascript">
+                        // Initialize Variables
+                        var s{{ s.id }} = document.getElementById("s{{ s.id }}");
+                        //Function to open popup window
+                        s{{ s.id }}.onclick = function() {
+                            overlay.style.display = 'block';
+                            popup.style.display = 'block';
+                            return false;
+                        };
+                        //Function to execute remove url
+                        button_yes.onclick = function() {
+                            window.location = s{{ s.id }}.href;
+                        };
+                </script>		  
+		  </tr>
+		{% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/equipments/{{ equipment.id }}/connect_space/">+ Add Space</a></td>
+            <td></td>
+          </tr>
+	  </tbody>
+	</table>
+  {% endif %}
+
+  {% if equipment.meters.all %}
+	<div class="clear">
+	  <div class="woo-sc-hr"></div>
+	</div>
+	<h2>Meters</h2>
+	<table>
+	  <tbody>
+		  <tr>
+			<td>Supplying Meter</td>
+			<td></td>
+		  </tr>
+		{% for m in equipment.meters.all %}
+		  <tr>
+			<td><a href="/{{ account.id }}/meters/{{ m.id }}/">{{ m.name }}</a></td>
+			<td><a id="m{{ m.id }}" href="/{{ account.id }}/equipments/{{ equipment.id }}/remove_meter/{{ m.id }}">remove</a></td>
+                <script type="text/javascript">
+                        // Initialize Variables
+                        var m{{ m.id }} = document.getElementById("m{{ m.id }}");
+                        //Function to open popup window
+                        m{{ m.id }}.onclick = function() {
+                            overlay.style.display = 'block';
+                            popup.style.display = 'block';
+                            return false;
+                        };
+                        //Function to execute remove url
+                        button_yes.onclick = function() {
+                            window.location = m{{ m.id }}.href;
+                        };
+                </script>		  
+		  </tr>
+		{% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/equipments/{{ equipment.id }}/connect_meter/">+ Add Meter</a></td>
+            <td></td>
+          </tr>
+	  </tbody>
+	</table>
+  {% endif %}
+
+  <div class="clear">
+    <div class="woo-sc-hr"></div>
+  </div>
+
+  <a id="eventlist"></a>
+  <h2>Alerts:</h2>
+  <table>
+	<tbody>
+	  {% if alerts %}
+		{% for a in alerts %}
+		  <tr>
+            <td>{{ a.get_field_1_display }} {{ a.get_utility_type_1_display }}</td>
+            <td>{{ a.get_comparator_display }}</td>
+            <td>{{ a.get_field_2_display }} {{ a.get_utility_type_2_display }}</td>
+		  </tr>
+		{% endfor %}
+	  {% else %}
+		<tr>
+		  <td>No alerts.</td>
+		</tr>
+	  {% endif %}
+	</tbody>
+  </table>
+
+  <div class="clear">
+	<div class="woo-sc-hr"></div>
+  </div>
+
+  <h2>Event Log:</h2>
+  <table>
+	<tbody>
+	  {% if events %}
+		{% for e in events %}
+		  <tr>
+			<td>{{ e.when|date:"m/d/Y" }}</td>
+			<td>{{ e.subject }}</td>
+		  </tr>
+		{% endfor %}
+	  {% else %}
+		<tr>
+		  <td>No events.</td>
+		</tr>
+	  {% endif %}
+	</tbody>
+  </table>
+
+  {% if adding_events_is_enabled %}
+	<h4>Add an event for this space:</h4>
+	<form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/equipments/{{ equipment.id }}/info/#eventlist" method="post">
+	  {% csrf_token %}
+	  <input type="text" class="event-date short datepicker" value="{% now "m/d/Y" %}" name="when"/>
+	  <input type="text" class="event-description" placeholder="Click to enter event description" name="subject"/>
+	  <input type="submit" class="woo-sc-button custom small woo-bu" value="Add" name="add_event"/>
+	</form>
+  {% endif %}
+
+</div> <!-- .tab-info -->
+
+{% endblock %}

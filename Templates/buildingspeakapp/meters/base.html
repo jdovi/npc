@@ -1,0 +1,113 @@
+{% extends 'app_base.html' %}
+
+{% block body %}
+
+<style type="text/css">
+#ui-tabs-1, #ui-tabs-2, #ui-tabs-3, #ui-tabs-4, #ui-tabs-5,
+#ui-tabs-6, #ui-tabs-7, #ui-tabs-8, #ui-tabs-9, #ui-tabs-10,
+#ui-tabs-11, #ui-tabs-12, #ui-tabs-13, #ui-tabs-14  {
+  display: none !important;
+}
+.tab-container {
+  background-color: #ffffff;
+  overflow: auto;
+  margin: 0;
+  padding: 9px 18px;
+  clear: both;
+}
+.actions { text-align: right; }
+a.button { background-color: #5298d2 !important; }
+a.button:hover { background-color: #3076b0 !important; }
+</style>
+
+<header>
+  <font size="3">
+	<a href="/{{ account.id }}/">Account: {{ account.name }}</a>  >  
+	Meter: {{ meter.name }}
+  </font>
+  <img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ main_page_help_text }}"></img>
+</header>
+
+<section class="entry">
+  <div class="shortcode-tabs default" id="tabs-13">
+    <ul class="tab_titles">
+      <li class="nav-tab {% if tab == 'info' %}ui-tabs-active ui-state-active{% endif %}">
+        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/info/">Info</a>
+      </li>
+
+      <li class="nav-tab {% if tab == 'data' or tab == 'select_month' or tab == 'overwrite'%}ui-tabs-active ui-state-active{% endif %}">
+        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/data/">Data</a>
+      </li>
+
+      <li class="nav-tab {% if tab == 'upload' %}ui-tabs-active ui-state-active{% endif %}">
+        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/upload/">Upload</a>
+      </li>
+
+      <li class="nav-tab {% if tab == 'bars' %}ui-tabs-active ui-state-active{% endif %}">
+        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/bars/">Bars</a>
+      </li>
+
+      <li class="nav-tab {% if tab == 'tables' %}ui-tabs-active ui-state-active{% endif %}">
+        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/tables/">Tables</a>
+      </li>
+
+      <li class="nav-tab {% if tab == 'fiveyear' %}ui-tabs-active ui-state-active{% endif %}">
+        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/fiveyear/">5yr</a>
+      </li>
+
+<!--      <li class="nav-tab {% if tab == 'motion' %}ui-tabs-active ui-state-active{% endif %}">-->
+<!--        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/motion/">Motion</a>-->
+<!--      </li>-->
+
+      {% if user.is_staff %}
+      <li class="nav-tab {% if tab == 'stats' %}ui-tabs-active ui-state-active{% endif %}">
+        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/stats/">Stats</a>
+      </li>
+      {% endif %}
+
+      <li class="nav-tab {% if tab == 'details' %}ui-tabs-active ui-state-active{% endif %}">
+        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/details/">Details</a>
+      </li>
+
+      <li class="nav-tab {% if tab == 'alerts' %}ui-tabs-active ui-state-active{% endif %}">
+        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/alerts/">Alerts</a>
+      </li>
+
+      {% if user.is_staff %}
+      <li class="nav-tab {% if tab == 'staff' %}ui-tabs-active ui-state-active{% endif %}">
+        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/staff/">Staff</a>
+      </li>
+      <li class="nav-tab {% if tab == 'launch' or tab == 'select_month_launch' or tab == 'overwrite_launch'%}ui-tabs-active ui-state-active{% endif %}">
+        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/launch/">Launch</a>
+      </li>
+      {% endif %}
+
+      {% if tab == 'connect_building' %}
+        <li class="nav-tab ui-tabs-active ui-state-active">
+          <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/connect_building/">Connect Building</a>
+        </li>
+      {% endif %}
+      {% if tab == 'connect_space' %}
+        <li class="nav-tab ui-tabs-active ui-state-active">
+          <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/connect_space/">Connect Space</a>
+        </li>
+      {% endif %}
+      {% if tab == 'connect_equipment' %}
+      <li class="nav-tab ui-tabs-active ui-state-active">
+        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/connect_equipment/">Connect Equipment</a>
+      </li>
+      {% endif %}
+      {% if tab == 'connect_measure' %}
+      <li class="nav-tab ui-tabs-active ui-state-active">
+        <a class="static" href="/{{ account.id }}/meters/{{ meter.id }}/connect_efficiency_measure/">Connect Measure</a>
+      </li>
+      {% endif %}
+    </ul> <!-- .nav-tabs -->
+
+    {% block contents %}
+    {% endblock %}
+
+  </div>
+</section> <!-- .entry -->
+
+{% endblock %}

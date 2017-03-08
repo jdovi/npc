@@ -1,0 +1,51 @@
+{% extends 'buildingspeakapp/accounts/base.html' %}
+{% block contents %}
+
+<div class="tab tab-info">
+  <div style="width: 50%;
+             display: block;
+             margin-left: auto;
+             margin-right: auto;">
+
+        {% if account.status == 'Delinquent' %}
+        Your account is currently <strong>Delinquent</strong>, meaning we were unable to charge your credit card even after three attempts.  Please update the card information on the Billing tab or email us at <a href="mailto:support@buildingspeak.com?Subject=help%20status%20delinquent" target="_top">support@buildingspeak.com</a> if you believe the card is active and the information correct.
+        {% endif %}
+
+        {% if account.status == 'Closed' %}
+        Your account is currently <strong>Closed</strong>.  If you're interested in reactivating it, please email us at <a href="mailto:support@buildingspeak.com?Subject=help%20status%20closed" target="_top">support@buildingspeak.com</a>.
+        {% endif %}
+
+        {% if account.status == 'Inactive' %}
+        Your account is currently <strong>Inactive</strong>.  Please enter credit card information on the Billing tab so we can activate your account.  If you run into trouble, email us at <a href="mailto:support@buildingspeak.com?Subject=help%20status%20inactive" target="_top">support@buildingspeak.com</a>.
+        {% endif %}
+
+        {% if account.status == 'No Terms' %}
+        We need you to agree to our latest Terms of Use before we can give you full access to your account.  Please click the button below to indicate your acceptance of our current terms and you can be on your way!
+        {% endif %}
+
+        {% if account.status == 'Construction' %}
+        Your account has been activated and we're working to load all your data.  As soon as we're done, we'll send you an email letting you know your account is up and running.  Thanks for your patience!
+        {% endif %}
+
+    
+    {% if account.status == 'No Terms' %}
+        <br>
+        <br>
+        <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/status/" method="post"
+              style="width: 50%;
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    text-align: center;">
+          {% csrf_token %}
+        <a href="http://buildingspeak.com/terms-of-use/" target="_blank">Read Terms of Use</a>
+        <br>
+        <br>
+        <input type="submit" value="I Agree" name="agree_to_terms"/>
+        </form>
+    {% endif %}
+
+  </div>
+</div> <!-- .tab-info -->
+
+{% endblock %}

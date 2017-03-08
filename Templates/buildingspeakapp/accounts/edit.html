@@ -1,0 +1,72 @@
+{% extends 'buildingspeakapp/accounts/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+	<form enctype="multipart/form-data" class="form-wrapper" action="/{{ account.id }}/edit/" method="post">{% csrf_token %}
+		{{ account_edit_form.non_field_errors }}
+		<div class="form-row-set">
+		  {{ account_edit_form.name.label_tag }}
+		  {{ account_edit_form.name }}
+		  {{ account_edit_form.name.errors }}
+		</div>
+		<div class="form-row-set">
+		  {{ account_edit_form.street_address.label_tag }}
+		  {{ account_edit_form.street_address }}
+		  {{ account_edit_form.street_address.errors }}
+		</div>
+		<div class="form-row-set">
+		  {{ account_edit_form.city.label_tag }}
+		  {{ account_edit_form.city }}
+		  {{ account_edit_form.city.errors }}
+		</div>
+		<div class="form-row-set">
+		  {{ account_edit_form.state.label_tag }}
+		  {{ account_edit_form.state }}
+		  {{ account_edit_form.state.errors }}
+		</div>
+		<div class="form-row-set">
+		  {{ account_edit_form.zip_code.label_tag }}
+		  {{ account_edit_form.zip_code }}
+		  {{ account_edit_form.zip_code.errors }}
+		</div>
+		<div class="form-row-set">
+		  {{ account_edit_form.first_name.label_tag }}
+		  {{ account_edit_form.first_name }}
+		  {{ account_edit_form.first_name.errors }}
+		</div>
+		<div class="form-row-set">
+		  {{ account_edit_form.last_name.label_tag }}
+		  {{ account_edit_form.last_name }}
+		  {{ account_edit_form.last_name.errors }}
+		</div>
+		<div class="form-row-set">
+		  {{ account_edit_form.title.label_tag }}
+		  {{ account_edit_form.title }}
+		  {{ account_edit_form.title.errors }}
+		</div>
+		<div class="form-row-set">
+		  {{ account_edit_form.email.label_tag }}
+		  {{ account_edit_form.email }}
+		  {{ account_edit_form.email.errors }}
+		</div>
+		<div class="form-row-set">
+		  {{ account_edit_form.phone.label_tag }}
+		  {{ account_edit_form.phone }}
+		  {{ account_edit_form.phone.errors }}
+		</div>
+		<div class="form-row-set">
+		  {{ account_edit_form.image_file.label_tag }}
+		  {{ account_edit_form.image_file }}
+		  {{ account_edit_form.image_file.errors }}
+		</div>
+		
+        <div class="form-row-set-buttons">
+        <input class="woo-sc-button custom small woo-bu" type="submit" value="Create" name="edit_account_details"/>
+        <a href="/{{ account.id }}/details/">Cancel</a>
+        </div>
+        
+	</form>
+  </div>
+
+{% endblock %}

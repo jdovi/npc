@@ -1,0 +1,30 @@
+{% extends 'buildingspeakapp/measures/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/measures/{{ measure.id }}/connect_meter/" method="post">{% csrf_token %}
+      {{ connect_efficiency_measure_meter_form.non_field_errors }}
+      <div class="form-item">
+        {{ connect_efficiency_measure_meter_form.efficiency_measure.label_tag }}
+        {{ connect_efficiency_measure_meter_form.efficiency_measure }}
+        {{ connect_efficiency_measure_meter_form.efficiency_measure.errors }}
+      </div>
+      <div class="form-item">
+        {{ connect_efficiency_measure_meter_form.meter.label_tag }}
+        {{ connect_efficiency_measure_meter_form.meter }}
+        {{ connect_efficiency_measure_meter_form.meter.errors }}
+      </div>
+      <div class="form-item">
+        {{ connect_efficiency_measure_meter_form.assigned_fraction.label_tag }}
+        {{ connect_efficiency_measure_meter_form.assigned_fraction }}
+        {{ connect_efficiency_measure_meter_form.assigned_fraction.errors }}
+      </div>
+
+	  <a style="margin: 5px" class="button" href="/{{ account.id }}/measures/{{ measure.id }}/info/">Cancel</a>
+	  <input style="margin: 5px" type="submit" value="Save" name="connect_efficiency_measure_meter"/>
+    
+	</form>
+  </div>
+{% endblock %}
+

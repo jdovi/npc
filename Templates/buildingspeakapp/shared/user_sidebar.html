@@ -1,0 +1,8 @@
+<ul id="menu-left-menu" class="menu">
+  {% if user.user_profile.image_file %}
+    <img src="{{ user.user_profile.image_file.url }}" alt="UserProfile image" width="120" height=auto/> <p><b>User: </b>{{ user.username }}</p>
+  {% else %}
+    <img src="{{ STATIC_PREFIX }}default_images/default_user_image.png" alt="UserProfile image" width="120" height=auto/> <p><b>User: </b>{{ user.username }}</p>
+  {% endif %}
+</ul>
+

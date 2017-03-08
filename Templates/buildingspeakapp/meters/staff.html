@@ -1,0 +1,64 @@
+{% extends 'buildingspeakapp/meters/base.html' %}
+
+{% block contents %}
+
+
+<div class="tab tab-staff">
+  <h2>Bill Data Collection</h2>
+  Retrieved utility data will appear as a dictionary of dictionaries, one for each utility. <br>
+  Example: {'Constellation': {'Supply Cost': '999.99'}, 'NationalGrid': {'Consumption': '1234.56', 'Total Cost': '321'}}. <br>
+  User can update values, save, and attempt to process the data if complete.
+
+  <div class="clear">
+    <div class="woo-sc-hr"></div>
+  </div>
+
+  <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/meters/{{ meter.id }}/staff/" method="post">
+  <div id="staged_monthling" style="width: 100%;">
+      {% csrf_token %}
+      {{ meter_edit_form.non_field_errors }}
+        {{ meter_edit_form.staged_monthling_dict.label_tag }}
+        {{ meter_edit_form.staged_monthling_dict }}
+        {{ meter_edit_form.staged_monthling_dict.errors }}
+      <br>
+      <br>
+      <input type="submit" value="Get Data" name="retrieve_data"/>
+      <input type="submit" value="Save Model" name="save_model"/>
+      <input type="submit" value="Load This Month" name="load_this_month"/>
+  </div>
+  
+  <div class="clear">
+    <div class="woo-sc-hr"></div>
+  </div>
+  
+  <div>
+    <table>
+      <tr>
+        <th>Utility</th>
+        <th>Notes</th>
+        <th>Last Successful Retrieval Date</th>
+        <th>Next Retrieval Date</th>
+      </tr>
+    
+      {% for ubdc in collector_info %}
+        <tr>
+          <td>{{ ubdc.utility_name }}</td>
+          <td>{{ ubdc.notes }}</td>
+          <td>{{ ubdc.last_successful_retrieval_date }}</td>
+          <td>{{ ubdc.next_retrieval_date }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <input type="submit" value="Clear Dict & Dates" name="clear_dict_and_dates"/>
+  </form>
+
+  <div class="clear">
+    <div class="woo-sc-hr"></div>
+  </div>
+
+</div> <!-- .tab-staff -->
+
+
+{% endblock %}
+

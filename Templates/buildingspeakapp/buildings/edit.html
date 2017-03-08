@@ -1,0 +1,112 @@
+{% extends 'buildingspeakapp/buildings/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+    <form enctype="multipart/form-data" class="form-wrapper" action="/{{ account.id }}/buildings/{{ building.id }}/edit/" method="post">{% csrf_token %}
+      {{ building_edit_form.non_field_errors }}
+      <div class="form-row-set">
+        {{ building_edit_form.name.label_tag }}
+        {{ building_edit_form.name }}
+        {{ building_edit_form.name.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.street_address.label_tag }}
+        {{ building_edit_form.street_address }}
+        {{ building_edit_form.street_address.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.city.label_tag }}
+        {{ building_edit_form.city }}
+        {{ building_edit_form.city.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.state.label_tag }}
+        {{ building_edit_form.state }}
+        {{ building_edit_form.state.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.zip_code.label_tag }}
+        {{ building_edit_form.zip_code }}
+        {{ building_edit_form.zip_code.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.vintage.label_tag }}
+        {{ building_edit_form.vintage }}
+        {{ building_edit_form.vintage.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.square_footage.label_tag }}
+        {{ building_edit_form.square_footage }}
+        {{ building_edit_form.square_footage.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.stories.label_tag }}
+        {{ building_edit_form.stories }}
+        {{ building_edit_form.stories.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.max_occupancy.label_tag }}
+        {{ building_edit_form.max_occupancy }}
+        {{ building_edit_form.max_occupancy.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.building_type.label_tag }}
+        {{ building_edit_form.building_type }}
+        {{ building_edit_form.building_type.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.EIA_type.label_tag }}
+        {{ building_edit_form.EIA_type }}
+        {{ building_edit_form.EIA_type.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.ESPM_type.label_tag }}
+        {{ building_edit_form.ESPM_type }}
+        {{ building_edit_form.ESPM_type.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.ESPM_primary_function.label_tag }}
+        {{ building_edit_form.ESPM_primary_function }}
+        {{ building_edit_form.ESPM_primary_function.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.first_name.label_tag }}
+        {{ building_edit_form.first_name }}
+        {{ building_edit_form.first_name.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.last_name.label_tag }}
+        {{ building_edit_form.last_name }}
+        {{ building_edit_form.last_name.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.title.label_tag }}
+        {{ building_edit_form.title }}
+        {{ building_edit_form.title.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.email.label_tag }}
+        {{ building_edit_form.email }}
+        {{ building_edit_form.email.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.phone.label_tag }}
+        {{ building_edit_form.phone }}
+        {{ building_edit_form.phone.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_edit_form.image_file.label_tag}}
+        {{ building_edit_form.image_file }}
+        {{ building_edit_form.image_file.errors }}
+      </div>
+	  
+	  <div class="form-row-set-buttons">
+	      <input class="woo-sc-button custom small woo-bu" type="submit" value="Create" name="edit_building_details"/>
+	      <a href="/{{ account.id }}/buildings/{{ building.id }}/details/">Cancel</a>
+	  </div>
+    
+	</form>
+  </div>
+{% endblock %}
+

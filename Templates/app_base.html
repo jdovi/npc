@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <title>BuildingSPEAK</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name='robots' content='noindex,nofollow' />
+
+  <link rel='stylesheet' id='jquery-style-css'  href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/base/jquery.ui.base.css?ver=3.5.1' type='text/css' media='all' />
+
+  <!-- Stylesheets -->
+  <link href="{% static 'app/css/jquery.fancybox.css' %}?{% now 'U' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'app/css/jquery-accordion.css' %}?{% now 'U' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'app/css/tooltipster.css' %}?{% now 'U' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'app/css/tooltipster-light.css' %}?{% now 'U' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'app/css/resort/style.css' %}?{% now 'U' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'app/css/resort/layout.css' %}?{% now 'U' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'app/css/resort/shortcodes.css' %}?{% now 'U' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'app/css/resort/default.css' %}?{% now 'U' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'app/css/resort/custom.css' %}?{% now 'U' %}" rel="stylesheet" type="text/css" />
+
+  <!-- Javascripts -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="{% static 'app/js/jquery.ui.core.min.js' %}?{% now 'U' %}"></script>
+  <script src="{% static 'app/js/jquery.ui.datepicker.min.js' %}?{% now 'U' %}"></script>
+  <script src="{% static 'app/js/jquery.ui.widget.min.js' %}?{% now 'U' %}"></script>
+  <script src="{% static 'app/js/jquery.ui.tabs.min.js' %}?{% now 'U' %}"></script>
+  <script src="{% static 'app/js/jquery-accordion.js' %}?{% now 'U' %}"></script>
+  <script src="{% static 'app/js/jquery.tooltipster.min.js' %}?{% now 'U' %}"></script>
+  <script src="{% static 'app/js/jquery.ba-throttle-debounce.min.js' %}?{% now 'U' %}"></script>
+  <script src="{% static 'app/js/comment-reply.min.js' %}?{% now 'U' %}"></script>
+  <script src="{% static 'app/js/jquery.fancybox.pack.js' %}?{% now 'U' %}"></script>
+  <script src="{% static 'app/js/resort/general.js' %}?{% now 'U' %}"></script>
+  <script src="{% static 'app/js/resort/shortcodes.js' %}?{% now 'U' %}"></script>
+  <script src="{% static 'app/js/resort/third-party.js' %}?{% now 'U' %}"></script>
+
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <!--
+  <%= csrf_meta_tags %>
+  -->
+
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+  <!--  Mobile viewport scale | Disable user zooming as the layout is optimised -->
+  <meta content="initial-scale=1.0; maximum-scale=1.0; user-scalable=no" name="viewport"/>
+  <!--[if lt IE 9]>
+  <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <!-- Woo Custom Styling -->
+  <style type="text/css">
+  a.button, a.comment-reply-link, #commentform #submit, #contact-page .submit { background: #eed062 !important; border-color: #eed062 !important; }
+  a.button:hover, a.button.hover, a.button.active, a.comment-reply-link:hover, #commentform #submit:hover, #contact-page .submit:hover { background: #eed062 !important; opacity: 0.9; }
+  </style>
+
+  <!-- Google Webfonts -->
+  <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic" rel="stylesheet" type="text/css" />
+
+  <!-- Woo Custom Typography -->
+  <style type="text/css">
+  #header .site-title a {font:bold 1.6em/1em 'Lato', arial, sans-serif;color:#eed062;}
+  #header .site-description {font:normal 1em/1em "Helvetica Neue", Helvetica, sans-serif;color:#999999;}
+  </style>
+
+  <script type="text/javascript">
+  $(function() {
+    var activeNav = $('#accordion .panel').map(function(index, obj) {
+      return $(obj).hasClass('active');
+    }).index(true);
+    if (activeNav == -1) activeNav = null;
+    $( "#accordion" ).accordion({
+      collapsible: true,
+      heightStyle: "content",
+      active:      activeNav
+    });
+    $('.tooltip').tooltipster({
+       theme: 'tooltipster-light',
+       position: 'right',
+    });
+  });
+  </script>
+</head>
+
+<body class="page page-id-5 page-template-default unknown alt-style-default layout-right-content has-top-menu">
+
+<div id="wrapper">
+  <div id="overlay"></div>
+    <div id="popup">
+      <div class="popupcontrols">
+        <span id="popclose">X</span>
+      </div>
+      <div class="clear">
+        <div class="woo-sc-hr"></div>
+      </div>
+      <div class="popupcontent">
+
+            <h3>Are you sure you want to delete this item?</h3></br>
+            <div>
+                <button class="woo-sc-button custom small woo-bu" id="button_yes">Yes</button>
+                <button class="woo-sc-button custom small woo-bu" id="button_no">No</button>
+            </div>
+      </div>
+  </div>
+  <div id="top">
+    <nav class="col-full" role="navigation">
+	  <div style="float: left;"><a href="http://www.buildingspeak.com"><img src="{% static 'app/img/BuildingSPEAK logo - without tagline - 20dpi.png' %}" alt="BuildingSpeak logo" style="height: 18px;"/></a><i> Give your building a voice.</i></div>
+      <ul id="top-nav" class="nav fr">
+        <li class="menu-item" style="top: 6px; width: 95px;">currently viewing:</li>
+		<li class="menu-item account-selector">
+          <select>
+            <option value="">Select an account...</option>
+            {% for acct in accounts %}
+              <option value="{{ acct.id }}" {% if acct.id == account.id %}selected{% endif %}>{{ acct.name }}</option>
+            {% endfor %}
+          </select>
+        </li>
+        <script>
+          $(function() {
+            var obj = $('.account-selector select');
+            obj.bind('change', function() {
+              var val = obj.val();
+              window.location = "/" + val;
+            });
+          });
+        </script>
+		{% if user.is_staff %}
+		 <li class="menu-item">
+		   <a href="/listofdocs/">Docs</a>
+		 </li>
+        {% endif %}
+		{% if user.is_staff %}
+		 <li class="menu-item">
+		   <a href="/staff/">Staff</a>
+		 </li>
+        {% endif %}
+		{% if user.username %}
+		 <li class="menu-item">
+		   <a href="/user-account/">{{ user.username }}</a>
+		 </li>
+		{% endif %}
+		{% if not user.username %}
+		 <li class="menu-item">
+		   <a href="/login/">Login</a>
+		 </li>
+		{% endif %}
+        <li class="menu-item">
+          <a href="/logout/">Logout</a>
+        </li>
+      </ul> <!-- #top-nav -->
+    </nav> <!-- .col-full -->
+  </div> <!-- #top -->
+
+  <header id="header" class="fixed" style="margin: 0px;
+										   height: 97px;
+										   background-position: 0px 50%;
+										   background: 0">
+    <div id="fixed-header" class="fixed" style="margin: 0px;
+											    width: 100%;
+											    padding: 10px;
+												top: 33px;">
+	
+      <div class="col-full">
+        <hgroup>
+		  {% if account.name %}
+		  <font size="6"><a href="/{{ account.id }}/">{{ account.name }}</a></font>
+		  <br>
+          <h2 class="site-description">{{ account.city }}, {{ account.state }}</h2>
+          {% else %}
+			  {% if 'user-account' in request.path %}
+			  <font size="6"><a href="/user-account/">User Settings</a></font>
+			  {% endif %}
+		  {% endif %}
+        </hgroup>
+		  {% if account.image_file %}
+            <h3 class="site-description" style="float:right;">
+				<img src="{{ account.image_file.url }}" alt="organization image" style="height: 60px;"/>
+            </h3>
+          {% endif %}
+      </div>
+    </div>
+  </header>
+ <!--- if user.username    this is what used to go above in place of 'user' in request.path to decide whether to show User Settings link--->
+
+  <div id="content" class="page col-full">
+    <div class="alerts">
+
+      {% block messages %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="{{ forloop.counter }}">
+                <div class="woo-sc-box {{ message.tags }} large rounded full">
+                    <a class="dismiss" href="#" onclick="jQuery('.{{ forloop.counter }}').animate({ opacity: 0 }).slideUp();">Dismiss</a>
+                    <strong>{{ message.level_tag }}</strong>
+                    <div>
+                      {{ message }}
+                    </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+      {% endblock messages %}
+    </div> <!-- .alerts -->
+
+    <section id="main" {% if sidebar %}class="col-left"{% else %}class="fullwidth"{% endif %}>
+      <article class="post-5 page type-page status-publish hentry">
+        <div class="inner">
+          {% block body %}
+          {% endblock %}
+        </div><!-- .inner -->
+      </article><!-- .post -->
+    </section><!-- #main -->
+
+    {% if sidebar %}
+      <aside id="sidebar" class="col-right">
+        <div class="primary">
+          <div id="nav_menu-2" class="widget widget_nav_menu">
+            <div class="inner">
+              <div class="menu-left-menu-container">
+                {% include sidebar %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside><!-- /#sidebar -->
+    {% endif %}
+  </div><!-- /#content -->
+
+  <div id="footer-wrapper">
+    <footer id="footer" class="col-full">
+      <div id="credit" class="col-right"></div>
+      <div id="copyright" class="col-left">
+        <p>BuildingSPEAK &copy; 2014. All Rights Reserved.</p>
+      </div>
+    </footer> <!-- #footer  -->
+  </div> <!-- #footer-wrapper -->
+</div><!-- #wrapper -->
+
+<script type="text/javascript">
+jQuery(function() {
+  jQuery('.datepicker').datepicker();
+});
+</script>
+
+
+<script type="text/javascript">
+    //initial popup variables
+var closePopup = document.getElementById("popclose");
+var overlay = document.getElementById("overlay");
+var popup = document.getElementById("popup");
+    // Close Popup Event
+closePopup.onclick = function() {
+    overlay.style.display = 'none';
+    popup.style.display = 'none';
+};
+    // Hide Overlay and Popup
+button_no.onclick = function() {
+    overlay.style.display = 'none';
+    popup.style.display = 'none';
+};
+</script>
+
+<!--[if lt IE 9]>
+<script src="/wp-content/themes/resort/includes/js/respond.js"></script>
+<![endif]-->
+</body>
+</html>
+

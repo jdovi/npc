@@ -1,0 +1,186 @@
+{% extends 'buildingspeakapp/spaces/base.html' %}
+{% load humanize %}
+
+{% block contents %}
+
+<div class="tab tab-info">
+  <div class="row">
+    <div class="fivecol-three space-details">
+      {% if space.building %}
+        <div class="form-item">
+          <label>Building:</label>
+          <span>{{ space.building.name }}</span>
+        </div>
+      {% endif %}
+      {% if space.square_footage %}
+        <div class="form-item">
+          <label>Floorspace (SF):</label>
+          <span>{{ space.square_footage|floatformat:0|intcomma }}</span>
+        </div>
+      {% endif %}
+      {% if space.space_type %}
+        <div class="form-item">
+          <label>Space Type:</label>
+          <span>{{ space.space_type }}</span>
+        </div>
+      {% endif %}
+
+	  <span><a href="/{{ account.id }}/spaces/{{ space.id }}/edit/">Edit Space Details</a></span>
+
+	  </div>
+    <div class="fivecol-two last">
+      <ul class="images">
+        {% if space.image_file %}
+          <li>
+            <a rel="images" href="{{ space.image_file.url }}"><img src="{{ space.image_file.url }}"  style="height: 100px;"/></a>
+          </li>
+		{% else %}
+          <li>
+            <a rel="images" href="{{ STATIC_PREFIX }}default_images/default_space_image.png"><img src="{{ STATIC_PREFIX }}default_images/default_space_image.png"  style="height: 100px;"/></a>
+          </li>
+		{% endif %}
+      </ul>
+    </div> <!-- .fivecol-two -->
+  </div> <!-- .row -->
+
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/spaces/{{ space.id }}/info/" method="post">
+      {% csrf_token %}
+    <img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ tab_help_text|safe }}"></img>
+    <input type="submit" value="Export" name="export_info_tab" style="float:right;"/>
+    </form>
+
+	{% if space_measures %}
+    <div class="clear">
+      <div class="woo-sc-hr"></div>
+    </div>
+    <h2>Efficiency Measures</h2>
+    <table>
+      <tbody>
+          <tr>
+            <td>Efficiency Measure</td>
+            <td>Start Date</td>
+          </tr>
+        {% for sm in space_measures %}
+          <tr>
+            <td><a href="/{{ account.id }}/measures/{{ sm.id }}/">{{ sm.name }}</a></td>
+            <td>{{ sm.start_date }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+  {% if space.spacemeterapportionment_set.all %}
+    <div class="clear">
+      <div class="woo-sc-hr"></div>
+    </div>
+    <h2>Meters</h2>
+    <table>
+      <tbody>
+          <tr>
+            <td>Meter</td>
+            <td>Fuel Type</td>
+            <td>Fraction of Meter Assigned</td>
+            <td></td>
+          </tr>
+        {% for sma in space.spacemeterapportionment_set.all %}
+          <tr>
+            <td><a href="/{{ account.id }}/meters/{{ sma.meter.id }}/">{{ sma.meter.name }} - {{ sma.meter.utility_type }}</a></td>
+            <td>{{ sma.meter.utility_type }}</td>
+            <td>{{ sma.assigned_fraction|floatformat:3|intcomma }}</td>
+            <td>
+                <a href="/{{ account.id }}/spaces/{{ space.id }}/connect_meter/{{ sma.id }}">edit</a>
+                /
+                <a href="/{{ account.id }}/spaces/{{ space.id }}/remove_meter/{{ sma.id }}">remove</a>
+            </td>
+          </tr>
+        {% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/spaces/{{ space.id }}/connect_meter/">+ Add Meter</a></td>
+            <td></td>
+          </tr>
+      </tbody>
+    </table>
+  {% endif %}
+
+  {% if space.equipment_set.all %}
+    <div class="clear">
+      <div class="woo-sc-hr"></div>
+    </div>
+    <h2>Equipment</h2>
+    <table>
+      <tbody>
+          <tr>
+            <td>Equipment</td>
+            <td></td>
+          </tr>
+        {% for e in space.equipment_set.all %}
+          <tr>
+            <td><a href="/{{ account.id }}/equipments/{{ e.id }}/">{{ e.name }}</a></td>
+            <td><a href="/{{ account.id }}/spaces/{{ space.id }}/remove_equipment/{{ e.id }}">remove</a></td>
+          </tr>
+        {% endfor %}
+          <tr>
+            <td><a href="/{{ account.id }}/spaces/{{ space.id }}/connect_equipment/">+ Add Equipment</a></td>
+            <td></td>
+          </tr>
+      </tbody>
+    </table>
+  {% endif %}
+
+  <div class="clear">
+    <div class="woo-sc-hr"></div>
+  </div>
+
+  <a id="eventlist"></a>
+  <h2>Alerts:</h2>
+  <table>
+    <tbody>
+      {% if alerts %}
+        {% for a in alerts %}
+          <tr>
+            <td>{{ a.get_field_1_display }} {{ a.get_utility_type_1_display }}</td>
+            <td>{{ a.get_comparator_display }}</td>
+            <td>{{ a.get_field_2_display }} {{ a.get_utility_type_2_display }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td>No alerts.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <h2>Event Log:</h2>
+  <table>
+    <tbody>
+      {% if events %}
+        {% for e in events %}
+          <tr>
+            <td>{{ e.when|date:"m/d/Y" }}</td>
+            <td>{{ e.subject }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td>No events.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  {% if adding_events_is_enabled %}
+    <h4>Add an event for this space:</h4>
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/spaces/{{ space.id }}/info/#eventlist" method="post">
+      {% csrf_token %}
+      <input type="text" class="event-date short datepicker" value="{% now "m/d/Y" %}" name="when"/>
+      <input type="text" class="event-description" placeholder="Click to enter event description" name="subject"/>
+      <input type="submit" class="woo-sc-button custom small woo-bu" value="Add" name="add_event"/>
+    </form>
+  {% endif %}
+
+</div> <!-- .tab-info -->
+
+{% endblock %}
+

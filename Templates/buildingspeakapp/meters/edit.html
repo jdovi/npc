@@ -1,0 +1,92 @@
+{% extends 'buildingspeakapp/meters/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+    <form enctype="multipart/form-data" class="form-wrapper" action="/{{ account.id }}/meters/{{ meter.id }}/edit/" method="post">{% csrf_token %}
+      {{ meter_edit_form.non_field_errors }}
+      <div class="form-row-set">
+        {{ meter_edit_form.name.label_tag }}
+        {{ meter_edit_form.name }}
+        {{ meter_edit_form.name.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.serves.label_tag }}
+        {{ meter_edit_form.serves }}
+        {{ meter_edit_form.serves.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.location.label_tag }}
+        {{ meter_edit_form.location }}
+        {{ meter_edit_form.location.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.zip_code.label_tag }}
+        {{ meter_edit_form.zip_code }}
+        {{ meter_edit_form.zip_code.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.make.label_tag }}
+        {{ meter_edit_form.make }}
+        {{ meter_edit_form.make.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.model.label_tag }}
+        {{ meter_edit_form.model }}
+        {{ meter_edit_form.model.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.serial_number.label_tag }}
+        {{ meter_edit_form.serial_number }}
+        {{ meter_edit_form.serial_number.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.utility.label_tag }}
+        {{ meter_edit_form.utility }}
+        {{ meter_edit_form.utility.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.utility_account_number.label_tag }}
+        {{ meter_edit_form.utility_account_number }}
+        {{ meter_edit_form.utility_account_number.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.utility_meter_number.label_tag }}
+        {{ meter_edit_form.utility_meter_number }}
+        {{ meter_edit_form.utility_meter_number.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.image_file.label_tag }}
+        {{ meter_edit_form.image_file }}
+        {{ meter_edit_form.image_file.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.nameplate_file.label_tag }}
+        {{ meter_edit_form.nameplate_file }}
+        {{ meter_edit_form.nameplate_file.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.utility_type.label_tag }}
+        {{ meter_edit_form.utility_type }}
+        {{ meter_edit_form.utility_type.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.units.label_tag }}
+        {{ meter_edit_form.units }}
+        {{ meter_edit_form.units.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ meter_edit_form.cost_forecast_method.label_tag }}
+        {{ meter_edit_form.cost_forecast_method }}
+        {{ meter_edit_form.cost_forecast_method.errors }}
+      </div>
+	  
+	  <div class="form-row-set-buttons">
+	      <input class="woo-sc-button custom small woo-bu" type="submit" value="Save" name="edit_meter_details"/>
+	      <a href="/{{ account.id }}/meters/{{ meter.id }}/details/">Cancel</a>
+	  </div>
+	  </form>
+
+  </div>
+{% endblock %}
+

@@ -1,0 +1,88 @@
+{% extends 'buildingspeakapp/accounts/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+    <form enctype="multipart/form-data" class="form-wrapper" action="/{{ account.id }}/add_efficiency_measure/" method="post">{% csrf_token %}
+      {{ add_efficiency_measure_form.non_field_errors }}
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.name.label_tag }}
+        {{ add_efficiency_measure_form.name }}
+        {{ add_efficiency_measure_form.name.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.zip_code.label_tag }}
+        {{ add_efficiency_measure_form.zip_code }}
+        {{ add_efficiency_measure_form.zip_code.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.start_date.label_tag }}
+        {{ add_efficiency_measure_form.start_date }}
+        {{ add_efficiency_measure_form.start_date.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.end_date.label_tag }}
+        {{ add_efficiency_measure_form.end_date }}
+        {{ add_efficiency_measure_form.end_date.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.annual_consumption_savings.label_tag }}
+        {{ add_efficiency_measure_form.annual_consumption_savings }}
+        {{ add_efficiency_measure_form.annual_consumption_savings.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.peak_demand_savings.label_tag }}
+        {{ add_efficiency_measure_form.peak_demand_savings }}
+        {{ add_efficiency_measure_form.peak_demand_savings.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.annual_cost_savings.label_tag }}
+        {{ add_efficiency_measure_form.annual_cost_savings }}
+        {{ add_efficiency_measure_form.annual_cost_savings.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.percent_uncertainty.label_tag }}
+        {{ add_efficiency_measure_form.percent_uncertainty }}
+        {{ add_efficiency_measure_form.percent_uncertainty.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.percent_cool.label_tag }}
+        {{ add_efficiency_measure_form.percent_cool }}
+        {{ add_efficiency_measure_form.percent_cool.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.percent_heat.label_tag }}
+        {{ add_efficiency_measure_form.percent_heat }}
+        {{ add_efficiency_measure_form.percent_heat.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.percent_flat.label_tag }}
+        {{ add_efficiency_measure_form.percent_flat }}
+        {{ add_efficiency_measure_form.percent_flat.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.percent_fixed.label_tag }}
+        {{ add_efficiency_measure_form.percent_fixed }}
+        {{ add_efficiency_measure_form.percent_fixed.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.utility_type.label_tag }}
+        {{ add_efficiency_measure_form.utility_type }}
+        {{ add_efficiency_measure_form.utility_type.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ add_efficiency_measure_form.units.label_tag }}
+        {{ add_efficiency_measure_form.units }}
+        {{ add_efficiency_measure_form.units.errors }}
+      </div>
+      
+      <div class="form-row-set-buttons">
+	  <input class="woo-sc-button custom small woo-bu" type="submit" value="Create" name="add_efficiency_measure"/>
+	  <a href="/{{ account.id }}/add/">Cancel</a>
+	  </div>
+	      
+	</form>
+  </div>
+
+{% endblock %}
+

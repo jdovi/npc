@@ -1,0 +1,30 @@
+{% extends 'buildingspeakapp/spaces/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/spaces/{{ space.id }}/connect_meter/" method="post">{% csrf_token %}
+      {{ connect_space_meter_form.non_field_errors }}
+      <div class="form-item">
+        {{ connect_space_meter_form.space.label_tag }}
+        {{ connect_space_meter_form.space }}
+        {{ connect_space_meter_form.space.errors }}
+      </div>
+      <div class="form-item">
+        {{ connect_space_meter_form.meter.label_tag }}
+        {{ connect_space_meter_form.meter }}
+        {{ connect_space_meter_form.meter.errors }}
+      </div>
+      <div class="form-item">
+        {{ connect_space_meter_form.assigned_fraction.label_tag }}
+        {{ connect_space_meter_form.assigned_fraction }}
+        {{ connect_space_meter_form.assigned_fraction.errors }}
+      </div>
+
+	  <a style="margin: 5px" class="button" href="/{{ account.id }}/spaces/{{ space.id }}/info/">Cancel</a>
+	  <input style="margin: 5px" type="submit" value="Save" name="connect_space_meter"/>
+    
+	</form>
+  </div>
+{% endblock %}
+

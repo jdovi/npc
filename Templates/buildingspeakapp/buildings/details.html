@@ -1,0 +1,61 @@
+{% extends 'buildingspeakapp/buildings/base.html' %}
+{% load humanize %}
+
+{% block contents %}
+
+<div class="tab tab-details">
+
+<form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/buildings/{{ building.id }}/details/" method="post">
+  {% csrf_token %}
+<img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ tab_help_text|safe }}"></img>
+<input type="submit" value="Export" name="export_details_tab" style="float:right;"/>
+</form>
+
+<h2 style="display:inline">Building Details</h2>  |  <a href="/{{ account.id }}/buildings/{{ building.id }}/edit/">Edit Building Details</a> 
+
+<table>
+  <tbody>
+    <tr><td>Name:</td><td>{{ building.name }}</td></tr>
+    <tr><td>Address:</td><td>{{ building.street_address }}, {{ building.city }}, {{ building.state }} {{ building.zip_code }}</td></tr>
+    <tr><td>Type:</td><td>{{ building.building_type }}</td></tr>
+    <tr><td>EIA Type:</td><td>{{ building.EIA_type }}</td></tr>
+    <tr><td>Vintage:</td><td>{{ building.vintage }}</td></tr>
+    <tr><td>Square Footage:</td><td>{{ building.square_footage|floatformat:0|intcomma }}</td></tr>
+    <tr><td>Floors:</td><td>{{ building.stories }}</td></tr>
+    <tr><td>Max. Occupancy:</td><td>{{ building.max_occupancy }}</td></tr>
+    <tr><td>Image File:</td><td>
+						{% if building.image_file %}
+						<img src="{{ building.image_file.url }}" alt="building image" style="height: 40px;"/>
+						{% else %}
+						<b>No Building image file!</b>
+						{% endif %}
+						</td></tr>
+  </tbody>
+</table>
+
+<h2 style="display:inline">Building Contact Info</h2>  |  <span><a href="/{{ account.id }}/buildings/{{ building.id }}/edit/">Edit Building Details</a></span>
+
+<table>
+  <tbody>
+    <tr><td>First Name:</td><td>{{ building.first_name }}</td></tr>
+    <tr><td>Last Name:</td><td>{{ building.last_name }}</td></tr>
+    <tr><td>Title:</td><td>{{ building.title }}</td></tr>
+    <tr><td>Email:</td><td>{{ building.email }}</td></tr>
+    <tr><td>Phone:</td><td>{{ building.phone }}</td></tr>
+  </tbody>
+</table>
+
+<h2 style="display:inline">Building ENERGY STAR Info</h2>  |  <span><a href="/{{ account.id }}/buildings/{{ building.id }}/edit/">Edit Building Details</a></span>
+
+<table>
+  <tbody>
+    <tr><td>Portfolio Manager Primary Function:</td><td>{{ building_ESPM_primary_function }}</td></tr>
+    <tr><td>Current ENERGY STAR Score:</td><td>{{ building.ES_score_past_12_months }}</td></tr>
+    <tr><td>Forecasted ENERGY STAR Score:</td><td>{{ building.ES_score_next_12_months }}</td></tr>
+  </tbody>
+</table>
+
+</div> <!-- .tab-details -->
+
+{% endblock %}
+

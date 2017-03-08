@@ -1,0 +1,32 @@
+{% extends 'buildingspeakapp/accounts/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+    <form enctype="multipart/form-data" class="form-wrapper" action="/{{ account.id }}/equipment_measure/" method="post">{% csrf_token %}
+      {{ connect_equipment_efficiency_measure_form.non_field_errors }}
+      <div class="form-row-set">
+        {{ connect_equipment_efficiency_measure_form.equipment.label_tag }}
+        {{ connect_equipment_efficiency_measure_form.equipment }}
+        {{ connect_equipment_efficiency_measure_form.equipment.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ connect_equipment_efficiency_measure_form.efficiency_measure.label_tag }}
+        {{ connect_equipment_efficiency_measure_form.efficiency_measure }}
+        {{ connect_equipment_efficiency_measure_form.efficiency_measure.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ connect_equipment_efficiency_measure_form.assigned_fraction.label_tag }}
+        {{ connect_equipment_efficiency_measure_form.assigned_fraction }}
+        {{ connect_equipment_efficiency_measure_form.assigned_fraction.errors }}
+      </div>
+
+      <div class="form-row-set-buttons">
+	  <input class="woo-sc-button custom small woo-bu" type="submit" value="Create" name="equipment_efficiency_measure"/>
+	  <a href="/{{ account.id }}/add/">Cancel</a>
+	  </div>
+    
+	</form>
+  </div>
+{% endblock %}
+

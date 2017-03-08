@@ -1,0 +1,58 @@
+{% extends 'buildingspeakapp/meters/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+    <form enctype="multipart/form-data" class="form-wrapper" action="/{{ account.id }}/meters/{{ meter.id }}/overwrite_launch/{{ mlg.id }}/" method="post">{% csrf_token %}
+      {{ overwrite_form_launch.non_field_errors }}
+      <div class="form-row-set">
+        {{ overwrite_form_launch.start_date.label_tag }}
+        {{ overwrite_form_launch.start_date }}
+        {{ overwrite_form_launch.start_date.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ overwrite_form_launch.end_date.label_tag }}
+        {{ overwrite_form_launch.end_date }}
+        {{ overwrite_form_launch.end_date.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ overwrite_form_launch.act_billing_demand.label_tag }}
+        {{ overwrite_form_launch.act_billing_demand }}
+        {{ overwrite_form_launch.act_billing_demand.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ overwrite_form_launch.act_peak_demand.label_tag }}
+        {{ overwrite_form_launch.act_peak_demand }}
+        {{ overwrite_form_launch.act_peak_demand.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ overwrite_form_launch.act_consumption.label_tag }}
+        {{ overwrite_form_launch.act_consumption }}
+        {{ overwrite_form_launch.act_consumption.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ overwrite_form_launch.act_cost.label_tag }}
+        {{ overwrite_form_launch.act_cost }}
+        {{ overwrite_form_launch.act_cost.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ overwrite_form_launch.act_cost_supply.label_tag }}
+        {{ overwrite_form_launch.act_cost_supply }}
+        {{ overwrite_form_launch.act_cost_supply.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ overwrite_form_launch.act_cost_delivery.label_tag }}
+        {{ overwrite_form_launch.act_cost_delivery }}
+        {{ overwrite_form_launch.act_cost_delivery.errors }}
+      </div>
+
+	  <div class="form-row-set-buttons">
+	      <input class="woo-sc-button custom small woo-bu" type="submit" value="Update" name="overwrite"/>
+	      <input class="woo-sc-button custom small woo-bu" type="submit" value="Delete" name="delete"/>
+	      <a href="/{{ account.id }}/meters/{{ meter.id }}/select_month_launch/">Cancel</a>
+	  </div>
+	  </form>
+
+  </div>
+{% endblock %}
+

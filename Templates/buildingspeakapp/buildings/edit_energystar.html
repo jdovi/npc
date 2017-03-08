@@ -1,0 +1,1230 @@
+{% extends 'buildingspeakapp/buildings/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+    <form enctype="multipart/form-data" class="form-wrapper" action="/{{ account.id }}/buildings/{{ building.id }}/edit-energystar/" method="post">{% csrf_token %}
+      {{ building_energystar_form.non_field_errors }}
+      {% if building.ESPM_type == 'worshipFacility' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.weeklyOperatingHours.label_tag }}
+        {{ building_energystar_form.weeklyOperatingHours }}
+        {{ building_energystar_form.weeklyOperatingHours.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfCommercialRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfCommercialRefrigerationUnits }}
+        {{ building_energystar_form.numberOfCommercialRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.cookingFacilities.label_tag }}
+        {{ building_energystar_form.cookingFacilities }}
+        {{ building_energystar_form.cookingFacilities.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.seatingCapacity.label_tag }}
+        {{ building_energystar_form.seatingCapacity }}
+        {{ building_energystar_form.seatingCapacity.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWeekdaysOpen.label_tag }}
+        {{ building_energystar_form.numberOfWeekdaysOpen }}
+        {{ building_energystar_form.numberOfWeekdaysOpen.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'wholesaleClubSupercenter' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.exteriorEntranceToThePublic.label_tag }}
+        {{ building_energystar_form.exteriorEntranceToThePublic }}
+        {{ building_energystar_form.exteriorEntranceToThePublic.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.weeklyOperatingHours.label_tag }}
+        {{ building_energystar_form.weeklyOperatingHours }}
+        {{ building_energystar_form.weeklyOperatingHours.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfCashRegisters.label_tag }}
+        {{ building_energystar_form.numberOfCashRegisters }}
+        {{ building_energystar_form.numberOfCashRegisters.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfOpenClosedRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfOpenClosedRefrigerationUnits }}
+        {{ building_energystar_form.numberOfOpenClosedRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'wastewaterTreatmentPlant' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.averageInfluentBiologicalOxygenDemand.label_tag }}
+        {{ building_energystar_form.averageInfluentBiologicalOxygenDemand }}
+        {{ building_energystar_form.averageInfluentBiologicalOxygenDemand.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.averageEffluentBiologicalOxygenDemand.label_tag }}
+        {{ building_energystar_form.averageEffluentBiologicalOxygenDemand }}
+        {{ building_energystar_form.averageEffluentBiologicalOxygenDemand.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.plantDesignFlowRate.label_tag }}
+        {{ building_energystar_form.plantDesignFlowRate }}
+        {{ building_energystar_form.plantDesignFlowRate.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.fixedFilmTrickleFiltrationProcess.label_tag }}
+        {{ building_energystar_form.fixedFilmTrickleFiltrationProcess }}
+        {{ building_energystar_form.fixedFilmTrickleFiltrationProcess.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.nutrientRemoval.label_tag }}
+        {{ building_energystar_form.nutrientRemoval }}
+        {{ building_energystar_form.nutrientRemoval.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'swimmingPool' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.poolSize.label_tag }}
+        {{ building_energystar_form.poolSize }}
+        {{ building_energystar_form.poolSize.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.poolLocation.label_tag }}
+        {{ building_energystar_form.poolLocation }}
+        {{ building_energystar_form.poolLocation.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.monthsInUse.label_tag }}
+        {{ building_energystar_form.monthsInUse }}
+        {{ building_energystar_form.monthsInUse.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'supermarket' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.weeklyOperatingHours.label_tag }}
+        {{ building_energystar_form.weeklyOperatingHours }}
+        {{ building_energystar_form.weeklyOperatingHours.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.cookingFacilities.label_tag }}
+        {{ building_energystar_form.cookingFacilities }}
+        {{ building_energystar_form.cookingFacilities.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfOpenClosedRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfOpenClosedRefrigerationUnits }}
+        {{ building_energystar_form.numberOfOpenClosedRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfCashRegisters.label_tag }}
+        {{ building_energystar_form.numberOfCashRegisters }}
+        {{ building_energystar_form.numberOfCashRegisters.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'stadiumOpen' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.enclosedFloorArea.label_tag }}
+        {{ building_energystar_form.enclosedFloorArea }}
+        {{ building_energystar_form.enclosedFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfSportingEventsPerYear.label_tag }}
+        {{ building_energystar_form.numberOfSportingEventsPerYear }}
+        {{ building_energystar_form.numberOfSportingEventsPerYear.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfConcertShowEventsPerYear.label_tag }}
+        {{ building_energystar_form.numberOfConcertShowEventsPerYear }}
+        {{ building_energystar_form.numberOfConcertShowEventsPerYear.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfSpecialOtherEventsPerYear.label_tag }}
+        {{ building_energystar_form.numberOfSpecialOtherEventsPerYear }}
+        {{ building_energystar_form.numberOfSpecialOtherEventsPerYear.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.sizeOfElectronicScoreBoards.label_tag }}
+        {{ building_energystar_form.sizeOfElectronicScoreBoards }}
+        {{ building_energystar_form.sizeOfElectronicScoreBoards.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.iceEvents.label_tag }}
+        {{ building_energystar_form.iceEvents }}
+        {{ building_energystar_form.iceEvents.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'stadiumClosed' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.enclosedFloorArea.label_tag }}
+        {{ building_energystar_form.enclosedFloorArea }}
+        {{ building_energystar_form.enclosedFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfSportingEventsPerYear.label_tag }}
+        {{ building_energystar_form.numberOfSportingEventsPerYear }}
+        {{ building_energystar_form.numberOfSportingEventsPerYear.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfConcertShowEventsPerYear.label_tag }}
+        {{ building_energystar_form.numberOfConcertShowEventsPerYear }}
+        {{ building_energystar_form.numberOfConcertShowEventsPerYear.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfSpecialOtherEventsPerYear.label_tag }}
+        {{ building_energystar_form.numberOfSpecialOtherEventsPerYear }}
+        {{ building_energystar_form.numberOfSpecialOtherEventsPerYear.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.sizeOfElectronicScoreBoards.label_tag }}
+        {{ building_energystar_form.sizeOfElectronicScoreBoards }}
+        {{ building_energystar_form.sizeOfElectronicScoreBoards.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.iceEvents.label_tag }}
+        {{ building_energystar_form.iceEvents }}
+        {{ building_energystar_form.iceEvents.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'singleFamilyHome' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfBedrooms.label_tag }}
+        {{ building_energystar_form.numberOfBedrooms }}
+        {{ building_energystar_form.numberOfBedrooms.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfPeople.label_tag }}
+        {{ building_energystar_form.numberOfPeople }}
+        {{ building_energystar_form.numberOfPeople.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'seniorCareCommunity' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfResidentialLivingUnits.label_tag }}
+        {{ building_energystar_form.numberOfResidentialLivingUnits }}
+        {{ building_energystar_form.numberOfResidentialLivingUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.averageNumberOfResidents.label_tag }}
+        {{ building_energystar_form.averageNumberOfResidents }}
+        {{ building_energystar_form.averageNumberOfResidents.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.maximumResidentCapacity.label_tag }}
+        {{ building_energystar_form.maximumResidentCapacity }}
+        {{ building_energystar_form.maximumResidentCapacity.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfCommercialRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfCommercialRefrigerationUnits }}
+        {{ building_energystar_form.numberOfCommercialRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfCommercialWashingMachines.label_tag }}
+        {{ building_energystar_form.numberOfCommercialWashingMachines }}
+        {{ building_energystar_form.numberOfCommercialWashingMachines.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfResidentialWashingMachines.label_tag }}
+        {{ building_energystar_form.numberOfResidentialWashingMachines }}
+        {{ building_energystar_form.numberOfResidentialWashingMachines.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfResidentialLiftSystems.label_tag }}
+        {{ building_energystar_form.numberOfResidentialLiftSystems }}
+        {{ building_energystar_form.numberOfResidentialLiftSystems.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'retail' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.weeklyOperatingHours.label_tag }}
+        {{ building_energystar_form.weeklyOperatingHours }}
+        {{ building_energystar_form.weeklyOperatingHours.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfCashRegisters.label_tag }}
+        {{ building_energystar_form.numberOfCashRegisters }}
+        {{ building_energystar_form.numberOfCashRegisters.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfOpenClosedRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfOpenClosedRefrigerationUnits }}
+        {{ building_energystar_form.numberOfOpenClosedRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.singleStore.label_tag }}
+        {{ building_energystar_form.singleStore }}
+        {{ building_energystar_form.singleStore.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.exteriorEntranceToThePublic.label_tag }}
+        {{ building_energystar_form.exteriorEntranceToThePublic }}
+        {{ building_energystar_form.exteriorEntranceToThePublic.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'residenceHallDormitory' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfRooms.label_tag }}
+        {{ building_energystar_form.numberOfRooms }}
+        {{ building_energystar_form.numberOfRooms.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.hasComputerLab.label_tag }}
+        {{ building_energystar_form.hasComputerLab }}
+        {{ building_energystar_form.hasComputerLab.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.hasDiningHall.label_tag }}
+        {{ building_energystar_form.hasDiningHall }}
+        {{ building_energystar_form.hasDiningHall.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'refrigeratedWarehouse' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.weeklyOperatingHours.label_tag }}
+        {{ building_energystar_form.weeklyOperatingHours }}
+        {{ building_energystar_form.weeklyOperatingHours.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'parking' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.supplementalHeating.label_tag }}
+        {{ building_energystar_form.supplementalHeating }}
+        {{ building_energystar_form.supplementalHeating.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.openFootage.label_tag }}
+        {{ building_energystar_form.openFootage }}
+        {{ building_energystar_form.openFootage.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.completelyEnclosedFootage.label_tag }}
+        {{ building_energystar_form.completelyEnclosedFootage }}
+        {{ building_energystar_form.completelyEnclosedFootage.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.partiallyEnclosedFootage.label_tag }}
+        {{ building_energystar_form.partiallyEnclosedFootage }}
+        {{ building_energystar_form.partiallyEnclosedFootage.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'otherStadium' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.enclosedFloorArea.label_tag }}
+        {{ building_energystar_form.enclosedFloorArea }}
+        {{ building_energystar_form.enclosedFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfSportingEventsPerYear.label_tag }}
+        {{ building_energystar_form.numberOfSportingEventsPerYear }}
+        {{ building_energystar_form.numberOfSportingEventsPerYear.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfConcertShowEventsPerYear.label_tag }}
+        {{ building_energystar_form.numberOfConcertShowEventsPerYear }}
+        {{ building_energystar_form.numberOfConcertShowEventsPerYear.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfSpecialOtherEventsPerYear.label_tag }}
+        {{ building_energystar_form.numberOfSpecialOtherEventsPerYear }}
+        {{ building_energystar_form.numberOfSpecialOtherEventsPerYear.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.sizeOfElectronicScoreBoards.label_tag }}
+        {{ building_energystar_form.sizeOfElectronicScoreBoards }}
+        {{ building_energystar_form.sizeOfElectronicScoreBoards.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.iceEvents.label_tag }}
+        {{ building_energystar_form.iceEvents }}
+        {{ building_energystar_form.iceEvents.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'office' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.weeklyOperatingHours.label_tag }}
+        {{ building_energystar_form.weeklyOperatingHours }}
+        {{ building_energystar_form.weeklyOperatingHours.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentOfficeCooled.label_tag }}
+        {{ building_energystar_form.percentOfficeCooled }}
+        {{ building_energystar_form.percentOfficeCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentOfficeHeated.label_tag }}
+        {{ building_energystar_form.percentOfficeHeated }}
+        {{ building_energystar_form.percentOfficeHeated.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'nonRefrigeratedWarehouse' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.weeklyOperatingHours.label_tag }}
+        {{ building_energystar_form.weeklyOperatingHours }}
+        {{ building_energystar_form.weeklyOperatingHours.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'multifamilyHousing' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfResidentialLivingUnits.label_tag }}
+        {{ building_energystar_form.numberOfResidentialLivingUnits }}
+        {{ building_energystar_form.numberOfResidentialLivingUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfBedrooms.label_tag }}
+        {{ building_energystar_form.numberOfBedrooms }}
+        {{ building_energystar_form.numberOfBedrooms.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.maximumNumberOfFloors.label_tag }}
+        {{ building_energystar_form.maximumNumberOfFloors }}
+        {{ building_energystar_form.maximumNumberOfFloors.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentOfFloorAreaThatIsCommonSpaceOnly.label_tag }}
+        {{ building_energystar_form.percentOfFloorAreaThatIsCommonSpaceOnly }}
+        {{ building_energystar_form.percentOfFloorAreaThatIsCommonSpaceOnly.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfLaundryHookupsInAllUnits.label_tag }}
+        {{ building_energystar_form.numberOfLaundryHookupsInAllUnits }}
+        {{ building_energystar_form.numberOfLaundryHookupsInAllUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfLaundryHookupsInCommonArea.label_tag }}
+        {{ building_energystar_form.numberOfLaundryHookupsInCommonArea }}
+        {{ building_energystar_form.numberOfLaundryHookupsInCommonArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfDishwashers.label_tag }}
+        {{ building_energystar_form.numberOfDishwashers }}
+        {{ building_energystar_form.numberOfDishwashers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.primaryHotWaterFuelType.label_tag }}
+        {{ building_energystar_form.primaryHotWaterFuelType }}
+        {{ building_energystar_form.primaryHotWaterFuelType.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.residentPopulation.label_tag }}
+        {{ building_energystar_form.residentPopulation }}
+        {{ building_energystar_form.residentPopulation.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.governmentSubsidizedHousing.label_tag }}
+        {{ building_energystar_form.governmentSubsidizedHousing }}
+        {{ building_energystar_form.governmentSubsidizedHousing.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'medicalOffice' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.weeklyOperatingHours.label_tag }}
+        {{ building_energystar_form.weeklyOperatingHours }}
+        {{ building_energystar_form.weeklyOperatingHours.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfSurgicalOperatingBeds.label_tag }}
+        {{ building_energystar_form.numberOfSurgicalOperatingBeds }}
+        {{ building_energystar_form.numberOfSurgicalOperatingBeds.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.surgeryCenterFloorArea.label_tag }}
+        {{ building_energystar_form.surgeryCenterFloorArea }}
+        {{ building_energystar_form.surgeryCenterFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfMriMachines.label_tag }}
+        {{ building_energystar_form.numberOfMriMachines }}
+        {{ building_energystar_form.numberOfMriMachines.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'k12School' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.openOnWeekends.label_tag }}
+        {{ building_energystar_form.openOnWeekends }}
+        {{ building_energystar_form.openOnWeekends.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.cookingFacilities.label_tag }}
+        {{ building_energystar_form.cookingFacilities }}
+        {{ building_energystar_form.cookingFacilities.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.isHighSchool.label_tag }}
+        {{ building_energystar_form.isHighSchool }}
+        {{ building_energystar_form.isHighSchool.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.monthsInUse.label_tag }}
+        {{ building_energystar_form.monthsInUse }}
+        {{ building_energystar_form.monthsInUse.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.schoolDistrict.label_tag }}
+        {{ building_energystar_form.schoolDistrict }}
+        {{ building_energystar_form.schoolDistrict.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.studentSeatingCapacity.label_tag }}
+        {{ building_energystar_form.studentSeatingCapacity }}
+        {{ building_energystar_form.studentSeatingCapacity.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.gymnasiumFloorArea.label_tag }}
+        {{ building_energystar_form.gymnasiumFloorArea }}
+        {{ building_energystar_form.gymnasiumFloorArea.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'indoorArena' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.enclosedFloorArea.label_tag }}
+        {{ building_energystar_form.enclosedFloorArea }}
+        {{ building_energystar_form.enclosedFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfSportingEventsPerYear.label_tag }}
+        {{ building_energystar_form.numberOfSportingEventsPerYear }}
+        {{ building_energystar_form.numberOfSportingEventsPerYear.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfConcertShowEventsPerYear.label_tag }}
+        {{ building_energystar_form.numberOfConcertShowEventsPerYear }}
+        {{ building_energystar_form.numberOfConcertShowEventsPerYear.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfSpecialOtherEventsPerYear.label_tag }}
+        {{ building_energystar_form.numberOfSpecialOtherEventsPerYear }}
+        {{ building_energystar_form.numberOfSpecialOtherEventsPerYear.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.sizeOfElectronicScoreBoards.label_tag }}
+        {{ building_energystar_form.sizeOfElectronicScoreBoards }}
+        {{ building_energystar_form.sizeOfElectronicScoreBoards.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.iceEvents.label_tag }}
+        {{ building_energystar_form.iceEvents }}
+        {{ building_energystar_form.iceEvents.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'hotel' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.fullServiceSpaFloorArea.label_tag }}
+        {{ building_energystar_form.fullServiceSpaFloorArea }}
+        {{ building_energystar_form.fullServiceSpaFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.gymCenterFloorArea.label_tag }}
+        {{ building_energystar_form.gymCenterFloorArea }}
+        {{ building_energystar_form.gymCenterFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.hoursPerDayGuestsOnsite.label_tag }}
+        {{ building_energystar_form.hoursPerDayGuestsOnsite }}
+        {{ building_energystar_form.hoursPerDayGuestsOnsite.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfCommercialRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfCommercialRefrigerationUnits }}
+        {{ building_energystar_form.numberOfCommercialRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfGuestMealsServedPerYear.label_tag }}
+        {{ building_energystar_form.numberOfGuestMealsServedPerYear }}
+        {{ building_energystar_form.numberOfGuestMealsServedPerYear.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfHotelRooms.label_tag }}
+        {{ building_energystar_form.numberOfHotelRooms }}
+        {{ building_energystar_form.numberOfHotelRooms.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.laundryFacility.label_tag }}
+        {{ building_energystar_form.laundryFacility }}
+        {{ building_energystar_form.laundryFacility.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.cookingFacilities.label_tag }}
+        {{ building_energystar_form.cookingFacilities }}
+        {{ building_energystar_form.cookingFacilities.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.amountOfLaundryProcessedAnnually.label_tag }}
+        {{ building_energystar_form.amountOfLaundryProcessedAnnually }}
+        {{ building_energystar_form.amountOfLaundryProcessedAnnually.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'hospital' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.hasLaboratory.label_tag }}
+        {{ building_energystar_form.hasLaboratory }}
+        {{ building_energystar_form.hasLaboratory.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.onSiteLaundryFacility.label_tag }}
+        {{ building_energystar_form.onSiteLaundryFacility }}
+        {{ building_energystar_form.onSiteLaundryFacility.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.maximumNumberOfFloors.label_tag }}
+        {{ building_energystar_form.maximumNumberOfFloors }}
+        {{ building_energystar_form.maximumNumberOfFloors.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfStaffedBeds.label_tag }}
+        {{ building_energystar_form.numberOfStaffedBeds }}
+        {{ building_energystar_form.numberOfStaffedBeds.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfFTEWorkers.label_tag }}
+        {{ building_energystar_form.numberOfFTEWorkers }}
+        {{ building_energystar_form.numberOfFTEWorkers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfMriMachines.label_tag }}
+        {{ building_energystar_form.numberOfMriMachines }}
+        {{ building_energystar_form.numberOfMriMachines.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.ownedBy.label_tag }}
+        {{ building_energystar_form.ownedBy }}
+        {{ building_energystar_form.ownedBy.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.isTertiaryCare.label_tag }}
+        {{ building_energystar_form.isTertiaryCare }}
+        {{ building_energystar_form.isTertiaryCare.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.licensedBedCapacity.label_tag }}
+        {{ building_energystar_form.licensedBedCapacity }}
+        {{ building_energystar_form.licensedBedCapacity.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'financialOffice' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentOfficeCooled.label_tag }}
+        {{ building_energystar_form.percentOfficeCooled }}
+        {{ building_energystar_form.percentOfficeCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentOfficeHeated.label_tag }}
+        {{ building_energystar_form.percentOfficeHeated }}
+        {{ building_energystar_form.percentOfficeHeated.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.weeklyOperatingHours.label_tag }}
+        {{ building_energystar_form.weeklyOperatingHours }}
+        {{ building_energystar_form.weeklyOperatingHours.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'drinkingWaterTreatmentAndDistribution' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'distributionCenter' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.weeklyOperatingHours.label_tag }}
+        {{ building_energystar_form.weeklyOperatingHours }}
+        {{ building_energystar_form.weeklyOperatingHours.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.label_tag }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits }}
+        {{ building_energystar_form.numberOfWalkInRefrigerationUnits.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'dataCenter' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.coolingEquipmentRedundancy.label_tag }}
+        {{ building_energystar_form.coolingEquipmentRedundancy }}
+        {{ building_energystar_form.coolingEquipmentRedundancy.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.itEnergyMeterConfiguration.label_tag }}
+        {{ building_energystar_form.itEnergyMeterConfiguration }}
+        {{ building_energystar_form.itEnergyMeterConfiguration.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.upsSystemRedundancy.label_tag }}
+        {{ building_energystar_form.upsSystemRedundancy }}
+        {{ building_energystar_form.upsSystemRedundancy.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'courthouse' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentOfficeCooled.label_tag }}
+        {{ building_energystar_form.percentOfficeCooled }}
+        {{ building_energystar_form.percentOfficeCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentOfficeHeated.label_tag }}
+        {{ building_energystar_form.percentOfficeHeated }}
+        {{ building_energystar_form.percentOfficeHeated.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.weeklyOperatingHours.label_tag }}
+        {{ building_energystar_form.weeklyOperatingHours }}
+        {{ building_energystar_form.weeklyOperatingHours.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'collegeUniversity' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.weeklyOperatingHours.label_tag }}
+        {{ building_energystar_form.weeklyOperatingHours }}
+        {{ building_energystar_form.weeklyOperatingHours.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.enrollment.label_tag }}
+        {{ building_energystar_form.enrollment }}
+        {{ building_energystar_form.enrollment.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.grantDollars.label_tag }}
+        {{ building_energystar_form.grantDollars }}
+        {{ building_energystar_form.grantDollars.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfFTEWorkers.label_tag }}
+        {{ building_energystar_form.numberOfFTEWorkers }}
+        {{ building_energystar_form.numberOfFTEWorkers.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'barracks' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.hasComputerLab.label_tag }}
+        {{ building_energystar_form.hasComputerLab }}
+        {{ building_energystar_form.hasComputerLab.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.hasDiningHall.label_tag }}
+        {{ building_energystar_form.hasDiningHall }}
+        {{ building_energystar_form.hasDiningHall.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfRooms.label_tag }}
+        {{ building_energystar_form.numberOfRooms }}
+        {{ building_energystar_form.numberOfRooms.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentCooled.label_tag }}
+        {{ building_energystar_form.percentCooled }}
+        {{ building_energystar_form.percentCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentHeated.label_tag }}
+        {{ building_energystar_form.percentHeated }}
+        {{ building_energystar_form.percentHeated.errors }}
+      </div>
+      {% endif %}
+      {% if building.ESPM_type == 'bankBranch' %}
+      <div class="form-row-set">
+        {{ building_energystar_form.totalGrossFloorArea.label_tag }}
+        {{ building_energystar_form.totalGrossFloorArea }}
+        {{ building_energystar_form.totalGrossFloorArea.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfComputers.label_tag }}
+        {{ building_energystar_form.numberOfComputers }}
+        {{ building_energystar_form.numberOfComputers.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentOfficeCooled.label_tag }}
+        {{ building_energystar_form.percentOfficeCooled }}
+        {{ building_energystar_form.percentOfficeCooled.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.percentOfficeHeated.label_tag }}
+        {{ building_energystar_form.percentOfficeHeated }}
+        {{ building_energystar_form.percentOfficeHeated.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.weeklyOperatingHours.label_tag }}
+        {{ building_energystar_form.weeklyOperatingHours }}
+        {{ building_energystar_form.weeklyOperatingHours.errors }}
+      </div>
+      <div class="form-row-set">
+        {{ building_energystar_form.numberOfWorkers.label_tag }}
+        {{ building_energystar_form.numberOfWorkers }}
+        {{ building_energystar_form.numberOfWorkers.errors }}
+      </div>
+      {% endif %}
+
+	  <a style="margin: 5px" class="button" href="/{{ account.id }}/buildings/{{ building.id }}/details/">Cancel</a>
+	  <input style="margin: 5px" type="submit" value="Update" name="edit_building_energystar"/>
+    
+	</form>
+  </div>
+{% endblock %}
+

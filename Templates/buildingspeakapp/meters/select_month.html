@@ -1,0 +1,26 @@
+{% extends 'buildingspeakapp/meters/base.html' %}
+
+{% block contents %}
+
+  <div class="tab-container">
+    <form enctype="multipart/form-data" class="form-wrapper" action="/{{ account.id }}/meters/{{ meter.id }}/select_month/" method="post">{% csrf_token %}
+      {{ select_form.non_field_errors }}
+      <div class="form-row-set">
+        <label for="id_mlg">Select the month to edit:</label>
+            <div style="padding-right:150px">
+            {{ select_form.mlg }}
+            {{ select_form.mlg.errors }}
+            </div>
+      </div>
+	  
+	  <div class="form-row-set-buttons">
+	    <div style="padding-right:150px">
+	      <input class="woo-sc-button custom small woo-bu" type="submit" value="Select" name="select_month"/>
+	      <a href="/{{ account.id }}/meters/{{ meter.id }}/data/">Cancel</a>
+	    </div>
+	  </div>
+	  </form>
+
+  </div>
+{% endblock %}
+

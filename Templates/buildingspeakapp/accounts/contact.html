@@ -1,0 +1,60 @@
+{% extends 'buildingspeakapp/accounts/base.html' %}
+
+{% block contents %}
+
+<div class="tab-container">
+  <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/edit-contact/" method="post">{% csrf_token %}
+	{{ account_contact_info_form.non_field_errors }}
+	<div class="form-item">
+	  {{ account_contact_info_form.first_name.label_tag }}
+	  {{ account_contact_info_form.first_name }}
+	  {{ account_contact_info_form.first_name.errors }}
+	</div>
+	<div class="form-item">
+	  {{ account_contact_info_form.last_name.label_tag }}
+	  {{ account_contact_info_form.last_name }}
+	  {{ account_contact_info_form.last_name.errors }}
+	</div>
+	<div class="form-item">
+	  {{ account_contact_info_form.title.label_tag }}
+	  {{ account_contact_info_form.title }}
+	  {{ account_contact_info_form.title.errors }}
+	</div>
+	<div class="form-item">
+	  {{ account_contact_info_form.email.label_tag }}
+	  {{ account_contact_info_form.email }}
+	  {{ account_contact_info_form.email.errors }}
+	</div>
+	<div class="form-item">
+	  {{ account_contact_info_form.phone.label_tag }}
+	  {{ account_contact_info_form.phone }}
+	  {{ account_contact_info_form.phone.errors }}
+	</div>
+	<div class="form-item">
+	  {{ account_contact_info_form.street_address.label_tag }}
+	  {{ account_contact_info_form.street_address }}
+	  {{ account_contact_info_form.street_address.errors }}
+	</div>
+	<div class="form-item">
+	  {{ account_contact_info_form.city.label_tag }}
+	  {{ account_contact_info_form.city }}
+	  {{ account_contact_info_form.city.errors }}
+	</div>
+	<div class="form-item">
+	  {{ account_contact_info_form.state.label_tag }}
+	  {{ account_contact_info_form.state }}
+	  {{ account_contact_info_form.state.errors }}
+	</div>
+	<div class="form-item">
+	  {{ account_contact_info_form.zip_code.label_tag }}
+	  {{ account_contact_info_form.zip_code }}
+	  {{ account_contact_info_form.zip_code.errors }}
+	</div>
+
+	<a style="margin: 5px" class="button" href="/{{ account.id }}/details/">Cancel</a>
+	<input style="margin: 5px" type="submit" value="Update" name="edit_account_contact_information"/>
+
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "buildingspeakapp/accounts/base.html" %}
+{% load humanize %}
+
+{% block contents %}
+  <div class="tab-container">
+    {% if account.stripe_customer_id %}
+      <p>
+        Your account is set up for automatic payment:
+        ${{ account.monthly_payment|floatformat:2|intcomma }}/month &mdash; card ending in
+        <strong>{{ account.stripe_cc_last_4 }}</strong>.
+      </p>
+      <p>
+        If you wish to use a different credit card, please use the form below.
+      </p>
+    {% else %}
+      <p>
+        Your current plan is ${{ account.monthly_payment|floatformat:2|intcomma }} per month. Please
+        add a credit card to avoid service disruption.
+      </p>
+    {% endif %}
+
+    <hr>
+
+    <form action="/{{account.id}}/billing/" class="entry" method="POST" id="payment-form">
+      {% csrf_token %}
+      <div class="payment-errors"></div>
+
+      <div class="form-item">
+        <label>Card Number</label>
+        <input type="text" size="20" data-stripe="number"/>
+      </div>
+
+      <div class="form-item">
+        <label>CVC</label>
+        <input type="text" class="xshort" size="4" data-stripe="cvc"/>
+      </div>
+
+      <div class="form-item">
+        <label>Expiration</label>
+        <input type="text" class="tiny" size="2" data-stripe="exp-month" placeholder="MM"/>
+        <span> / </span>
+        <input type="text" class="xshort" size="4" data-stripe="exp-year" placeholder="YYYY"/>
+      </div>
+
+      <div class="actions">
+        <input type="submit" class="right" name="add_new_card" value="Save">
+      </div>
+    </form>
+
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript">
+      // This identifies your website in the createToken call below
+      var stripeResponseHandler = function(status, response) {
+        var $form = $('#payment-form');
+
+        if (response.error) {
+          // Show the errors on the form
+          $form.find('.payment-errors').text(response.error.message);
+          $form.find('input[type=submit]').prop('disabled', false);
+          $(".payment-errors").show("fast")
+        } else {
+          // token contains id, last4, and card type
+          var token = response.id;
+          // Insert the token into the form so it gets submitted to the server
+          $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+          // and re-submit
+          $form.get(0).submit();
+        }
+      };
+
+      $(function() {
+        Stripe.setPublishableKey('{{ stripe_pk }}');
+        $('#payment-form').submit(function(e) {
+          var $form = $(this);
+
+          // Disable the submit button to prevent repeated clicks
+          $form.find('button').prop('disabled', true);
+
+          Stripe.card.createToken($form, stripeResponseHandler);
+
+          // Prevent the form from submitting with the default action
+          return false;
+        });
+      });
+    </script>
+
+    <hr>
+
+    <h2>Payment History</h2>
+    <form enctype="multipart/form-data" class="entry" action="/{{ account.id }}/billing/" method="post">
+      {% csrf_token %}
+    <img src="{{ STATIC_PREFIX }}app/img/resort/icons/help.png" class="tooltip" style="float:right;" title="{{ tab_help_text|safe }}"></img>
+    <input type="submit" value="Export" name="export_billing_tab" style="float:right;"/>
+    </form>
+
+	
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Amount Charged</th>
+        <th>Card</th>
+      </tr>
+
+      {% for payment in payments %}
+        <tr>
+          <td>{{ payment.created_at|date:"n/j/Y" }}</td>
+          <td>${{ payment.amount_in_dollars|intcomma }}</td>
+          <td>{{ payment.stripe_cc_type }} ending in {{ payment.stripe_cc_last_4 }}</td>
+        </tr>
+      {% endfor %}
+      {% if not payments %}
+        <tr><td colspan=3>You haven't made any payments yet.</td></tr>
+      {% endif %}
+    </table>
+  </div>
+{% endblock %}
+
